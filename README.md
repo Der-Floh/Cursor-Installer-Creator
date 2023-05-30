@@ -5,7 +5,7 @@
 
 A program to create Cursor-Installer files simply and fast.
 
-![Cursor-Installer-Creator-Preview](https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/9ff00409-0fba-4b27-bf55-8861b97fe1a6)
+![Cursor-Installer-Creator-Preview](https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/9fae892f-b22c-41b7-9804-3584452b6cf4)
 
 Current Version can be found under [Releases](https://github.com/Der-Floh/Cursor-Installer-Creator/releases)
 
@@ -22,6 +22,7 @@ Pick or Drag & Drop cursor files in their corresponding slot. Give the cursor pa
 ## Planned Features
 
 - Directly insall a new cursor from the program
+- Reset individual cursors to default
 
 &nbsp;
 
