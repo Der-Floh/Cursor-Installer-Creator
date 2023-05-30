@@ -29,6 +29,14 @@ sealed partial class MainForm
     private void InitializeComponent()
     {
         CursorsTableLayoutPanel = new TableLayoutPanel();
+        CursorPanel16 = new Panel();
+        CursorNameLabel16 = new Label();
+        CursorSelectButton16 = new Button();
+        CursorPictureBox16 = new PictureBox();
+        CursorPanel17 = new Panel();
+        CursorNameLabel17 = new Label();
+        CursorSelectButton17 = new Button();
+        CursorPictureBox17 = new PictureBox();
         CursorPanel15 = new Panel();
         CursorSelectButton15 = new Button();
         CursorNameLabel15 = new Label();
@@ -99,6 +107,10 @@ sealed partial class MainForm
         AdminLabel = new Label();
         DragDropLabel = new Label();
         CursorsTableLayoutPanel.SuspendLayout();
+        CursorPanel16.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)CursorPictureBox16).BeginInit();
+        CursorPanel17.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)CursorPictureBox17).BeginInit();
         CursorPanel15.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)CursorPictureBox15).BeginInit();
         CursorPanel14.SuspendLayout();
@@ -138,6 +150,8 @@ sealed partial class MainForm
         CursorsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
         CursorsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
         CursorsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+        CursorsTableLayoutPanel.Controls.Add(CursorPanel16, 0, 5);
+        CursorsTableLayoutPanel.Controls.Add(CursorPanel17, 1, 5);
         CursorsTableLayoutPanel.Controls.Add(CursorPanel15, 2, 4);
         CursorsTableLayoutPanel.Controls.Add(CursorPanel14, 1, 4);
         CursorsTableLayoutPanel.Controls.Add(CursorPanel13, 0, 4);
@@ -155,14 +169,113 @@ sealed partial class MainForm
         CursorsTableLayoutPanel.Controls.Add(CursorPanel2, 1, 0);
         CursorsTableLayoutPanel.Location = new Point(12, 94);
         CursorsTableLayoutPanel.Name = "CursorsTableLayoutPanel";
-        CursorsTableLayoutPanel.RowCount = 5;
-        CursorsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-        CursorsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-        CursorsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-        CursorsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-        CursorsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-        CursorsTableLayoutPanel.Size = new Size(776, 298);
+        CursorsTableLayoutPanel.RowCount = 6;
+        CursorsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+        CursorsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+        CursorsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+        CursorsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+        CursorsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+        CursorsTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
+        CursorsTableLayoutPanel.Size = new Size(759, 354);
         CursorsTableLayoutPanel.TabIndex = 0;
+        // 
+        // CursorPanel16
+        // 
+        CursorPanel16.AllowDrop = true;
+        CursorPanel16.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        CursorPanel16.BorderStyle = BorderStyle.FixedSingle;
+        CursorPanel16.Controls.Add(CursorNameLabel16);
+        CursorPanel16.Controls.Add(CursorSelectButton16);
+        CursorPanel16.Controls.Add(CursorPictureBox16);
+        CursorPanel16.Location = new Point(3, 298);
+        CursorPanel16.Name = "CursorPanel16";
+        CursorPanel16.Size = new Size(247, 53);
+        CursorPanel16.TabIndex = 10;
+        CursorPanel16.DragDrop += CursorPanel16_DragDrop;
+        CursorPanel16.DragEnter += CursorPanel16_DragEnter;
+        CursorPanel16.DragOver += CursorPanel16_DragOver;
+        // 
+        // CursorNameLabel16
+        // 
+        CursorNameLabel16.Anchor = AnchorStyles.Right;
+        CursorNameLabel16.AutoSize = true;
+        CursorNameLabel16.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+        CursorNameLabel16.Location = new Point(54, 16);
+        CursorNameLabel16.Name = "CursorNameLabel16";
+        CursorNameLabel16.Size = new Size(90, 19);
+        CursorNameLabel16.TabIndex = 11;
+        CursorNameLabel16.Text = "Cursor Name";
+        // 
+        // CursorSelectButton16
+        // 
+        CursorSelectButton16.Anchor = AnchorStyles.Right;
+        CursorSelectButton16.Cursor = Cursors.Hand;
+        CursorSelectButton16.Location = new Point(192, 0);
+        CursorSelectButton16.Name = "CursorSelectButton16";
+        CursorSelectButton16.Size = new Size(50, 50);
+        CursorSelectButton16.TabIndex = 11;
+        CursorSelectButton16.Text = "Pick";
+        CursorSelectButton16.UseVisualStyleBackColor = true;
+        CursorSelectButton16.Click += CursorSelectButton16_Click;
+        // 
+        // CursorPictureBox16
+        // 
+        CursorPictureBox16.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        CursorPictureBox16.Location = new Point(3, 3);
+        CursorPictureBox16.Name = "CursorPictureBox16";
+        CursorPictureBox16.Size = new Size(45, 46);
+        CursorPictureBox16.SizeMode = PictureBoxSizeMode.Zoom;
+        CursorPictureBox16.TabIndex = 11;
+        CursorPictureBox16.TabStop = false;
+        // 
+        // CursorPanel17
+        // 
+        CursorPanel17.AllowDrop = true;
+        CursorPanel17.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        CursorPanel17.BorderStyle = BorderStyle.FixedSingle;
+        CursorPanel17.Controls.Add(CursorNameLabel17);
+        CursorPanel17.Controls.Add(CursorSelectButton17);
+        CursorPanel17.Controls.Add(CursorPictureBox17);
+        CursorPanel17.Location = new Point(256, 298);
+        CursorPanel17.Name = "CursorPanel17";
+        CursorPanel17.Size = new Size(247, 53);
+        CursorPanel17.TabIndex = 12;
+        CursorPanel17.DragDrop += CursorPanel17_DragDrop;
+        CursorPanel17.DragEnter += CursorPanel17_DragEnter;
+        CursorPanel17.DragOver += CursorPanel17_DragOver;
+        // 
+        // CursorNameLabel17
+        // 
+        CursorNameLabel17.Anchor = AnchorStyles.Right;
+        CursorNameLabel17.AutoSize = true;
+        CursorNameLabel17.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+        CursorNameLabel17.Location = new Point(54, 16);
+        CursorNameLabel17.Name = "CursorNameLabel17";
+        CursorNameLabel17.Size = new Size(90, 19);
+        CursorNameLabel17.TabIndex = 11;
+        CursorNameLabel17.Text = "Cursor Name";
+        // 
+        // CursorSelectButton17
+        // 
+        CursorSelectButton17.Anchor = AnchorStyles.Right;
+        CursorSelectButton17.Cursor = Cursors.Hand;
+        CursorSelectButton17.Location = new Point(192, 0);
+        CursorSelectButton17.Name = "CursorSelectButton17";
+        CursorSelectButton17.Size = new Size(50, 50);
+        CursorSelectButton17.TabIndex = 11;
+        CursorSelectButton17.Text = "Pick";
+        CursorSelectButton17.UseVisualStyleBackColor = true;
+        CursorSelectButton17.Click += CursorSelectButton17_Click;
+        // 
+        // CursorPictureBox17
+        // 
+        CursorPictureBox17.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        CursorPictureBox17.Location = new Point(3, 3);
+        CursorPictureBox17.Name = "CursorPictureBox17";
+        CursorPictureBox17.Size = new Size(45, 46);
+        CursorPictureBox17.SizeMode = PictureBoxSizeMode.Zoom;
+        CursorPictureBox17.TabIndex = 11;
+        CursorPictureBox17.TabStop = false;
         // 
         // CursorPanel15
         // 
@@ -172,9 +285,9 @@ sealed partial class MainForm
         CursorPanel15.Controls.Add(CursorSelectButton15);
         CursorPanel15.Controls.Add(CursorNameLabel15);
         CursorPanel15.Controls.Add(CursorPictureBox15);
-        CursorPanel15.Location = new Point(519, 239);
+        CursorPanel15.Location = new Point(509, 239);
         CursorPanel15.Name = "CursorPanel15";
-        CursorPanel15.Size = new Size(254, 56);
+        CursorPanel15.Size = new Size(247, 53);
         CursorPanel15.TabIndex = 9;
         CursorPanel15.DragDrop += CursorPanel15_DragDrop;
         CursorPanel15.DragEnter += CursorPanel15_DragEnter;
@@ -184,7 +297,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton15.Anchor = AnchorStyles.Right;
         CursorSelectButton15.Cursor = Cursors.Hand;
-        CursorSelectButton15.Location = new Point(199, 2);
+        CursorSelectButton15.Location = new Point(192, 0);
         CursorSelectButton15.Name = "CursorSelectButton15";
         CursorSelectButton15.Size = new Size(50, 50);
         CursorSelectButton15.TabIndex = 8;
@@ -197,7 +310,7 @@ sealed partial class MainForm
         CursorNameLabel15.Anchor = AnchorStyles.Right;
         CursorNameLabel15.AutoSize = true;
         CursorNameLabel15.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel15.Location = new Point(61, 18);
+        CursorNameLabel15.Location = new Point(54, 16);
         CursorNameLabel15.Name = "CursorNameLabel15";
         CursorNameLabel15.Size = new Size(90, 19);
         CursorNameLabel15.TabIndex = 8;
@@ -208,7 +321,7 @@ sealed partial class MainForm
         CursorPictureBox15.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox15.Location = new Point(3, 3);
         CursorPictureBox15.Name = "CursorPictureBox15";
-        CursorPictureBox15.Size = new Size(52, 48);
+        CursorPictureBox15.Size = new Size(45, 45);
         CursorPictureBox15.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox15.TabIndex = 8;
         CursorPictureBox15.TabStop = false;
@@ -221,9 +334,9 @@ sealed partial class MainForm
         CursorPanel14.Controls.Add(CursorSelectButton14);
         CursorPanel14.Controls.Add(CursorNameLabel14);
         CursorPanel14.Controls.Add(CursorPictureBox14);
-        CursorPanel14.Location = new Point(261, 239);
+        CursorPanel14.Location = new Point(256, 239);
         CursorPanel14.Name = "CursorPanel14";
-        CursorPanel14.Size = new Size(252, 56);
+        CursorPanel14.Size = new Size(247, 53);
         CursorPanel14.TabIndex = 10;
         CursorPanel14.DragDrop += CursorPanel14_DragDrop;
         CursorPanel14.DragEnter += CursorPanel14_DragEnter;
@@ -233,7 +346,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton14.Anchor = AnchorStyles.Right;
         CursorSelectButton14.Cursor = Cursors.Hand;
-        CursorSelectButton14.Location = new Point(197, 2);
+        CursorSelectButton14.Location = new Point(192, 0);
         CursorSelectButton14.Name = "CursorSelectButton14";
         CursorSelectButton14.Size = new Size(50, 50);
         CursorSelectButton14.TabIndex = 8;
@@ -246,7 +359,7 @@ sealed partial class MainForm
         CursorNameLabel14.Anchor = AnchorStyles.Right;
         CursorNameLabel14.AutoSize = true;
         CursorNameLabel14.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel14.Location = new Point(59, 17);
+        CursorNameLabel14.Location = new Point(54, 15);
         CursorNameLabel14.Name = "CursorNameLabel14";
         CursorNameLabel14.Size = new Size(90, 19);
         CursorNameLabel14.TabIndex = 8;
@@ -257,7 +370,7 @@ sealed partial class MainForm
         CursorPictureBox14.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox14.Location = new Point(3, 3);
         CursorPictureBox14.Name = "CursorPictureBox14";
-        CursorPictureBox14.Size = new Size(50, 48);
+        CursorPictureBox14.Size = new Size(45, 45);
         CursorPictureBox14.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox14.TabIndex = 8;
         CursorPictureBox14.TabStop = false;
@@ -272,7 +385,7 @@ sealed partial class MainForm
         CursorPanel13.Controls.Add(CursorPictureBox13);
         CursorPanel13.Location = new Point(3, 239);
         CursorPanel13.Name = "CursorPanel13";
-        CursorPanel13.Size = new Size(252, 56);
+        CursorPanel13.Size = new Size(247, 53);
         CursorPanel13.TabIndex = 10;
         CursorPanel13.DragDrop += CursorPanel13_DragDrop;
         CursorPanel13.DragEnter += CursorPanel13_DragEnter;
@@ -282,7 +395,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton13.Anchor = AnchorStyles.Right;
         CursorSelectButton13.Cursor = Cursors.Hand;
-        CursorSelectButton13.Location = new Point(197, 2);
+        CursorSelectButton13.Location = new Point(192, 0);
         CursorSelectButton13.Name = "CursorSelectButton13";
         CursorSelectButton13.Size = new Size(50, 50);
         CursorSelectButton13.TabIndex = 8;
@@ -295,7 +408,7 @@ sealed partial class MainForm
         CursorNameLabel13.Anchor = AnchorStyles.Right;
         CursorNameLabel13.AutoSize = true;
         CursorNameLabel13.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel13.Location = new Point(59, 17);
+        CursorNameLabel13.Location = new Point(54, 15);
         CursorNameLabel13.Name = "CursorNameLabel13";
         CursorNameLabel13.Size = new Size(90, 19);
         CursorNameLabel13.TabIndex = 8;
@@ -306,7 +419,7 @@ sealed partial class MainForm
         CursorPictureBox13.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox13.Location = new Point(3, 3);
         CursorPictureBox13.Name = "CursorPictureBox13";
-        CursorPictureBox13.Size = new Size(50, 48);
+        CursorPictureBox13.Size = new Size(45, 45);
         CursorPictureBox13.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox13.TabIndex = 8;
         CursorPictureBox13.TabStop = false;
@@ -319,9 +432,9 @@ sealed partial class MainForm
         CursorPanel12.Controls.Add(CursorSelectButton12);
         CursorPanel12.Controls.Add(CursorNameLabel12);
         CursorPanel12.Controls.Add(CursorPictureBox12);
-        CursorPanel12.Location = new Point(519, 180);
+        CursorPanel12.Location = new Point(509, 180);
         CursorPanel12.Name = "CursorPanel12";
-        CursorPanel12.Size = new Size(254, 53);
+        CursorPanel12.Size = new Size(247, 53);
         CursorPanel12.TabIndex = 10;
         CursorPanel12.DragDrop += CursorPanel12_DragDrop;
         CursorPanel12.DragEnter += CursorPanel12_DragEnter;
@@ -331,7 +444,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton12.Anchor = AnchorStyles.Right;
         CursorSelectButton12.Cursor = Cursors.Hand;
-        CursorSelectButton12.Location = new Point(199, 0);
+        CursorSelectButton12.Location = new Point(192, 0);
         CursorSelectButton12.Name = "CursorSelectButton12";
         CursorSelectButton12.Size = new Size(50, 50);
         CursorSelectButton12.TabIndex = 8;
@@ -344,7 +457,7 @@ sealed partial class MainForm
         CursorNameLabel12.Anchor = AnchorStyles.Right;
         CursorNameLabel12.AutoSize = true;
         CursorNameLabel12.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel12.Location = new Point(61, 15);
+        CursorNameLabel12.Location = new Point(54, 15);
         CursorNameLabel12.Name = "CursorNameLabel12";
         CursorNameLabel12.Size = new Size(90, 19);
         CursorNameLabel12.TabIndex = 8;
@@ -355,7 +468,7 @@ sealed partial class MainForm
         CursorPictureBox12.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox12.Location = new Point(3, 3);
         CursorPictureBox12.Name = "CursorPictureBox12";
-        CursorPictureBox12.Size = new Size(52, 45);
+        CursorPictureBox12.Size = new Size(45, 45);
         CursorPictureBox12.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox12.TabIndex = 8;
         CursorPictureBox12.TabStop = false;
@@ -368,9 +481,9 @@ sealed partial class MainForm
         CursorPanel11.Controls.Add(CursorSelectButton11);
         CursorPanel11.Controls.Add(CursorNameLabel11);
         CursorPanel11.Controls.Add(CursorPictureBox11);
-        CursorPanel11.Location = new Point(261, 180);
+        CursorPanel11.Location = new Point(256, 180);
         CursorPanel11.Name = "CursorPanel11";
-        CursorPanel11.Size = new Size(252, 53);
+        CursorPanel11.Size = new Size(247, 53);
         CursorPanel11.TabIndex = 10;
         CursorPanel11.DragDrop += CursorPanel11_DragDrop;
         CursorPanel11.DragEnter += CursorPanel11_DragEnter;
@@ -380,7 +493,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton11.Anchor = AnchorStyles.Right;
         CursorSelectButton11.Cursor = Cursors.Hand;
-        CursorSelectButton11.Location = new Point(197, 0);
+        CursorSelectButton11.Location = new Point(192, 0);
         CursorSelectButton11.Name = "CursorSelectButton11";
         CursorSelectButton11.Size = new Size(50, 50);
         CursorSelectButton11.TabIndex = 8;
@@ -393,7 +506,7 @@ sealed partial class MainForm
         CursorNameLabel11.Anchor = AnchorStyles.Right;
         CursorNameLabel11.AutoSize = true;
         CursorNameLabel11.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel11.Location = new Point(59, 15);
+        CursorNameLabel11.Location = new Point(54, 15);
         CursorNameLabel11.Name = "CursorNameLabel11";
         CursorNameLabel11.Size = new Size(90, 19);
         CursorNameLabel11.TabIndex = 8;
@@ -404,7 +517,7 @@ sealed partial class MainForm
         CursorPictureBox11.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox11.Location = new Point(3, 3);
         CursorPictureBox11.Name = "CursorPictureBox11";
-        CursorPictureBox11.Size = new Size(50, 45);
+        CursorPictureBox11.Size = new Size(45, 45);
         CursorPictureBox11.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox11.TabIndex = 8;
         CursorPictureBox11.TabStop = false;
@@ -419,7 +532,7 @@ sealed partial class MainForm
         CursorPanel10.Controls.Add(CursorPictureBox10);
         CursorPanel10.Location = new Point(3, 180);
         CursorPanel10.Name = "CursorPanel10";
-        CursorPanel10.Size = new Size(252, 53);
+        CursorPanel10.Size = new Size(247, 53);
         CursorPanel10.TabIndex = 10;
         CursorPanel10.DragDrop += CursorPanel10_DragDrop;
         CursorPanel10.DragEnter += CursorPanel10_DragEnter;
@@ -429,7 +542,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton10.Anchor = AnchorStyles.Right;
         CursorSelectButton10.Cursor = Cursors.Hand;
-        CursorSelectButton10.Location = new Point(197, 0);
+        CursorSelectButton10.Location = new Point(192, 0);
         CursorSelectButton10.Name = "CursorSelectButton10";
         CursorSelectButton10.Size = new Size(50, 50);
         CursorSelectButton10.TabIndex = 8;
@@ -442,7 +555,7 @@ sealed partial class MainForm
         CursorNameLabel10.Anchor = AnchorStyles.Right;
         CursorNameLabel10.AutoSize = true;
         CursorNameLabel10.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel10.Location = new Point(59, 15);
+        CursorNameLabel10.Location = new Point(54, 15);
         CursorNameLabel10.Name = "CursorNameLabel10";
         CursorNameLabel10.Size = new Size(90, 19);
         CursorNameLabel10.TabIndex = 8;
@@ -453,7 +566,7 @@ sealed partial class MainForm
         CursorPictureBox10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox10.Location = new Point(3, 3);
         CursorPictureBox10.Name = "CursorPictureBox10";
-        CursorPictureBox10.Size = new Size(50, 45);
+        CursorPictureBox10.Size = new Size(45, 45);
         CursorPictureBox10.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox10.TabIndex = 8;
         CursorPictureBox10.TabStop = false;
@@ -466,9 +579,9 @@ sealed partial class MainForm
         CursorPanel9.Controls.Add(CursorSelectButton9);
         CursorPanel9.Controls.Add(CursorNameLabel9);
         CursorPanel9.Controls.Add(CursorPictureBox9);
-        CursorPanel9.Location = new Point(519, 121);
+        CursorPanel9.Location = new Point(509, 121);
         CursorPanel9.Name = "CursorPanel9";
-        CursorPanel9.Size = new Size(254, 53);
+        CursorPanel9.Size = new Size(247, 53);
         CursorPanel9.TabIndex = 10;
         CursorPanel9.DragDrop += CursorPanel9_DragDrop;
         CursorPanel9.DragEnter += CursorPanel9_DragEnter;
@@ -478,7 +591,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton9.Anchor = AnchorStyles.Right;
         CursorSelectButton9.Cursor = Cursors.Hand;
-        CursorSelectButton9.Location = new Point(199, 0);
+        CursorSelectButton9.Location = new Point(192, 0);
         CursorSelectButton9.Name = "CursorSelectButton9";
         CursorSelectButton9.Size = new Size(50, 50);
         CursorSelectButton9.TabIndex = 8;
@@ -491,7 +604,7 @@ sealed partial class MainForm
         CursorNameLabel9.Anchor = AnchorStyles.Right;
         CursorNameLabel9.AutoSize = true;
         CursorNameLabel9.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel9.Location = new Point(61, 15);
+        CursorNameLabel9.Location = new Point(54, 15);
         CursorNameLabel9.Name = "CursorNameLabel9";
         CursorNameLabel9.Size = new Size(90, 19);
         CursorNameLabel9.TabIndex = 8;
@@ -502,7 +615,7 @@ sealed partial class MainForm
         CursorPictureBox9.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox9.Location = new Point(3, 3);
         CursorPictureBox9.Name = "CursorPictureBox9";
-        CursorPictureBox9.Size = new Size(52, 45);
+        CursorPictureBox9.Size = new Size(45, 45);
         CursorPictureBox9.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox9.TabIndex = 8;
         CursorPictureBox9.TabStop = false;
@@ -515,9 +628,9 @@ sealed partial class MainForm
         CursorPanel8.Controls.Add(CursorSelectButton8);
         CursorPanel8.Controls.Add(CursorNameLabel8);
         CursorPanel8.Controls.Add(CursorPictureBox8);
-        CursorPanel8.Location = new Point(261, 121);
+        CursorPanel8.Location = new Point(256, 121);
         CursorPanel8.Name = "CursorPanel8";
-        CursorPanel8.Size = new Size(252, 53);
+        CursorPanel8.Size = new Size(247, 53);
         CursorPanel8.TabIndex = 10;
         CursorPanel8.DragDrop += CursorPanel8_DragDrop;
         CursorPanel8.DragEnter += CursorPanel8_DragEnter;
@@ -527,7 +640,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton8.Anchor = AnchorStyles.Right;
         CursorSelectButton8.Cursor = Cursors.Hand;
-        CursorSelectButton8.Location = new Point(197, 0);
+        CursorSelectButton8.Location = new Point(192, 0);
         CursorSelectButton8.Name = "CursorSelectButton8";
         CursorSelectButton8.Size = new Size(50, 50);
         CursorSelectButton8.TabIndex = 8;
@@ -540,7 +653,7 @@ sealed partial class MainForm
         CursorNameLabel8.Anchor = AnchorStyles.Right;
         CursorNameLabel8.AutoSize = true;
         CursorNameLabel8.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel8.Location = new Point(59, 15);
+        CursorNameLabel8.Location = new Point(54, 15);
         CursorNameLabel8.Name = "CursorNameLabel8";
         CursorNameLabel8.Size = new Size(90, 19);
         CursorNameLabel8.TabIndex = 8;
@@ -551,7 +664,7 @@ sealed partial class MainForm
         CursorPictureBox8.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox8.Location = new Point(3, 3);
         CursorPictureBox8.Name = "CursorPictureBox8";
-        CursorPictureBox8.Size = new Size(50, 45);
+        CursorPictureBox8.Size = new Size(45, 45);
         CursorPictureBox8.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox8.TabIndex = 8;
         CursorPictureBox8.TabStop = false;
@@ -566,7 +679,7 @@ sealed partial class MainForm
         CursorPanel7.Controls.Add(CursorPictureBox7);
         CursorPanel7.Location = new Point(3, 121);
         CursorPanel7.Name = "CursorPanel7";
-        CursorPanel7.Size = new Size(252, 53);
+        CursorPanel7.Size = new Size(247, 53);
         CursorPanel7.TabIndex = 10;
         CursorPanel7.DragDrop += CursorPanel7_DragDrop;
         CursorPanel7.DragEnter += CursorPanel7_DragEnter;
@@ -576,7 +689,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton7.Anchor = AnchorStyles.Right;
         CursorSelectButton7.Cursor = Cursors.Hand;
-        CursorSelectButton7.Location = new Point(197, 0);
+        CursorSelectButton7.Location = new Point(192, 0);
         CursorSelectButton7.Name = "CursorSelectButton7";
         CursorSelectButton7.Size = new Size(50, 50);
         CursorSelectButton7.TabIndex = 8;
@@ -589,7 +702,7 @@ sealed partial class MainForm
         CursorNameLabel7.Anchor = AnchorStyles.Right;
         CursorNameLabel7.AutoSize = true;
         CursorNameLabel7.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel7.Location = new Point(59, 15);
+        CursorNameLabel7.Location = new Point(54, 15);
         CursorNameLabel7.Name = "CursorNameLabel7";
         CursorNameLabel7.Size = new Size(90, 19);
         CursorNameLabel7.TabIndex = 8;
@@ -600,7 +713,7 @@ sealed partial class MainForm
         CursorPictureBox7.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox7.Location = new Point(3, 3);
         CursorPictureBox7.Name = "CursorPictureBox7";
-        CursorPictureBox7.Size = new Size(50, 45);
+        CursorPictureBox7.Size = new Size(45, 45);
         CursorPictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox7.TabIndex = 8;
         CursorPictureBox7.TabStop = false;
@@ -613,9 +726,9 @@ sealed partial class MainForm
         CursorPanel6.Controls.Add(CursorSelectButton6);
         CursorPanel6.Controls.Add(CursorNameLabel6);
         CursorPanel6.Controls.Add(CursorPictureBox6);
-        CursorPanel6.Location = new Point(519, 62);
+        CursorPanel6.Location = new Point(509, 62);
         CursorPanel6.Name = "CursorPanel6";
-        CursorPanel6.Size = new Size(254, 53);
+        CursorPanel6.Size = new Size(247, 53);
         CursorPanel6.TabIndex = 10;
         CursorPanel6.DragDrop += CursorPanel6_DragDrop;
         CursorPanel6.DragEnter += CursorPanel6_DragEnter;
@@ -625,7 +738,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton6.Anchor = AnchorStyles.Right;
         CursorSelectButton6.Cursor = Cursors.Hand;
-        CursorSelectButton6.Location = new Point(199, 0);
+        CursorSelectButton6.Location = new Point(192, 0);
         CursorSelectButton6.Name = "CursorSelectButton6";
         CursorSelectButton6.Size = new Size(50, 50);
         CursorSelectButton6.TabIndex = 8;
@@ -638,7 +751,7 @@ sealed partial class MainForm
         CursorNameLabel6.Anchor = AnchorStyles.Right;
         CursorNameLabel6.AutoSize = true;
         CursorNameLabel6.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel6.Location = new Point(61, 15);
+        CursorNameLabel6.Location = new Point(54, 15);
         CursorNameLabel6.Name = "CursorNameLabel6";
         CursorNameLabel6.Size = new Size(90, 19);
         CursorNameLabel6.TabIndex = 8;
@@ -649,7 +762,7 @@ sealed partial class MainForm
         CursorPictureBox6.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox6.Location = new Point(3, 3);
         CursorPictureBox6.Name = "CursorPictureBox6";
-        CursorPictureBox6.Size = new Size(52, 45);
+        CursorPictureBox6.Size = new Size(45, 45);
         CursorPictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox6.TabIndex = 8;
         CursorPictureBox6.TabStop = false;
@@ -662,9 +775,9 @@ sealed partial class MainForm
         CursorPanel5.Controls.Add(CursorSelectButton5);
         CursorPanel5.Controls.Add(CursorNameLabel5);
         CursorPanel5.Controls.Add(CursorPictureBox5);
-        CursorPanel5.Location = new Point(261, 62);
+        CursorPanel5.Location = new Point(256, 62);
         CursorPanel5.Name = "CursorPanel5";
-        CursorPanel5.Size = new Size(252, 53);
+        CursorPanel5.Size = new Size(247, 53);
         CursorPanel5.TabIndex = 10;
         CursorPanel5.DragDrop += CursorPanel5_DragDrop;
         CursorPanel5.DragEnter += CursorPanel5_DragEnter;
@@ -674,7 +787,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton5.Anchor = AnchorStyles.Right;
         CursorSelectButton5.Cursor = Cursors.Hand;
-        CursorSelectButton5.Location = new Point(197, 0);
+        CursorSelectButton5.Location = new Point(192, 0);
         CursorSelectButton5.Name = "CursorSelectButton5";
         CursorSelectButton5.Size = new Size(50, 50);
         CursorSelectButton5.TabIndex = 8;
@@ -687,7 +800,7 @@ sealed partial class MainForm
         CursorNameLabel5.Anchor = AnchorStyles.Right;
         CursorNameLabel5.AutoSize = true;
         CursorNameLabel5.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel5.Location = new Point(59, 15);
+        CursorNameLabel5.Location = new Point(54, 15);
         CursorNameLabel5.Name = "CursorNameLabel5";
         CursorNameLabel5.Size = new Size(90, 19);
         CursorNameLabel5.TabIndex = 8;
@@ -698,7 +811,7 @@ sealed partial class MainForm
         CursorPictureBox5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox5.Location = new Point(3, 3);
         CursorPictureBox5.Name = "CursorPictureBox5";
-        CursorPictureBox5.Size = new Size(50, 45);
+        CursorPictureBox5.Size = new Size(45, 45);
         CursorPictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox5.TabIndex = 8;
         CursorPictureBox5.TabStop = false;
@@ -713,7 +826,7 @@ sealed partial class MainForm
         CursorPanel4.Controls.Add(CursorPictureBox4);
         CursorPanel4.Location = new Point(3, 62);
         CursorPanel4.Name = "CursorPanel4";
-        CursorPanel4.Size = new Size(252, 53);
+        CursorPanel4.Size = new Size(247, 53);
         CursorPanel4.TabIndex = 10;
         CursorPanel4.DragDrop += CursorPanel4_DragDrop;
         CursorPanel4.DragEnter += CursorPanel4_DragEnter;
@@ -723,7 +836,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton4.Anchor = AnchorStyles.Right;
         CursorSelectButton4.Cursor = Cursors.Hand;
-        CursorSelectButton4.Location = new Point(197, 0);
+        CursorSelectButton4.Location = new Point(192, 0);
         CursorSelectButton4.Name = "CursorSelectButton4";
         CursorSelectButton4.Size = new Size(50, 50);
         CursorSelectButton4.TabIndex = 8;
@@ -736,7 +849,7 @@ sealed partial class MainForm
         CursorNameLabel4.Anchor = AnchorStyles.Right;
         CursorNameLabel4.AutoSize = true;
         CursorNameLabel4.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel4.Location = new Point(59, 15);
+        CursorNameLabel4.Location = new Point(54, 15);
         CursorNameLabel4.Name = "CursorNameLabel4";
         CursorNameLabel4.Size = new Size(90, 19);
         CursorNameLabel4.TabIndex = 8;
@@ -747,7 +860,7 @@ sealed partial class MainForm
         CursorPictureBox4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox4.Location = new Point(3, 3);
         CursorPictureBox4.Name = "CursorPictureBox4";
-        CursorPictureBox4.Size = new Size(50, 45);
+        CursorPictureBox4.Size = new Size(45, 45);
         CursorPictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox4.TabIndex = 8;
         CursorPictureBox4.TabStop = false;
@@ -760,9 +873,9 @@ sealed partial class MainForm
         CursorPanel3.Controls.Add(CursorSelectButton3);
         CursorPanel3.Controls.Add(CursorNameLabel3);
         CursorPanel3.Controls.Add(CursorPictureBox3);
-        CursorPanel3.Location = new Point(519, 3);
+        CursorPanel3.Location = new Point(509, 3);
         CursorPanel3.Name = "CursorPanel3";
-        CursorPanel3.Size = new Size(254, 53);
+        CursorPanel3.Size = new Size(247, 53);
         CursorPanel3.TabIndex = 10;
         CursorPanel3.DragDrop += CursorPanel3_DragDrop;
         CursorPanel3.DragEnter += CursorPanel3_DragEnter;
@@ -772,7 +885,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton3.Anchor = AnchorStyles.Right;
         CursorSelectButton3.Cursor = Cursors.Hand;
-        CursorSelectButton3.Location = new Point(199, 0);
+        CursorSelectButton3.Location = new Point(192, 0);
         CursorSelectButton3.Name = "CursorSelectButton3";
         CursorSelectButton3.Size = new Size(50, 50);
         CursorSelectButton3.TabIndex = 8;
@@ -785,7 +898,7 @@ sealed partial class MainForm
         CursorNameLabel3.Anchor = AnchorStyles.Right;
         CursorNameLabel3.AutoSize = true;
         CursorNameLabel3.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel3.Location = new Point(61, 15);
+        CursorNameLabel3.Location = new Point(54, 15);
         CursorNameLabel3.Name = "CursorNameLabel3";
         CursorNameLabel3.Size = new Size(90, 19);
         CursorNameLabel3.TabIndex = 8;
@@ -796,7 +909,7 @@ sealed partial class MainForm
         CursorPictureBox3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox3.Location = new Point(3, 3);
         CursorPictureBox3.Name = "CursorPictureBox3";
-        CursorPictureBox3.Size = new Size(52, 45);
+        CursorPictureBox3.Size = new Size(45, 45);
         CursorPictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox3.TabIndex = 8;
         CursorPictureBox3.TabStop = false;
@@ -811,7 +924,7 @@ sealed partial class MainForm
         CursorPanel1.Controls.Add(CursorPictureBox1);
         CursorPanel1.Location = new Point(3, 3);
         CursorPanel1.Name = "CursorPanel1";
-        CursorPanel1.Size = new Size(252, 53);
+        CursorPanel1.Size = new Size(247, 53);
         CursorPanel1.TabIndex = 10;
         CursorPanel1.DragDrop += CursorPanel1_DragDrop;
         CursorPanel1.DragEnter += CursorPanel1_DragEnter;
@@ -821,7 +934,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton1.Anchor = AnchorStyles.Right;
         CursorSelectButton1.Cursor = Cursors.Hand;
-        CursorSelectButton1.Location = new Point(197, 0);
+        CursorSelectButton1.Location = new Point(192, 0);
         CursorSelectButton1.Name = "CursorSelectButton1";
         CursorSelectButton1.Size = new Size(50, 50);
         CursorSelectButton1.TabIndex = 8;
@@ -834,7 +947,7 @@ sealed partial class MainForm
         CursorNameLabel1.Anchor = AnchorStyles.Right;
         CursorNameLabel1.AutoSize = true;
         CursorNameLabel1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel1.Location = new Point(59, 15);
+        CursorNameLabel1.Location = new Point(54, 15);
         CursorNameLabel1.Name = "CursorNameLabel1";
         CursorNameLabel1.Size = new Size(90, 19);
         CursorNameLabel1.TabIndex = 8;
@@ -845,7 +958,7 @@ sealed partial class MainForm
         CursorPictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox1.Location = new Point(3, 3);
         CursorPictureBox1.Name = "CursorPictureBox1";
-        CursorPictureBox1.Size = new Size(50, 45);
+        CursorPictureBox1.Size = new Size(45, 45);
         CursorPictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox1.TabIndex = 8;
         CursorPictureBox1.TabStop = false;
@@ -858,9 +971,9 @@ sealed partial class MainForm
         CursorPanel2.Controls.Add(CursorSelectButton2);
         CursorPanel2.Controls.Add(CursorNameLabel2);
         CursorPanel2.Controls.Add(CursorPictureBox2);
-        CursorPanel2.Location = new Point(261, 3);
+        CursorPanel2.Location = new Point(256, 3);
         CursorPanel2.Name = "CursorPanel2";
-        CursorPanel2.Size = new Size(252, 53);
+        CursorPanel2.Size = new Size(247, 53);
         CursorPanel2.TabIndex = 10;
         CursorPanel2.DragDrop += CursorPanel2_DragDrop;
         CursorPanel2.DragEnter += CursorPanel2_DragEnter;
@@ -870,7 +983,7 @@ sealed partial class MainForm
         // 
         CursorSelectButton2.Anchor = AnchorStyles.Right;
         CursorSelectButton2.Cursor = Cursors.Hand;
-        CursorSelectButton2.Location = new Point(197, 0);
+        CursorSelectButton2.Location = new Point(192, 0);
         CursorSelectButton2.Name = "CursorSelectButton2";
         CursorSelectButton2.Size = new Size(50, 50);
         CursorSelectButton2.TabIndex = 8;
@@ -883,7 +996,7 @@ sealed partial class MainForm
         CursorNameLabel2.Anchor = AnchorStyles.Right;
         CursorNameLabel2.AutoSize = true;
         CursorNameLabel2.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel2.Location = new Point(59, 15);
+        CursorNameLabel2.Location = new Point(54, 15);
         CursorNameLabel2.Name = "CursorNameLabel2";
         CursorNameLabel2.Size = new Size(90, 19);
         CursorNameLabel2.TabIndex = 8;
@@ -894,7 +1007,7 @@ sealed partial class MainForm
         CursorPictureBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPictureBox2.Location = new Point(3, 3);
         CursorPictureBox2.Name = "CursorPictureBox2";
-        CursorPictureBox2.Size = new Size(50, 45);
+        CursorPictureBox2.Size = new Size(45, 45);
         CursorPictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
         CursorPictureBox2.TabIndex = 8;
         CursorPictureBox2.TabStop = false;
@@ -904,7 +1017,7 @@ sealed partial class MainForm
         PackageNameTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         PackageNameTextBox.Location = new Point(104, 20);
         PackageNameTextBox.Name = "PackageNameTextBox";
-        PackageNameTextBox.Size = new Size(327, 23);
+        PackageNameTextBox.Size = new Size(310, 23);
         PackageNameTextBox.TabIndex = 1;
         PackageNameTextBox.Text = "Cursor-Installer";
         PackageNameTextBox.TextChanged += PackageNameTextBox_TextChanged;
@@ -923,7 +1036,7 @@ sealed partial class MainForm
         CancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
         CancelButton.Cursor = Cursors.Hand;
         CancelButton.DialogResult = DialogResult.Cancel;
-        CancelButton.Location = new Point(681, 398);
+        CancelButton.Location = new Point(664, 454);
         CancelButton.Name = "CancelButton";
         CancelButton.Size = new Size(107, 40);
         CancelButton.TabIndex = 3;
@@ -936,7 +1049,7 @@ sealed partial class MainForm
         OkButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
         OkButton.Cursor = Cursors.Hand;
         OkButton.DialogResult = DialogResult.OK;
-        OkButton.Location = new Point(558, 398);
+        OkButton.Location = new Point(541, 454);
         OkButton.Name = "OkButton";
         OkButton.Size = new Size(117, 40);
         OkButton.TabIndex = 4;
@@ -949,7 +1062,7 @@ sealed partial class MainForm
         PackageNameEmptyLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         PackageNameEmptyLabel.AutoSize = true;
         PackageNameEmptyLabel.ForeColor = Color.Red;
-        PackageNameEmptyLabel.Location = new Point(437, 23);
+        PackageNameEmptyLabel.Location = new Point(420, 23);
         PackageNameEmptyLabel.Name = "PackageNameEmptyLabel";
         PackageNameEmptyLabel.Size = new Size(184, 15);
         PackageNameEmptyLabel.TabIndex = 5;
@@ -963,7 +1076,7 @@ sealed partial class MainForm
         ZipCheckBox.Checked = true;
         ZipCheckBox.CheckState = CheckState.Checked;
         ZipCheckBox.Cursor = Cursors.Hand;
-        ZipCheckBox.Location = new Point(472, 410);
+        ZipCheckBox.Location = new Point(455, 466);
         ZipCheckBox.Name = "ZipCheckBox";
         ZipCheckBox.Size = new Size(80, 19);
         ZipCheckBox.TabIndex = 6;
@@ -975,7 +1088,7 @@ sealed partial class MainForm
         InstallButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
         InstallButton.Cursor = Cursors.Hand;
         InstallButton.DialogResult = DialogResult.OK;
-        InstallButton.Location = new Point(12, 398);
+        InstallButton.Location = new Point(12, 454);
         InstallButton.Name = "InstallButton";
         InstallButton.Size = new Size(107, 40);
         InstallButton.TabIndex = 7;
@@ -988,7 +1101,7 @@ sealed partial class MainForm
         // 
         AdminLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
         AdminLabel.AutoSize = true;
-        AdminLabel.Location = new Point(125, 411);
+        AdminLabel.Location = new Point(125, 467);
         AdminLabel.Name = "AdminLabel";
         AdminLabel.Size = new Size(91, 15);
         AdminLabel.TabIndex = 8;
@@ -999,7 +1112,7 @@ sealed partial class MainForm
         // 
         DragDropLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
         DragDropLabel.AutoSize = true;
-        DragDropLabel.Location = new Point(654, 76);
+        DragDropLabel.Location = new Point(637, 76);
         DragDropLabel.Name = "DragDropLabel";
         DragDropLabel.Size = new Size(134, 15);
         DragDropLabel.TabIndex = 9;
@@ -1009,7 +1122,7 @@ sealed partial class MainForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(800, 450);
+        ClientSize = new Size(783, 506);
         Controls.Add(DragDropLabel);
         Controls.Add(AdminLabel);
         Controls.Add(InstallButton);
@@ -1025,6 +1138,12 @@ sealed partial class MainForm
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Cursor Installer Creator";
         CursorsTableLayoutPanel.ResumeLayout(false);
+        CursorPanel16.ResumeLayout(false);
+        CursorPanel16.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)CursorPictureBox16).EndInit();
+        CursorPanel17.ResumeLayout(false);
+        CursorPanel17.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)CursorPictureBox17).EndInit();
         CursorPanel15.ResumeLayout(false);
         CursorPanel15.PerformLayout();
         ((System.ComponentModel.ISupportInitialize)CursorPictureBox15).EndInit();
@@ -1146,4 +1265,12 @@ sealed partial class MainForm
     private Button InstallButton;
     private Label AdminLabel;
     private Label DragDropLabel;
+    private Panel CursorPanel16;
+    private Label CursorNameLabel16;
+    private Button CursorSelectButton16;
+    private PictureBox CursorPictureBox16;
+    private Panel CursorPanel17;
+    private Label CursorNameLabel17;
+    private Button CursorSelectButton17;
+    private PictureBox CursorPictureBox17;
 }

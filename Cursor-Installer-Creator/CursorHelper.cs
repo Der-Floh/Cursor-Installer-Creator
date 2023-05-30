@@ -17,28 +17,67 @@ public sealed class CursorHelper
                 foreach (string valueName in valueNames)
                 {
                     string? cursorPath = key.GetValue(valueName)?.ToString();
-                    if (!string.IsNullOrEmpty(cursorPath))
+                    if (string.IsNullOrEmpty(cursorPath) || !File.Exists(cursorPath))
+                        cursorPath = "C:/Windows/Cursors/" + GetDefaultCursorName(valueName);
+
+                    if (File.Exists(cursorPath) && ConvertCursorFile(cursorPath, valueName))
                     {
-                        if (File.Exists(cursorPath))
+                        CCursor cursor = new CCursor()
                         {
-                            if (ConvertCursorFile(cursorPath, valueName))
-                            {
-                                CCursor cursor = new CCursor()
-                                {
-                                    Name = valueName,
-                                    CursorName = Path.GetFileName(cursorPath),
-                                    CursorPath = cursorPath,
-                                    ImagePath = Path.Combine(Program.TempPath, $"{valueName}.png")
-                                };
-                                cursors.Add(cursor);
-                            }
-                        }
+                            Name = valueName,
+                            CursorName = Path.GetFileName(cursorPath),
+                            CursorPath = cursorPath,
+                            ImagePath = Path.Combine(Program.TempPath, $"{valueName}.png")
+                        };
+                        cursors.Add(cursor);
                     }
                 }
             }
         }
 
         return cursors;
+    }
+
+    private static string GetDefaultCursorName(string name)
+    {
+        switch (name)
+        {
+            case "AppStarting":
+                return "wait_m.cur";
+            case "Arrow":
+                return "arrow_m.cur";
+            case "Crosshair":
+                return "cross_im.cur";
+            case "Hand":
+                return "aero_link_im.cur";
+            case "Help":
+                return "help_m.cur";
+            case "IBeam":
+                return "beam_im.cur";
+            case "No":
+                return "no_m.cur";
+            case "NWPen":
+                return "pen_m.cur";
+            case "SizeAll":
+                return "move_m.cur";
+            case "SizeNESW":
+                return "lnesw.cur";
+            case "SizeNS":
+                return "lns.cur";
+            case "SizeNWSE":
+                return "lnwse.cur";
+            case "SizeWE":
+                return "lwe.cur";
+            case "UpArrow":
+                return "up_m.cur";
+            case "Wait":
+                return "busy_m.cur";
+            case "Person":
+                return "person_m.cur";
+            case "Pin":
+                return "pin_m.cur";
+        }
+        return "";
     }
 
     public static bool ConvertCursorFile(string cursorPath, string cursorName, bool copyOrgiginal = false)
@@ -102,7 +141,7 @@ public sealed class CursorHelper
             writer.WriteLine("Scheme.Txt = 10,\"%CUR_DIR%\"");
             writer.WriteLine();
             writer.WriteLine("[Scheme.Reg]");
-            writer.WriteLine(@"HKCU,""Control Panel\Cursors\Schemes"",""%SCHEME_NAME%"",,""%10%\%CUR_DIR%\%pointer%,%10%\%CUR_DIR%\%help%,%10%\%CUR_DIR%\%work%,%10%\%CUR_DIR%\%busy%,%10%\%CUR_DIR%\%Cross%,%10%\%CUR_DIR%\%Text%,%10%\%CUR_DIR%\%Hand%,%10%\%CUR_DIR%\%Unavailiable%,%10%\%CUR_DIR%\%Vert%,%10%\%CUR_DIR%\%Horz%,%10%\%CUR_DIR%\%Dgn1%,%10%\%CUR_DIR%\%Dgn2%,%10%\%CUR_DIR%\%move%,%10%\%CUR_DIR%\%alternate%,%10%\%CUR_DIR%\%link%""");
+            writer.WriteLine(@"HKCU,""Control Panel\Cursors\Schemes"",""%SCHEME_NAME%"",,""%10%\%CUR_DIR%\%pointer%,%10%\%CUR_DIR%\%help%,%10%\%CUR_DIR%\%work%,%10%\%CUR_DIR%\%busy%,%10%\%CUR_DIR%\%Cross%,%10%\%CUR_DIR%\%Text%,%10%\%CUR_DIR%\%Hand%,%10%\%CUR_DIR%\%Unavailiable%,%10%\%CUR_DIR%\%Vert%,%10%\%CUR_DIR%\%Horz%,%10%\%CUR_DIR%\%Dgn1%,%10%\%CUR_DIR%\%Dgn2%,%10%\%CUR_DIR%\%move%,%10%\%CUR_DIR%\%alternate%,%10%\%CUR_DIR%\%link%,%10%\%CUR_DIR%\%pin%,%10%\%CUR_DIR%\%person%""");
             writer.WriteLine();
 
             writer.WriteLine("[Scheme.Cur]");
@@ -175,6 +214,8 @@ public sealed class CursorHelper
         result.Add("move = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "sizeall")?.CursorName + "\"");
         result.Add("alternate = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "uparrow")?.CursorName + "\"");
         result.Add("link = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "hand")?.CursorName + "\"");
+        result.Add("pin = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "pin")?.CursorName + "\"");
+        result.Add("person = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "person")?.CursorName + "\"");
 
         return result;
     }
