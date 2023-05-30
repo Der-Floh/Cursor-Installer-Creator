@@ -34,6 +34,8 @@ public sealed partial class MainForm : Form
         BoxCursorAssignment.Add(CursorPictureBox13.Name, "SizeAll");
         BoxCursorAssignment.Add(CursorPictureBox14.Name, "UpArrow");
         BoxCursorAssignment.Add(CursorPictureBox15.Name, "Hand");
+        BoxCursorAssignment.Add(CursorPictureBox16.Name, "Pin");
+        BoxCursorAssignment.Add(CursorPictureBox17.Name, "Person");
     }
 
     private void FillCursors(List<CCursor>? cCursors = null)
@@ -54,6 +56,8 @@ public sealed partial class MainForm : Form
 
             if (pictureBox is null || label is null)
                 continue;
+
+            label.Text = cursorName;
 
             CCursor? cursor = CCursors.FirstOrDefault(c => c.Name?.ToLower() == cursorName.ToLower());
             if (cursor is null || !File.Exists(cursor.ImagePath))
@@ -504,6 +508,40 @@ public sealed partial class MainForm : Form
     private void CursorSelectButton15_Click(object sender, EventArgs e)
     {
         HandleFilePick(CursorPictureBox15.Name);
+    }
+
+    private void CursorPanel16_DragEnter(object sender, DragEventArgs e)
+    {
+        HandleDragEffects(e);
+    }
+    private void CursorPanel16_DragOver(object sender, DragEventArgs e)
+    {
+        HandleDragEffects(e);
+    }
+    private void CursorPanel16_DragDrop(object sender, DragEventArgs e)
+    {
+        HandleDragDrop(e, CursorPictureBox16.Name);
+    }
+    private void CursorSelectButton16_Click(object sender, EventArgs e)
+    {
+        HandleFilePick(CursorPictureBox16.Name);
+    }
+
+    private void CursorPanel17_DragEnter(object sender, DragEventArgs e)
+    {
+        HandleDragEffects(e);
+    }
+    private void CursorPanel17_DragOver(object sender, DragEventArgs e)
+    {
+        HandleDragEffects(e);
+    }
+    private void CursorPanel17_DragDrop(object sender, DragEventArgs e)
+    {
+        HandleDragDrop(e, CursorPictureBox17.Name);
+    }
+    private void CursorSelectButton17_Click(object sender, EventArgs e)
+    {
+        HandleFilePick(CursorPictureBox17.Name);
     }
 
     #endregion
