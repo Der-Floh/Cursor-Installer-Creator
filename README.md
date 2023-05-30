@@ -25,4 +25,6 @@ Pick or Drag & Drop cursor files in their corresponding slot. Give the cursor pa
 
 ### If you found an error or want to submit an idea feel free to create an [Issue](https://github.com/Der-Floh/Cursor-Installer-Creator/issues/new) or view all [Issues](https://github.com/Der-Floh/Cursor-Installer-Creator/issues)
 
+&nbsp;
+
 [!["Buy me a Floppy Disk"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/der_floh)
