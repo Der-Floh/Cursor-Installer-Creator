@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.Diagnostics;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
 
@@ -220,11 +221,37 @@ public sealed class CursorHelper
         return result;
     }
 
-    [DllImport("Setupapi.dll", EntryPoint = "InstallHinfSection", CallingConvention = CallingConvention.StdCall)]
-    public static extern void InstallHinfSection([In] IntPtr hwnd, [In] IntPtr ModuleHandle, [In, MarshalAs(UnmanagedType.LPWStr)] string CmdLineBuffer, int nCmdShow);
-
     public static void InstallCursor(string installerFilePath)
     {
-        InstallHinfSection(IntPtr.Zero, IntPtr.Zero, installerFilePath, 0);
+        string command = @"C:\WINDOWS\System32\rundll32.exe";
+        string arguments = "setupapi,InstallHinfSection DefaultInstall 132 " + installerFilePath;
+
+        ProcessStartInfo startInfo = new ProcessStartInfo
+        {
+            FileName = "cmd.exe",
+            Arguments = $"/k \"{command} {arguments}\"",
+            Verb = "runas",
+            UseShellExecute = true,
+            CreateNoWindow = true,
+            WindowStyle = ProcessWindowStyle.Hidden
+        };
+
+        Process process = new Process
+        {
+            StartInfo = startInfo
+        };
+
+        try
+        {
+            process.Start();
+            process.WaitForExit();
+        }
+        catch (System.ComponentModel.Win32Exception ex)
+        {
+            if (ex.NativeErrorCode != 1223)
+            {
+                MessageBox.Show(ex.Message, "Error " + ex.ErrorCode, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
