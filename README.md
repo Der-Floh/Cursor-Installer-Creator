@@ -18,10 +18,10 @@ Pick or Drag & Drop cursor files in their corresponding slot. Give the cursor pa
 - Pick .cur and .ani cursor files
 - Drag and Drop .cur and .ani files
 - Create Installer-Package as Folder or .zip archive
+- Directly insall a new cursor from the program
 
 ## Planned Features
 
-- Directly insall a new cursor from the program
 - Reset individual cursors to default
 
 &nbsp;
