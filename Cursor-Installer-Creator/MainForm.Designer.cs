@@ -28,6 +28,7 @@ sealed partial class MainForm
     /// </summary>
     private void InitializeComponent()
     {
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
         CursorsTableLayoutPanel = new TableLayoutPanel();
         CursorPanel16 = new Panel();
         CursorNameLabel16 = new Label();
@@ -1094,7 +1095,6 @@ sealed partial class MainForm
         InstallButton.TabIndex = 7;
         InstallButton.Text = "Install Cursor";
         InstallButton.UseVisualStyleBackColor = true;
-        InstallButton.Visible = false;
         InstallButton.Click += InstallButton_Click;
         // 
         // AdminLabel
@@ -1117,11 +1117,14 @@ sealed partial class MainForm
         DragDropLabel.Size = new Size(134, 15);
         DragDropLabel.TabIndex = 9;
         DragDropLabel.Text = "Supports Drag and Drop";
+        DragDropLabel.TextAlign = ContentAlignment.MiddleRight;
         // 
         // MainForm
         // 
+        AcceptButton = OkButton;
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        CancelButton = CancelButton;
         ClientSize = new Size(783, 506);
         Controls.Add(DragDropLabel);
         Controls.Add(AdminLabel);
@@ -1133,6 +1136,7 @@ sealed partial class MainForm
         Controls.Add(PackageNameLabel);
         Controls.Add(PackageNameTextBox);
         Controls.Add(CursorsTableLayoutPanel);
+        Icon = (Icon)resources.GetObject("$this.Icon");
         MinimumSize = new Size(720, 400);
         Name = "MainForm";
         StartPosition = FormStartPosition.CenterScreen;

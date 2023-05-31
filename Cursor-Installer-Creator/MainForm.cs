@@ -12,7 +12,7 @@ public sealed partial class MainForm : Form
     public MainForm(List<CCursor>? cCursors = null)
     {
         InitializeComponent();
-        //AdminLabel.Visible = !IsRunningWithAdminPrivileges();
+        AdminLabel.Visible = !IsRunningWithAdminPrivileges();
         SetUpBoxCursorAssignment();
         FillCursors(cCursors);
     }
@@ -191,7 +191,7 @@ public sealed partial class MainForm : Form
     {
         if (IsRunningWithAdminPrivileges())
             return;
-        else if (MessageBox.Show("Installing a cursor requires Admin privileges. Restart program as Admin?", "Missing privileges", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.No)
+        else if (MessageBox.Show("Installing a cursor requires Admin privileges.\n\nWhen running as Admin Drag & Drop only accepts files from other programs that run as Admin.\n\nRestart program as Admin?", "Missing privileges", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.No)
             return;
 
         string json = JsonSerializer.Serialize(CCursors);
@@ -246,10 +246,6 @@ public sealed partial class MainForm : Form
 
     private void InstallButton_Click(object sender, EventArgs e)
     {
-        RestartWithAdminPrivileges();
-        if (!IsRunningWithAdminPrivileges())
-            return;
-
         CursorHelper.CreateInstaller(PackageNameTextBox.Text, Program.TempPath, CCursors, false);
         string installerPath = Path.Combine(Program.TempPath, PackageNameTextBox.Text, "installer.inf");
         CursorHelper.InstallCursor(installerPath);
