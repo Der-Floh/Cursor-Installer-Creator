@@ -17,10 +17,10 @@ Wähle die Cursordateien aus oder ziehe sie per Drag & Drop an den entsprechende
 - Auswählen von .cur- und .ani-Cursordateien
 - Ziehen und Ablegen von .cur- und .ani-Cursordateien per Drag & Drop
 - Installer-Paket als Ordner oder .zip-Archiv erstellen
+- Direktes Installieren eines neuen Cursors aus dem Programm
 
 ## Geplante Funktionen
 
-- Direktes INstallieren eines neuen Cursors aus dem Programm
 - Zurücksetzen einzelner Cursor zum standard Cursor
 
 &nbsp;
