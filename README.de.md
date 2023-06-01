@@ -4,7 +4,7 @@
 
 Ein Programm zum einfachen und schnellen Erstellen von Cursor-Installer Dateien.
 
-![Cursor-Installer-Creator-Preview](https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/dd64aade-8082-419c-bc53-fe6ffad09ac4)
+![Cursor-Installer-Creator-Preview](https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/255d7ab7-1ad2-46c6-bbf8-82ef06caff21)
 
 Die Aktuelle Version kann unter [Releases](https://github.com/Der-Floh/Cursor-Installer-Creator/releases) gefunden werden
 
