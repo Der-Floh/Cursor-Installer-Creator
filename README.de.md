@@ -20,6 +20,7 @@ Wähle die Cursordateien aus oder ziehe sie per Drag & Drop an den entsprechende
 - Direktes Installieren eines neuen Cursors aus dem Programm
 - Zurücksetzen einzelner Cursor zum standard Cursor
 - Importieren einer Cursor-Installer (.inf) Datei
+- Cursor Vorschau
 
 &nbsp;
 
