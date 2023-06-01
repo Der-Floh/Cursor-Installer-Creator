@@ -113,26 +113,6 @@ namespace Cursor_Installer_Creator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] magnifier {
-            get {
-                object obj = ResourceManager.GetObject("magnifier", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap magnifier_png {
-            get {
-                object obj = ResourceManager.GetObject("magnifier_png", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] package {
             get {
                 object obj = ResourceManager.GetObject("package", resourceCulture);
