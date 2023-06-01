@@ -39,6 +39,31 @@ public sealed class CursorHelper
         return cursors;
     }
 
+    public static string? GetSelectedCursorPath(string name)
+    {
+        using (RegistryKey? key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Cursors"))
+        {
+            if (key is not null)
+            {
+                string[] valueNames = key.GetValueNames();
+                if (valueNames is not null && valueNames.Length != 0)
+                {
+                    string? valueName = valueNames.FirstOrDefault(x => x == name);
+                    if (string.IsNullOrEmpty(valueName))
+                        return null;
+
+                    string? cursorPath = key.GetValue(valueName)?.ToString();
+                    if (string.IsNullOrEmpty(cursorPath) || !File.Exists(cursorPath))
+                        cursorPath = "C:/Windows/Cursors/" + GetDefaultCursorName(valueName);
+
+                    return cursorPath;
+                }
+            }
+        }
+
+        return null;
+    }
+
     private static string GetDefaultCursorName(string name)
     {
         switch (name)
@@ -200,23 +225,41 @@ public sealed class CursorHelper
     {
         List<string> result = new List<string>();
 
-        result.Add("pointer = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "arrow")?.CursorName + "\"");
-        result.Add("help = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "help")?.CursorName + "\"");
-        result.Add("work = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "appstarting")?.CursorName + "\"");
-        result.Add("busy = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "wait")?.CursorName + "\"");
-        result.Add("cross = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "crosshair")?.CursorName + "\"");
-        result.Add("text = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "ibeam")?.CursorName + "\"");
-        result.Add("hand = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "nwpen")?.CursorName + "\"");
-        result.Add("unavailiable = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "no")?.CursorName + "\"");
-        result.Add("vert = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "sizens")?.CursorName + "\"");
-        result.Add("horz = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "sizewe")?.CursorName + "\"");
-        result.Add("dgn1 = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "sizenwse")?.CursorName + "\"");
-        result.Add("dgn2 = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "sizenesw")?.CursorName + "\"");
-        result.Add("move = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "sizeall")?.CursorName + "\"");
-        result.Add("alternate = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "uparrow")?.CursorName + "\"");
-        result.Add("link = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "hand")?.CursorName + "\"");
-        result.Add("pin = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "pin")?.CursorName + "\"");
-        result.Add("person = \"" + ccursors.FirstOrDefault(c => c.Name?.ToLower() == "person")?.CursorName + "\"");
+        foreach (CCursor cursor in ccursors)
+        {
+            result.Add($"{TransformCursorName(cursor.Name)} = \"{cursor.CursorName}\"");
+        }
+
+        return result;
+    }
+
+    public static string? TransformCursorName(string name)
+    {
+        Dictionary<string, string> windowsStandardDict = new Dictionary<string, string>
+        {
+            { "pointer", "Arrow" },
+            { "help", "Help" },
+            { "work", "AppStarting" },
+            { "busy", "Wait" },
+            { "cross", "Crosshair" },
+            { "text", "IBeam" },
+            { "hand", "NWPen" },
+            { "unavailiable", "No" },
+            { "vert", "SizeNS" },
+            { "horz", "SizeWE" },
+            { "dgn1", "SizeNWSE" },
+            { "dgn2", "SizeNESW" },
+            { "move", "SizeAll" },
+            { "alternate", "UpArrow" },
+            { "link", "Hand" },
+            { "pin", "Pin" },
+            { "person", "Person" },
+        };
+        Dictionary<string, string> standardWindowsDict = windowsStandardDict.ToDictionary(x => x.Value, x => x.Key);
+
+        windowsStandardDict.TryGetValue(name, out string? result);
+        if (result is null)
+            standardWindowsDict.TryGetValue(name, out result);
 
         return result;
     }

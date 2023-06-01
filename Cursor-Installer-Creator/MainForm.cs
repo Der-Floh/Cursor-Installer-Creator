@@ -7,6 +7,7 @@ namespace Cursor_Installer_Creator;
 public sealed partial class MainForm : Form
 {
     private Dictionary<string, string> BoxCursorAssignment { get; set; } = new Dictionary<string, string>();
+    private Dictionary<string, string> CursorBoxAssignment { get; set; }
     private List<CCursor>? CCursors { get; set; }
 
     public MainForm(List<CCursor>? cCursors = null)
@@ -36,6 +37,7 @@ public sealed partial class MainForm : Form
         BoxCursorAssignment.Add(CursorPictureBox15.Name, "Hand");
         BoxCursorAssignment.Add(CursorPictureBox16.Name, "Pin");
         BoxCursorAssignment.Add(CursorPictureBox17.Name, "Person");
+        CursorBoxAssignment = BoxCursorAssignment.ToDictionary(x => x.Value, x => x.Key);
     }
 
     private void FillCursors(List<CCursor>? cCursors = null)
@@ -57,6 +59,7 @@ public sealed partial class MainForm : Form
             if (pictureBox is null || label is null)
                 continue;
 
+            pictureBox.Image?.Dispose();
             label.Text = cursorName;
 
             CCursor? cursor = CCursors.FirstOrDefault(c => c.Name?.ToLower() == cursorName.ToLower());
@@ -120,28 +123,105 @@ public sealed partial class MainForm : Form
 
     }
 
+    private void ResetCursor(string boxname)
+    {
+        string? newCursorPath = CursorHelper.GetSelectedCursorPath(BoxCursorAssignment[boxname]);
+        if (string.IsNullOrEmpty(newCursorPath))
+            return;
+        UpdateCCursor(newCursorPath, boxname);
+        FillCursor(boxname);
+    }
+
     private string? GetCursorFile()
     {
         using OpenFileDialog openFileDialog = new OpenFileDialog();
-        openFileDialog.Filter = "Cursor Files|*.cur;*.ani";
+        openFileDialog.Filter = "Cursor Files (.cur, .ani)|*.cur;*.ani";
         openFileDialog.FilterIndex = 0;
         openFileDialog.RestoreDirectory = true;
         openFileDialog.AddToRecent = true;
         openFileDialog.AutoUpgradeEnabled = true;
 
-        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        if (openFileDialog.ShowDialog() != DialogResult.OK)
+            return null;
+
+        return openFileDialog.FileName;
+    }
+
+    private string? GetCursorInstallerFile()
+    {
+        using OpenFileDialog openFileDialog = new OpenFileDialog();
+        openFileDialog.Filter = "Cursor Installer (.inf)|*.inf";
+        openFileDialog.FilterIndex = 0;
+        openFileDialog.RestoreDirectory = true;
+        openFileDialog.AddToRecent = true;
+        openFileDialog.AutoUpgradeEnabled = true;
+
+        if (openFileDialog.ShowDialog() != DialogResult.OK)
+            return null;
+
+        return openFileDialog.FileName;
+    }
+
+    private void ImportCursorFiles(string filePath)
+    {
+        string? selectedFolder = Path.GetDirectoryName(filePath);
+        if (string.IsNullOrEmpty(selectedFolder))
+            return;
+
+        var fileAssigns = ParseInstallerInfStrings(filePath);
+        foreach (var file in fileAssigns)
         {
-            string selectedFilePath = openFileDialog.FileName;
-            return selectedFilePath;
+            CursorBoxAssignment.TryGetValue(file.Key, out string? boxname);
+            if (string.IsNullOrEmpty(boxname))
+                continue;
+            UpdateCCursor(Path.Combine(selectedFolder, file.Value), boxname);
+            FillCursor(boxname);
+        }
+    }
+
+    public Dictionary<string, string> ParseInstallerInfStrings(string filePath)
+    {
+        var stringsDictionary = new Dictionary<string, string>();
+        string[] lines = File.ReadAllLines(filePath);
+        bool isStringsSection = false;
+
+        foreach (string line in lines)
+        {
+            if (line.Trim().Equals("[Strings]", StringComparison.OrdinalIgnoreCase))
+            {
+                isStringsSection = true;
+                continue;
+            }
+
+            if (isStringsSection)
+            {
+                string[] parts = line.Split('=');
+
+                if (parts.Length == 2)
+                {
+                    string key = parts[0].Trim();
+                    string? keyT = CursorHelper.TransformCursorName(key);
+                    if (!string.IsNullOrEmpty(keyT))
+                        key = keyT;
+                    string value = parts[1].Trim().TrimStart('\"').TrimEnd('\"');
+
+                    stringsDictionary[key] = value;
+                }
+            }
         }
 
-        return null;
+        return stringsDictionary;
     }
 
     private bool IsCursorFile(string filepath)
     {
         string? extension = Path.GetExtension(filepath)?.ToLower();
         return extension == ".cur" || extension == ".ani";
+    }
+    private bool IsCursorInstallerFile(string filepath)
+    {
+        string? extension = Path.GetExtension(filepath)?.ToLower();
+        return extension == ".inf";
     }
 
     private void HandleDragEffects(DragEventArgs e)
@@ -167,7 +247,8 @@ public sealed partial class MainForm : Form
         if (filepaths is null || filepaths.Length == 0)
             return;
 
-        UpdateCCursor(filepaths[0], boxname);
+        string file = filepaths.Where(IsCursorFile).First();
+        UpdateCCursor(file, boxname);
         FillCursor(boxname);
     }
     private void HandleFilePick(string boxname)
@@ -267,6 +348,10 @@ public sealed partial class MainForm : Form
     {
         HandleFilePick(CursorPictureBox1.Name);
     }
+    private void CursorResetButton1_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox1.Name);
+    }
 
     private void CursorPanel2_DragEnter(object sender, DragEventArgs e)
     {
@@ -283,6 +368,10 @@ public sealed partial class MainForm : Form
     private void CursorSelectButton2_Click(object sender, EventArgs e)
     {
         HandleFilePick(CursorPictureBox2.Name);
+    }
+    private void CursorResetButton2_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox2.Name);
     }
 
     private void CursorPanel3_DragEnter(object sender, DragEventArgs e)
@@ -301,6 +390,10 @@ public sealed partial class MainForm : Form
     {
         HandleFilePick(CursorPictureBox3.Name);
     }
+    private void CursorResetButton3_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox3.Name);
+    }
 
     private void CursorPanel4_DragEnter(object sender, DragEventArgs e)
     {
@@ -317,6 +410,10 @@ public sealed partial class MainForm : Form
     private void CursorSelectButton4_Click(object sender, EventArgs e)
     {
         HandleFilePick(CursorPictureBox4.Name);
+    }
+    private void CursorResetButton4_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox4.Name);
     }
 
     private void CursorPanel5_DragEnter(object sender, DragEventArgs e)
@@ -335,6 +432,10 @@ public sealed partial class MainForm : Form
     {
         HandleFilePick(CursorPictureBox5.Name);
     }
+    private void CursorResetButton5_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox5.Name);
+    }
 
     private void CursorPanel6_DragEnter(object sender, DragEventArgs e)
     {
@@ -351,6 +452,10 @@ public sealed partial class MainForm : Form
     private void CursorSelectButton6_Click(object sender, EventArgs e)
     {
         HandleFilePick(CursorPictureBox6.Name);
+    }
+    private void CursorResetButton6_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox6.Name);
     }
 
     private void CursorPanel7_DragEnter(object sender, DragEventArgs e)
@@ -369,6 +474,10 @@ public sealed partial class MainForm : Form
     {
         HandleFilePick(CursorPictureBox7.Name);
     }
+    private void CursorResetButton7_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox7.Name);
+    }
 
     private void CursorPanel8_DragEnter(object sender, DragEventArgs e)
     {
@@ -386,6 +495,11 @@ public sealed partial class MainForm : Form
     {
         HandleFilePick(CursorPictureBox8.Name);
     }
+    private void CursorResetButton8_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox8.Name);
+    }
+
 
     private void CursorPanel9_DragEnter(object sender, DragEventArgs e)
     {
@@ -402,6 +516,10 @@ public sealed partial class MainForm : Form
     private void CursorSelectButton9_Click(object sender, EventArgs e)
     {
         HandleFilePick(CursorPictureBox9.Name);
+    }
+    private void CursorResetButton9_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox9.Name);
     }
 
     private void CursorPanel10_DragEnter(object sender, DragEventArgs e)
@@ -420,6 +538,10 @@ public sealed partial class MainForm : Form
     {
         HandleFilePick(CursorPictureBox10.Name);
     }
+    private void CursorResetButton10_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox10.Name);
+    }
 
     private void CursorPanel11_DragEnter(object sender, DragEventArgs e)
     {
@@ -436,6 +558,10 @@ public sealed partial class MainForm : Form
     private void CursorSelectButton11_Click(object sender, EventArgs e)
     {
         HandleFilePick(CursorPictureBox11.Name);
+    }
+    private void CursorResetButton11_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox11.Name);
     }
 
     private void CursorPanel12_DragEnter(object sender, DragEventArgs e)
@@ -454,6 +580,10 @@ public sealed partial class MainForm : Form
     {
         HandleFilePick(CursorPictureBox12.Name);
     }
+    private void CursorResetButton12_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox12.Name);
+    }
 
     private void CursorPanel13_DragEnter(object sender, DragEventArgs e)
     {
@@ -470,6 +600,10 @@ public sealed partial class MainForm : Form
     private void CursorSelectButton13_Click(object sender, EventArgs e)
     {
         HandleFilePick(CursorPictureBox13.Name);
+    }
+    private void CursorResetButton13_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox13.Name);
     }
 
     private void CursorPanel14_DragEnter(object sender, DragEventArgs e)
@@ -488,6 +622,10 @@ public sealed partial class MainForm : Form
     {
         HandleFilePick(CursorPictureBox14.Name);
     }
+    private void CursorResetButton14_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox14.Name);
+    }
 
     private void CursorPanel15_DragEnter(object sender, DragEventArgs e)
     {
@@ -504,6 +642,10 @@ public sealed partial class MainForm : Form
     private void CursorSelectButton15_Click(object sender, EventArgs e)
     {
         HandleFilePick(CursorPictureBox15.Name);
+    }
+    private void CursorResetButton15_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox15.Name);
     }
 
     private void CursorPanel16_DragEnter(object sender, DragEventArgs e)
@@ -522,6 +664,10 @@ public sealed partial class MainForm : Form
     {
         HandleFilePick(CursorPictureBox16.Name);
     }
+    private void CursorResetButton16_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox16.Name);
+    }
 
     private void CursorPanel17_DragEnter(object sender, DragEventArgs e)
     {
@@ -538,6 +684,71 @@ public sealed partial class MainForm : Form
     private void CursorSelectButton17_Click(object sender, EventArgs e)
     {
         HandleFilePick(CursorPictureBox17.Name);
+    }
+    private void CursorResetButton17_Click(object sender, EventArgs e)
+    {
+        ResetCursor(CursorPictureBox17.Name);
+    }
+
+    private void CursorsAllResetButton_Click(object sender, EventArgs e)
+    {
+        foreach (KeyValuePair<string, string> kvp in BoxCursorAssignment)
+        {
+            string pictureBoxName = kvp.Key;
+            PictureBox? pictureBox = CursorsTableLayoutPanel.Controls.Find(pictureBoxName, true).FirstOrDefault() as PictureBox;
+            if (pictureBox is not null)
+                ResetCursor(pictureBox.Name);
+        }
+    }
+
+    private void CursorsAllPanel_DragEnter(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            string[] filepaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (filepaths.Any(IsCursorInstallerFile))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+        else
+        {
+            e.Effect = DragDropEffects.None;
+        }
+    }
+    private void CursorsAllPanel_DragOver(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        {
+            string[] filepaths = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (filepaths.Any(IsCursorInstallerFile))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+        else
+        {
+            e.Effect = DragDropEffects.None;
+        }
+    }
+    private void CursorsAllPanel_DragDrop(object sender, DragEventArgs e)
+    {
+        string[]? filepaths = (string[]?)e.Data.GetData(DataFormats.FileDrop);
+
+        if (filepaths is null || filepaths.Length == 0)
+            return;
+
+        string file = filepaths.Where(IsCursorInstallerFile).First();
+        ImportCursorFiles(file);
+    }
+    private void CursorsAllImportButton_Click(object sender, EventArgs e)
+    {
+        string? file = GetCursorInstallerFile();
+        if (string.IsNullOrEmpty(file))
+            return;
+        ImportCursorFiles(file);
     }
 
     #endregion

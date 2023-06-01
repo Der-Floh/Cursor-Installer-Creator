@@ -30,73 +30,93 @@ sealed partial class MainForm
     {
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
         CursorsTableLayoutPanel = new TableLayoutPanel();
+        CursorsAllPanel = new Panel();
+        CursorsAllImportButton = new Button();
+        CursorsAllResetButton = new Button();
         CursorPanel16 = new Panel();
+        CursorResetButton16 = new Button();
         CursorNameLabel16 = new Label();
         CursorSelectButton16 = new Button();
         CursorPictureBox16 = new PictureBox();
         CursorPanel17 = new Panel();
+        CursorResetButton17 = new Button();
         CursorNameLabel17 = new Label();
         CursorSelectButton17 = new Button();
         CursorPictureBox17 = new PictureBox();
         CursorPanel15 = new Panel();
-        CursorSelectButton15 = new Button();
+        CursorResetButton15 = new Button();
         CursorNameLabel15 = new Label();
+        CursorSelectButton15 = new Button();
         CursorPictureBox15 = new PictureBox();
         CursorPanel14 = new Panel();
-        CursorSelectButton14 = new Button();
+        CursorResetButton14 = new Button();
         CursorNameLabel14 = new Label();
+        CursorSelectButton14 = new Button();
         CursorPictureBox14 = new PictureBox();
         CursorPanel13 = new Panel();
-        CursorSelectButton13 = new Button();
+        CursorResetButton13 = new Button();
         CursorNameLabel13 = new Label();
+        CursorSelectButton13 = new Button();
         CursorPictureBox13 = new PictureBox();
         CursorPanel12 = new Panel();
-        CursorSelectButton12 = new Button();
+        CursorResetButton12 = new Button();
         CursorNameLabel12 = new Label();
+        CursorSelectButton12 = new Button();
         CursorPictureBox12 = new PictureBox();
         CursorPanel11 = new Panel();
-        CursorSelectButton11 = new Button();
+        CursorResetButton11 = new Button();
         CursorNameLabel11 = new Label();
+        CursorSelectButton11 = new Button();
         CursorPictureBox11 = new PictureBox();
         CursorPanel10 = new Panel();
-        CursorSelectButton10 = new Button();
+        CursorResetButton10 = new Button();
         CursorNameLabel10 = new Label();
+        CursorSelectButton10 = new Button();
         CursorPictureBox10 = new PictureBox();
         CursorPanel9 = new Panel();
-        CursorSelectButton9 = new Button();
+        CursorResetButton9 = new Button();
         CursorNameLabel9 = new Label();
+        CursorSelectButton9 = new Button();
         CursorPictureBox9 = new PictureBox();
         CursorPanel8 = new Panel();
-        CursorSelectButton8 = new Button();
+        CursorResetButton8 = new Button();
         CursorNameLabel8 = new Label();
+        CursorSelectButton8 = new Button();
         CursorPictureBox8 = new PictureBox();
         CursorPanel7 = new Panel();
-        CursorSelectButton7 = new Button();
+        CursorResetButton7 = new Button();
         CursorNameLabel7 = new Label();
+        CursorSelectButton7 = new Button();
         CursorPictureBox7 = new PictureBox();
         CursorPanel6 = new Panel();
-        CursorSelectButton6 = new Button();
+        CursorResetButton6 = new Button();
         CursorNameLabel6 = new Label();
+        CursorSelectButton6 = new Button();
         CursorPictureBox6 = new PictureBox();
         CursorPanel5 = new Panel();
-        CursorSelectButton5 = new Button();
+        CursorResetButton5 = new Button();
         CursorNameLabel5 = new Label();
+        CursorSelectButton5 = new Button();
         CursorPictureBox5 = new PictureBox();
         CursorPanel4 = new Panel();
-        CursorSelectButton4 = new Button();
+        CursorResetButton4 = new Button();
         CursorNameLabel4 = new Label();
+        CursorSelectButton4 = new Button();
         CursorPictureBox4 = new PictureBox();
         CursorPanel3 = new Panel();
-        CursorSelectButton3 = new Button();
+        CursorResetButton3 = new Button();
         CursorNameLabel3 = new Label();
+        CursorSelectButton3 = new Button();
         CursorPictureBox3 = new PictureBox();
         CursorPanel1 = new Panel();
-        CursorSelectButton1 = new Button();
+        CursorResetButton1 = new Button();
         CursorNameLabel1 = new Label();
+        CursorSelectButton1 = new Button();
         CursorPictureBox1 = new PictureBox();
         CursorPanel2 = new Panel();
-        CursorSelectButton2 = new Button();
+        CursorResetButton2 = new Button();
         CursorNameLabel2 = new Label();
+        CursorSelectButton2 = new Button();
         CursorPictureBox2 = new PictureBox();
         PackageNameTextBox = new TextBox();
         PackageNameLabel = new Label();
@@ -108,6 +128,7 @@ sealed partial class MainForm
         AdminLabel = new Label();
         DragDropLabel = new Label();
         CursorsTableLayoutPanel.SuspendLayout();
+        CursorsAllPanel.SuspendLayout();
         CursorPanel16.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)CursorPictureBox16).BeginInit();
         CursorPanel17.SuspendLayout();
@@ -151,6 +172,7 @@ sealed partial class MainForm
         CursorsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
         CursorsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
         CursorsTableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+        CursorsTableLayoutPanel.Controls.Add(CursorsAllPanel, 2, 5);
         CursorsTableLayoutPanel.Controls.Add(CursorPanel16, 0, 5);
         CursorsTableLayoutPanel.Controls.Add(CursorPanel17, 1, 5);
         CursorsTableLayoutPanel.Controls.Add(CursorPanel15, 2, 4);
@@ -180,11 +202,48 @@ sealed partial class MainForm
         CursorsTableLayoutPanel.Size = new Size(759, 354);
         CursorsTableLayoutPanel.TabIndex = 0;
         // 
+        // CursorsAllPanel
+        // 
+        CursorsAllPanel.AllowDrop = true;
+        CursorsAllPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        CursorsAllPanel.Controls.Add(CursorsAllImportButton);
+        CursorsAllPanel.Controls.Add(CursorsAllResetButton);
+        CursorsAllPanel.Location = new Point(509, 298);
+        CursorsAllPanel.Name = "CursorsAllPanel";
+        CursorsAllPanel.Size = new Size(247, 53);
+        CursorsAllPanel.TabIndex = 10;
+        CursorsAllPanel.DragDrop += CursorsAllPanel_DragDrop;
+        CursorsAllPanel.DragEnter += CursorsAllPanel_DragEnter;
+        CursorsAllPanel.DragOver += CursorsAllPanel_DragOver;
+        // 
+        // CursorsAllImportButton
+        // 
+        CursorsAllImportButton.Cursor = Cursors.Hand;
+        CursorsAllImportButton.Location = new Point(88, 0);
+        CursorsAllImportButton.Name = "CursorsAllImportButton";
+        CursorsAllImportButton.Size = new Size(131, 36);
+        CursorsAllImportButton.TabIndex = 24;
+        CursorsAllImportButton.Text = "Import Installer File";
+        CursorsAllImportButton.UseVisualStyleBackColor = true;
+        CursorsAllImportButton.Click += CursorsAllImportButton_Click;
+        // 
+        // CursorsAllResetButton
+        // 
+        CursorsAllResetButton.Cursor = Cursors.Hand;
+        CursorsAllResetButton.Location = new Point(0, 0);
+        CursorsAllResetButton.Name = "CursorsAllResetButton";
+        CursorsAllResetButton.Size = new Size(82, 36);
+        CursorsAllResetButton.TabIndex = 23;
+        CursorsAllResetButton.Text = "Reset All";
+        CursorsAllResetButton.UseVisualStyleBackColor = true;
+        CursorsAllResetButton.Click += CursorsAllResetButton_Click;
+        // 
         // CursorPanel16
         // 
         CursorPanel16.AllowDrop = true;
         CursorPanel16.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel16.BorderStyle = BorderStyle.FixedSingle;
+        CursorPanel16.Controls.Add(CursorResetButton16);
         CursorPanel16.Controls.Add(CursorNameLabel16);
         CursorPanel16.Controls.Add(CursorSelectButton16);
         CursorPanel16.Controls.Add(CursorPictureBox16);
@@ -195,6 +254,19 @@ sealed partial class MainForm
         CursorPanel16.DragDrop += CursorPanel16_DragDrop;
         CursorPanel16.DragEnter += CursorPanel16_DragEnter;
         CursorPanel16.DragOver += CursorPanel16_DragOver;
+        // 
+        // CursorResetButton16
+        // 
+        CursorResetButton16.Anchor = AnchorStyles.Right;
+        CursorResetButton16.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton16.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton16.Cursor = Cursors.Hand;
+        CursorResetButton16.Location = new Point(159, 5);
+        CursorResetButton16.Name = "CursorResetButton16";
+        CursorResetButton16.Size = new Size(40, 40);
+        CursorResetButton16.TabIndex = 21;
+        CursorResetButton16.UseVisualStyleBackColor = true;
+        CursorResetButton16.Click += CursorResetButton16_Click;
         // 
         // CursorNameLabel16
         // 
@@ -210,12 +282,13 @@ sealed partial class MainForm
         // CursorSelectButton16
         // 
         CursorSelectButton16.Anchor = AnchorStyles.Right;
+        CursorSelectButton16.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton16.BackgroundImageLayout = ImageLayout.Zoom;
         CursorSelectButton16.Cursor = Cursors.Hand;
-        CursorSelectButton16.Location = new Point(192, 0);
+        CursorSelectButton16.Location = new Point(202, 5);
         CursorSelectButton16.Name = "CursorSelectButton16";
-        CursorSelectButton16.Size = new Size(50, 50);
+        CursorSelectButton16.Size = new Size(40, 40);
         CursorSelectButton16.TabIndex = 11;
-        CursorSelectButton16.Text = "Pick";
         CursorSelectButton16.UseVisualStyleBackColor = true;
         CursorSelectButton16.Click += CursorSelectButton16_Click;
         // 
@@ -234,6 +307,7 @@ sealed partial class MainForm
         CursorPanel17.AllowDrop = true;
         CursorPanel17.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel17.BorderStyle = BorderStyle.FixedSingle;
+        CursorPanel17.Controls.Add(CursorResetButton17);
         CursorPanel17.Controls.Add(CursorNameLabel17);
         CursorPanel17.Controls.Add(CursorSelectButton17);
         CursorPanel17.Controls.Add(CursorPictureBox17);
@@ -244,6 +318,19 @@ sealed partial class MainForm
         CursorPanel17.DragDrop += CursorPanel17_DragDrop;
         CursorPanel17.DragEnter += CursorPanel17_DragEnter;
         CursorPanel17.DragOver += CursorPanel17_DragOver;
+        // 
+        // CursorResetButton17
+        // 
+        CursorResetButton17.Anchor = AnchorStyles.Right;
+        CursorResetButton17.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton17.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton17.Cursor = Cursors.Hand;
+        CursorResetButton17.Location = new Point(159, 5);
+        CursorResetButton17.Name = "CursorResetButton17";
+        CursorResetButton17.Size = new Size(40, 40);
+        CursorResetButton17.TabIndex = 22;
+        CursorResetButton17.UseVisualStyleBackColor = true;
+        CursorResetButton17.Click += CursorResetButton17_Click;
         // 
         // CursorNameLabel17
         // 
@@ -259,12 +346,13 @@ sealed partial class MainForm
         // CursorSelectButton17
         // 
         CursorSelectButton17.Anchor = AnchorStyles.Right;
+        CursorSelectButton17.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton17.BackgroundImageLayout = ImageLayout.Zoom;
         CursorSelectButton17.Cursor = Cursors.Hand;
-        CursorSelectButton17.Location = new Point(192, 0);
+        CursorSelectButton17.Location = new Point(202, 5);
         CursorSelectButton17.Name = "CursorSelectButton17";
-        CursorSelectButton17.Size = new Size(50, 50);
+        CursorSelectButton17.Size = new Size(40, 40);
         CursorSelectButton17.TabIndex = 11;
-        CursorSelectButton17.Text = "Pick";
         CursorSelectButton17.UseVisualStyleBackColor = true;
         CursorSelectButton17.Click += CursorSelectButton17_Click;
         // 
@@ -283,8 +371,9 @@ sealed partial class MainForm
         CursorPanel15.AllowDrop = true;
         CursorPanel15.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel15.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel15.Controls.Add(CursorSelectButton15);
+        CursorPanel15.Controls.Add(CursorResetButton15);
         CursorPanel15.Controls.Add(CursorNameLabel15);
+        CursorPanel15.Controls.Add(CursorSelectButton15);
         CursorPanel15.Controls.Add(CursorPictureBox15);
         CursorPanel15.Location = new Point(509, 239);
         CursorPanel15.Name = "CursorPanel15";
@@ -294,28 +383,42 @@ sealed partial class MainForm
         CursorPanel15.DragEnter += CursorPanel15_DragEnter;
         CursorPanel15.DragOver += CursorPanel15_DragOver;
         // 
-        // CursorSelectButton15
+        // CursorResetButton15
         // 
-        CursorSelectButton15.Anchor = AnchorStyles.Right;
-        CursorSelectButton15.Cursor = Cursors.Hand;
-        CursorSelectButton15.Location = new Point(192, 0);
-        CursorSelectButton15.Name = "CursorSelectButton15";
-        CursorSelectButton15.Size = new Size(50, 50);
-        CursorSelectButton15.TabIndex = 8;
-        CursorSelectButton15.Text = "Pick";
-        CursorSelectButton15.UseVisualStyleBackColor = true;
-        CursorSelectButton15.Click += CursorSelectButton15_Click;
+        CursorResetButton15.Anchor = AnchorStyles.Right;
+        CursorResetButton15.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton15.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton15.Cursor = Cursors.Hand;
+        CursorResetButton15.Location = new Point(159, 4);
+        CursorResetButton15.Name = "CursorResetButton15";
+        CursorResetButton15.Size = new Size(40, 40);
+        CursorResetButton15.TabIndex = 20;
+        CursorResetButton15.UseVisualStyleBackColor = true;
+        CursorResetButton15.Click += CursorResetButton15_Click;
         // 
         // CursorNameLabel15
         // 
         CursorNameLabel15.Anchor = AnchorStyles.Right;
         CursorNameLabel15.AutoSize = true;
         CursorNameLabel15.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-        CursorNameLabel15.Location = new Point(54, 16);
+        CursorNameLabel15.Location = new Point(54, 15);
         CursorNameLabel15.Name = "CursorNameLabel15";
         CursorNameLabel15.Size = new Size(90, 19);
         CursorNameLabel15.TabIndex = 8;
         CursorNameLabel15.Text = "Cursor Name";
+        // 
+        // CursorSelectButton15
+        // 
+        CursorSelectButton15.Anchor = AnchorStyles.Right;
+        CursorSelectButton15.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton15.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton15.Cursor = Cursors.Hand;
+        CursorSelectButton15.Location = new Point(202, 4);
+        CursorSelectButton15.Name = "CursorSelectButton15";
+        CursorSelectButton15.Size = new Size(40, 40);
+        CursorSelectButton15.TabIndex = 8;
+        CursorSelectButton15.UseVisualStyleBackColor = true;
+        CursorSelectButton15.Click += CursorSelectButton15_Click;
         // 
         // CursorPictureBox15
         // 
@@ -332,8 +435,9 @@ sealed partial class MainForm
         CursorPanel14.AllowDrop = true;
         CursorPanel14.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel14.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel14.Controls.Add(CursorSelectButton14);
+        CursorPanel14.Controls.Add(CursorResetButton14);
         CursorPanel14.Controls.Add(CursorNameLabel14);
+        CursorPanel14.Controls.Add(CursorSelectButton14);
         CursorPanel14.Controls.Add(CursorPictureBox14);
         CursorPanel14.Location = new Point(256, 239);
         CursorPanel14.Name = "CursorPanel14";
@@ -343,17 +447,18 @@ sealed partial class MainForm
         CursorPanel14.DragEnter += CursorPanel14_DragEnter;
         CursorPanel14.DragOver += CursorPanel14_DragOver;
         // 
-        // CursorSelectButton14
+        // CursorResetButton14
         // 
-        CursorSelectButton14.Anchor = AnchorStyles.Right;
-        CursorSelectButton14.Cursor = Cursors.Hand;
-        CursorSelectButton14.Location = new Point(192, 0);
-        CursorSelectButton14.Name = "CursorSelectButton14";
-        CursorSelectButton14.Size = new Size(50, 50);
-        CursorSelectButton14.TabIndex = 8;
-        CursorSelectButton14.Text = "Pick";
-        CursorSelectButton14.UseVisualStyleBackColor = true;
-        CursorSelectButton14.Click += CursorSelectButton14_Click;
+        CursorResetButton14.Anchor = AnchorStyles.Right;
+        CursorResetButton14.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton14.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton14.Cursor = Cursors.Hand;
+        CursorResetButton14.Location = new Point(159, 4);
+        CursorResetButton14.Name = "CursorResetButton14";
+        CursorResetButton14.Size = new Size(40, 40);
+        CursorResetButton14.TabIndex = 19;
+        CursorResetButton14.UseVisualStyleBackColor = true;
+        CursorResetButton14.Click += CursorResetButton14_Click;
         // 
         // CursorNameLabel14
         // 
@@ -365,6 +470,19 @@ sealed partial class MainForm
         CursorNameLabel14.Size = new Size(90, 19);
         CursorNameLabel14.TabIndex = 8;
         CursorNameLabel14.Text = "Cursor Name";
+        // 
+        // CursorSelectButton14
+        // 
+        CursorSelectButton14.Anchor = AnchorStyles.Right;
+        CursorSelectButton14.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton14.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton14.Cursor = Cursors.Hand;
+        CursorSelectButton14.Location = new Point(202, 4);
+        CursorSelectButton14.Name = "CursorSelectButton14";
+        CursorSelectButton14.Size = new Size(40, 40);
+        CursorSelectButton14.TabIndex = 8;
+        CursorSelectButton14.UseVisualStyleBackColor = true;
+        CursorSelectButton14.Click += CursorSelectButton14_Click;
         // 
         // CursorPictureBox14
         // 
@@ -381,8 +499,9 @@ sealed partial class MainForm
         CursorPanel13.AllowDrop = true;
         CursorPanel13.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel13.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel13.Controls.Add(CursorSelectButton13);
+        CursorPanel13.Controls.Add(CursorResetButton13);
         CursorPanel13.Controls.Add(CursorNameLabel13);
+        CursorPanel13.Controls.Add(CursorSelectButton13);
         CursorPanel13.Controls.Add(CursorPictureBox13);
         CursorPanel13.Location = new Point(3, 239);
         CursorPanel13.Name = "CursorPanel13";
@@ -392,17 +511,18 @@ sealed partial class MainForm
         CursorPanel13.DragEnter += CursorPanel13_DragEnter;
         CursorPanel13.DragOver += CursorPanel13_DragOver;
         // 
-        // CursorSelectButton13
+        // CursorResetButton13
         // 
-        CursorSelectButton13.Anchor = AnchorStyles.Right;
-        CursorSelectButton13.Cursor = Cursors.Hand;
-        CursorSelectButton13.Location = new Point(192, 0);
-        CursorSelectButton13.Name = "CursorSelectButton13";
-        CursorSelectButton13.Size = new Size(50, 50);
-        CursorSelectButton13.TabIndex = 8;
-        CursorSelectButton13.Text = "Pick";
-        CursorSelectButton13.UseVisualStyleBackColor = true;
-        CursorSelectButton13.Click += CursorSelectButton13_Click;
+        CursorResetButton13.Anchor = AnchorStyles.Right;
+        CursorResetButton13.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton13.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton13.Cursor = Cursors.Hand;
+        CursorResetButton13.Location = new Point(159, 4);
+        CursorResetButton13.Name = "CursorResetButton13";
+        CursorResetButton13.Size = new Size(40, 40);
+        CursorResetButton13.TabIndex = 18;
+        CursorResetButton13.UseVisualStyleBackColor = true;
+        CursorResetButton13.Click += CursorResetButton13_Click;
         // 
         // CursorNameLabel13
         // 
@@ -414,6 +534,19 @@ sealed partial class MainForm
         CursorNameLabel13.Size = new Size(90, 19);
         CursorNameLabel13.TabIndex = 8;
         CursorNameLabel13.Text = "Cursor Name";
+        // 
+        // CursorSelectButton13
+        // 
+        CursorSelectButton13.Anchor = AnchorStyles.Right;
+        CursorSelectButton13.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton13.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton13.Cursor = Cursors.Hand;
+        CursorSelectButton13.Location = new Point(202, 4);
+        CursorSelectButton13.Name = "CursorSelectButton13";
+        CursorSelectButton13.Size = new Size(40, 40);
+        CursorSelectButton13.TabIndex = 8;
+        CursorSelectButton13.UseVisualStyleBackColor = true;
+        CursorSelectButton13.Click += CursorSelectButton13_Click;
         // 
         // CursorPictureBox13
         // 
@@ -430,8 +563,9 @@ sealed partial class MainForm
         CursorPanel12.AllowDrop = true;
         CursorPanel12.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel12.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel12.Controls.Add(CursorSelectButton12);
+        CursorPanel12.Controls.Add(CursorResetButton12);
         CursorPanel12.Controls.Add(CursorNameLabel12);
+        CursorPanel12.Controls.Add(CursorSelectButton12);
         CursorPanel12.Controls.Add(CursorPictureBox12);
         CursorPanel12.Location = new Point(509, 180);
         CursorPanel12.Name = "CursorPanel12";
@@ -441,17 +575,18 @@ sealed partial class MainForm
         CursorPanel12.DragEnter += CursorPanel12_DragEnter;
         CursorPanel12.DragOver += CursorPanel12_DragOver;
         // 
-        // CursorSelectButton12
+        // CursorResetButton12
         // 
-        CursorSelectButton12.Anchor = AnchorStyles.Right;
-        CursorSelectButton12.Cursor = Cursors.Hand;
-        CursorSelectButton12.Location = new Point(192, 0);
-        CursorSelectButton12.Name = "CursorSelectButton12";
-        CursorSelectButton12.Size = new Size(50, 50);
-        CursorSelectButton12.TabIndex = 8;
-        CursorSelectButton12.Text = "Pick";
-        CursorSelectButton12.UseVisualStyleBackColor = true;
-        CursorSelectButton12.Click += CursorSelectButton12_Click;
+        CursorResetButton12.Anchor = AnchorStyles.Right;
+        CursorResetButton12.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton12.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton12.Cursor = Cursors.Hand;
+        CursorResetButton12.Location = new Point(159, 4);
+        CursorResetButton12.Name = "CursorResetButton12";
+        CursorResetButton12.Size = new Size(40, 40);
+        CursorResetButton12.TabIndex = 17;
+        CursorResetButton12.UseVisualStyleBackColor = true;
+        CursorResetButton12.Click += CursorResetButton12_Click;
         // 
         // CursorNameLabel12
         // 
@@ -463,6 +598,19 @@ sealed partial class MainForm
         CursorNameLabel12.Size = new Size(90, 19);
         CursorNameLabel12.TabIndex = 8;
         CursorNameLabel12.Text = "Cursor Name";
+        // 
+        // CursorSelectButton12
+        // 
+        CursorSelectButton12.Anchor = AnchorStyles.Right;
+        CursorSelectButton12.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton12.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton12.Cursor = Cursors.Hand;
+        CursorSelectButton12.Location = new Point(202, 4);
+        CursorSelectButton12.Name = "CursorSelectButton12";
+        CursorSelectButton12.Size = new Size(40, 40);
+        CursorSelectButton12.TabIndex = 8;
+        CursorSelectButton12.UseVisualStyleBackColor = true;
+        CursorSelectButton12.Click += CursorSelectButton12_Click;
         // 
         // CursorPictureBox12
         // 
@@ -479,8 +627,9 @@ sealed partial class MainForm
         CursorPanel11.AllowDrop = true;
         CursorPanel11.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel11.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel11.Controls.Add(CursorSelectButton11);
+        CursorPanel11.Controls.Add(CursorResetButton11);
         CursorPanel11.Controls.Add(CursorNameLabel11);
+        CursorPanel11.Controls.Add(CursorSelectButton11);
         CursorPanel11.Controls.Add(CursorPictureBox11);
         CursorPanel11.Location = new Point(256, 180);
         CursorPanel11.Name = "CursorPanel11";
@@ -490,17 +639,18 @@ sealed partial class MainForm
         CursorPanel11.DragEnter += CursorPanel11_DragEnter;
         CursorPanel11.DragOver += CursorPanel11_DragOver;
         // 
-        // CursorSelectButton11
+        // CursorResetButton11
         // 
-        CursorSelectButton11.Anchor = AnchorStyles.Right;
-        CursorSelectButton11.Cursor = Cursors.Hand;
-        CursorSelectButton11.Location = new Point(192, 0);
-        CursorSelectButton11.Name = "CursorSelectButton11";
-        CursorSelectButton11.Size = new Size(50, 50);
-        CursorSelectButton11.TabIndex = 8;
-        CursorSelectButton11.Text = "Pick";
-        CursorSelectButton11.UseVisualStyleBackColor = true;
-        CursorSelectButton11.Click += CursorSelectButton11_Click;
+        CursorResetButton11.Anchor = AnchorStyles.Right;
+        CursorResetButton11.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton11.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton11.Cursor = Cursors.Hand;
+        CursorResetButton11.Location = new Point(159, 4);
+        CursorResetButton11.Name = "CursorResetButton11";
+        CursorResetButton11.Size = new Size(40, 40);
+        CursorResetButton11.TabIndex = 16;
+        CursorResetButton11.UseVisualStyleBackColor = true;
+        CursorResetButton11.Click += CursorResetButton11_Click;
         // 
         // CursorNameLabel11
         // 
@@ -512,6 +662,19 @@ sealed partial class MainForm
         CursorNameLabel11.Size = new Size(90, 19);
         CursorNameLabel11.TabIndex = 8;
         CursorNameLabel11.Text = "Cursor Name";
+        // 
+        // CursorSelectButton11
+        // 
+        CursorSelectButton11.Anchor = AnchorStyles.Right;
+        CursorSelectButton11.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton11.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton11.Cursor = Cursors.Hand;
+        CursorSelectButton11.Location = new Point(202, 4);
+        CursorSelectButton11.Name = "CursorSelectButton11";
+        CursorSelectButton11.Size = new Size(40, 40);
+        CursorSelectButton11.TabIndex = 8;
+        CursorSelectButton11.UseVisualStyleBackColor = true;
+        CursorSelectButton11.Click += CursorSelectButton11_Click;
         // 
         // CursorPictureBox11
         // 
@@ -528,8 +691,9 @@ sealed partial class MainForm
         CursorPanel10.AllowDrop = true;
         CursorPanel10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel10.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel10.Controls.Add(CursorSelectButton10);
+        CursorPanel10.Controls.Add(CursorResetButton10);
         CursorPanel10.Controls.Add(CursorNameLabel10);
+        CursorPanel10.Controls.Add(CursorSelectButton10);
         CursorPanel10.Controls.Add(CursorPictureBox10);
         CursorPanel10.Location = new Point(3, 180);
         CursorPanel10.Name = "CursorPanel10";
@@ -539,17 +703,18 @@ sealed partial class MainForm
         CursorPanel10.DragEnter += CursorPanel10_DragEnter;
         CursorPanel10.DragOver += CursorPanel10_DragOver;
         // 
-        // CursorSelectButton10
+        // CursorResetButton10
         // 
-        CursorSelectButton10.Anchor = AnchorStyles.Right;
-        CursorSelectButton10.Cursor = Cursors.Hand;
-        CursorSelectButton10.Location = new Point(192, 0);
-        CursorSelectButton10.Name = "CursorSelectButton10";
-        CursorSelectButton10.Size = new Size(50, 50);
-        CursorSelectButton10.TabIndex = 8;
-        CursorSelectButton10.Text = "Pick";
-        CursorSelectButton10.UseVisualStyleBackColor = true;
-        CursorSelectButton10.Click += CursorSelectButton10_Click;
+        CursorResetButton10.Anchor = AnchorStyles.Right;
+        CursorResetButton10.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton10.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton10.Cursor = Cursors.Hand;
+        CursorResetButton10.Location = new Point(159, 4);
+        CursorResetButton10.Name = "CursorResetButton10";
+        CursorResetButton10.Size = new Size(40, 40);
+        CursorResetButton10.TabIndex = 15;
+        CursorResetButton10.UseVisualStyleBackColor = true;
+        CursorResetButton10.Click += CursorResetButton10_Click;
         // 
         // CursorNameLabel10
         // 
@@ -561,6 +726,19 @@ sealed partial class MainForm
         CursorNameLabel10.Size = new Size(90, 19);
         CursorNameLabel10.TabIndex = 8;
         CursorNameLabel10.Text = "Cursor Name";
+        // 
+        // CursorSelectButton10
+        // 
+        CursorSelectButton10.Anchor = AnchorStyles.Right;
+        CursorSelectButton10.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton10.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton10.Cursor = Cursors.Hand;
+        CursorSelectButton10.Location = new Point(202, 4);
+        CursorSelectButton10.Name = "CursorSelectButton10";
+        CursorSelectButton10.Size = new Size(40, 40);
+        CursorSelectButton10.TabIndex = 8;
+        CursorSelectButton10.UseVisualStyleBackColor = true;
+        CursorSelectButton10.Click += CursorSelectButton10_Click;
         // 
         // CursorPictureBox10
         // 
@@ -577,8 +755,9 @@ sealed partial class MainForm
         CursorPanel9.AllowDrop = true;
         CursorPanel9.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel9.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel9.Controls.Add(CursorSelectButton9);
+        CursorPanel9.Controls.Add(CursorResetButton9);
         CursorPanel9.Controls.Add(CursorNameLabel9);
+        CursorPanel9.Controls.Add(CursorSelectButton9);
         CursorPanel9.Controls.Add(CursorPictureBox9);
         CursorPanel9.Location = new Point(509, 121);
         CursorPanel9.Name = "CursorPanel9";
@@ -588,17 +767,18 @@ sealed partial class MainForm
         CursorPanel9.DragEnter += CursorPanel9_DragEnter;
         CursorPanel9.DragOver += CursorPanel9_DragOver;
         // 
-        // CursorSelectButton9
+        // CursorResetButton9
         // 
-        CursorSelectButton9.Anchor = AnchorStyles.Right;
-        CursorSelectButton9.Cursor = Cursors.Hand;
-        CursorSelectButton9.Location = new Point(192, 0);
-        CursorSelectButton9.Name = "CursorSelectButton9";
-        CursorSelectButton9.Size = new Size(50, 50);
-        CursorSelectButton9.TabIndex = 8;
-        CursorSelectButton9.Text = "Pick";
-        CursorSelectButton9.UseVisualStyleBackColor = true;
-        CursorSelectButton9.Click += CursorSelectButton9_Click;
+        CursorResetButton9.Anchor = AnchorStyles.Right;
+        CursorResetButton9.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton9.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton9.Cursor = Cursors.Hand;
+        CursorResetButton9.Location = new Point(159, 4);
+        CursorResetButton9.Name = "CursorResetButton9";
+        CursorResetButton9.Size = new Size(40, 40);
+        CursorResetButton9.TabIndex = 14;
+        CursorResetButton9.UseVisualStyleBackColor = true;
+        CursorResetButton9.Click += CursorResetButton9_Click;
         // 
         // CursorNameLabel9
         // 
@@ -610,6 +790,19 @@ sealed partial class MainForm
         CursorNameLabel9.Size = new Size(90, 19);
         CursorNameLabel9.TabIndex = 8;
         CursorNameLabel9.Text = "Cursor Name";
+        // 
+        // CursorSelectButton9
+        // 
+        CursorSelectButton9.Anchor = AnchorStyles.Right;
+        CursorSelectButton9.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton9.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton9.Cursor = Cursors.Hand;
+        CursorSelectButton9.Location = new Point(202, 4);
+        CursorSelectButton9.Name = "CursorSelectButton9";
+        CursorSelectButton9.Size = new Size(40, 40);
+        CursorSelectButton9.TabIndex = 8;
+        CursorSelectButton9.UseVisualStyleBackColor = true;
+        CursorSelectButton9.Click += CursorSelectButton9_Click;
         // 
         // CursorPictureBox9
         // 
@@ -626,8 +819,9 @@ sealed partial class MainForm
         CursorPanel8.AllowDrop = true;
         CursorPanel8.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel8.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel8.Controls.Add(CursorSelectButton8);
+        CursorPanel8.Controls.Add(CursorResetButton8);
         CursorPanel8.Controls.Add(CursorNameLabel8);
+        CursorPanel8.Controls.Add(CursorSelectButton8);
         CursorPanel8.Controls.Add(CursorPictureBox8);
         CursorPanel8.Location = new Point(256, 121);
         CursorPanel8.Name = "CursorPanel8";
@@ -637,17 +831,18 @@ sealed partial class MainForm
         CursorPanel8.DragEnter += CursorPanel8_DragEnter;
         CursorPanel8.DragOver += CursorPanel8_DragOver;
         // 
-        // CursorSelectButton8
+        // CursorResetButton8
         // 
-        CursorSelectButton8.Anchor = AnchorStyles.Right;
-        CursorSelectButton8.Cursor = Cursors.Hand;
-        CursorSelectButton8.Location = new Point(192, 0);
-        CursorSelectButton8.Name = "CursorSelectButton8";
-        CursorSelectButton8.Size = new Size(50, 50);
-        CursorSelectButton8.TabIndex = 8;
-        CursorSelectButton8.Text = "Pick";
-        CursorSelectButton8.UseVisualStyleBackColor = true;
-        CursorSelectButton8.Click += CursorSelectButton8_Click;
+        CursorResetButton8.Anchor = AnchorStyles.Right;
+        CursorResetButton8.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton8.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton8.Cursor = Cursors.Hand;
+        CursorResetButton8.Location = new Point(159, 4);
+        CursorResetButton8.Name = "CursorResetButton8";
+        CursorResetButton8.Size = new Size(40, 40);
+        CursorResetButton8.TabIndex = 13;
+        CursorResetButton8.UseVisualStyleBackColor = true;
+        CursorResetButton8.Click += CursorResetButton8_Click;
         // 
         // CursorNameLabel8
         // 
@@ -659,6 +854,19 @@ sealed partial class MainForm
         CursorNameLabel8.Size = new Size(90, 19);
         CursorNameLabel8.TabIndex = 8;
         CursorNameLabel8.Text = "Cursor Name";
+        // 
+        // CursorSelectButton8
+        // 
+        CursorSelectButton8.Anchor = AnchorStyles.Right;
+        CursorSelectButton8.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton8.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton8.Cursor = Cursors.Hand;
+        CursorSelectButton8.Location = new Point(202, 4);
+        CursorSelectButton8.Name = "CursorSelectButton8";
+        CursorSelectButton8.Size = new Size(40, 40);
+        CursorSelectButton8.TabIndex = 8;
+        CursorSelectButton8.UseVisualStyleBackColor = true;
+        CursorSelectButton8.Click += CursorSelectButton8_Click;
         // 
         // CursorPictureBox8
         // 
@@ -675,8 +883,9 @@ sealed partial class MainForm
         CursorPanel7.AllowDrop = true;
         CursorPanel7.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel7.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel7.Controls.Add(CursorSelectButton7);
+        CursorPanel7.Controls.Add(CursorResetButton7);
         CursorPanel7.Controls.Add(CursorNameLabel7);
+        CursorPanel7.Controls.Add(CursorSelectButton7);
         CursorPanel7.Controls.Add(CursorPictureBox7);
         CursorPanel7.Location = new Point(3, 121);
         CursorPanel7.Name = "CursorPanel7";
@@ -686,17 +895,18 @@ sealed partial class MainForm
         CursorPanel7.DragEnter += CursorPanel7_DragEnter;
         CursorPanel7.DragOver += CursorPanel7_DragOver;
         // 
-        // CursorSelectButton7
+        // CursorResetButton7
         // 
-        CursorSelectButton7.Anchor = AnchorStyles.Right;
-        CursorSelectButton7.Cursor = Cursors.Hand;
-        CursorSelectButton7.Location = new Point(192, 0);
-        CursorSelectButton7.Name = "CursorSelectButton7";
-        CursorSelectButton7.Size = new Size(50, 50);
-        CursorSelectButton7.TabIndex = 8;
-        CursorSelectButton7.Text = "Pick";
-        CursorSelectButton7.UseVisualStyleBackColor = true;
-        CursorSelectButton7.Click += CursorSelectButton7_Click;
+        CursorResetButton7.Anchor = AnchorStyles.Right;
+        CursorResetButton7.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton7.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton7.Cursor = Cursors.Hand;
+        CursorResetButton7.Location = new Point(159, 4);
+        CursorResetButton7.Name = "CursorResetButton7";
+        CursorResetButton7.Size = new Size(40, 40);
+        CursorResetButton7.TabIndex = 12;
+        CursorResetButton7.UseVisualStyleBackColor = true;
+        CursorResetButton7.Click += CursorResetButton7_Click;
         // 
         // CursorNameLabel7
         // 
@@ -708,6 +918,19 @@ sealed partial class MainForm
         CursorNameLabel7.Size = new Size(90, 19);
         CursorNameLabel7.TabIndex = 8;
         CursorNameLabel7.Text = "Cursor Name";
+        // 
+        // CursorSelectButton7
+        // 
+        CursorSelectButton7.Anchor = AnchorStyles.Right;
+        CursorSelectButton7.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton7.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton7.Cursor = Cursors.Hand;
+        CursorSelectButton7.Location = new Point(202, 4);
+        CursorSelectButton7.Name = "CursorSelectButton7";
+        CursorSelectButton7.Size = new Size(40, 40);
+        CursorSelectButton7.TabIndex = 8;
+        CursorSelectButton7.UseVisualStyleBackColor = true;
+        CursorSelectButton7.Click += CursorSelectButton7_Click;
         // 
         // CursorPictureBox7
         // 
@@ -724,8 +947,9 @@ sealed partial class MainForm
         CursorPanel6.AllowDrop = true;
         CursorPanel6.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel6.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel6.Controls.Add(CursorSelectButton6);
+        CursorPanel6.Controls.Add(CursorResetButton6);
         CursorPanel6.Controls.Add(CursorNameLabel6);
+        CursorPanel6.Controls.Add(CursorSelectButton6);
         CursorPanel6.Controls.Add(CursorPictureBox6);
         CursorPanel6.Location = new Point(509, 62);
         CursorPanel6.Name = "CursorPanel6";
@@ -735,17 +959,18 @@ sealed partial class MainForm
         CursorPanel6.DragEnter += CursorPanel6_DragEnter;
         CursorPanel6.DragOver += CursorPanel6_DragOver;
         // 
-        // CursorSelectButton6
+        // CursorResetButton6
         // 
-        CursorSelectButton6.Anchor = AnchorStyles.Right;
-        CursorSelectButton6.Cursor = Cursors.Hand;
-        CursorSelectButton6.Location = new Point(192, 0);
-        CursorSelectButton6.Name = "CursorSelectButton6";
-        CursorSelectButton6.Size = new Size(50, 50);
-        CursorSelectButton6.TabIndex = 8;
-        CursorSelectButton6.Text = "Pick";
-        CursorSelectButton6.UseVisualStyleBackColor = true;
-        CursorSelectButton6.Click += CursorSelectButton6_Click;
+        CursorResetButton6.Anchor = AnchorStyles.Right;
+        CursorResetButton6.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton6.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton6.Cursor = Cursors.Hand;
+        CursorResetButton6.Location = new Point(159, 4);
+        CursorResetButton6.Name = "CursorResetButton6";
+        CursorResetButton6.Size = new Size(40, 40);
+        CursorResetButton6.TabIndex = 12;
+        CursorResetButton6.UseVisualStyleBackColor = true;
+        CursorResetButton6.Click += CursorResetButton6_Click;
         // 
         // CursorNameLabel6
         // 
@@ -757,6 +982,19 @@ sealed partial class MainForm
         CursorNameLabel6.Size = new Size(90, 19);
         CursorNameLabel6.TabIndex = 8;
         CursorNameLabel6.Text = "Cursor Name";
+        // 
+        // CursorSelectButton6
+        // 
+        CursorSelectButton6.Anchor = AnchorStyles.Right;
+        CursorSelectButton6.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton6.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton6.Cursor = Cursors.Hand;
+        CursorSelectButton6.Location = new Point(202, 4);
+        CursorSelectButton6.Name = "CursorSelectButton6";
+        CursorSelectButton6.Size = new Size(40, 40);
+        CursorSelectButton6.TabIndex = 8;
+        CursorSelectButton6.UseVisualStyleBackColor = true;
+        CursorSelectButton6.Click += CursorSelectButton6_Click;
         // 
         // CursorPictureBox6
         // 
@@ -773,8 +1011,9 @@ sealed partial class MainForm
         CursorPanel5.AllowDrop = true;
         CursorPanel5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel5.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel5.Controls.Add(CursorSelectButton5);
+        CursorPanel5.Controls.Add(CursorResetButton5);
         CursorPanel5.Controls.Add(CursorNameLabel5);
+        CursorPanel5.Controls.Add(CursorSelectButton5);
         CursorPanel5.Controls.Add(CursorPictureBox5);
         CursorPanel5.Location = new Point(256, 62);
         CursorPanel5.Name = "CursorPanel5";
@@ -784,17 +1023,18 @@ sealed partial class MainForm
         CursorPanel5.DragEnter += CursorPanel5_DragEnter;
         CursorPanel5.DragOver += CursorPanel5_DragOver;
         // 
-        // CursorSelectButton5
+        // CursorResetButton5
         // 
-        CursorSelectButton5.Anchor = AnchorStyles.Right;
-        CursorSelectButton5.Cursor = Cursors.Hand;
-        CursorSelectButton5.Location = new Point(192, 0);
-        CursorSelectButton5.Name = "CursorSelectButton5";
-        CursorSelectButton5.Size = new Size(50, 50);
-        CursorSelectButton5.TabIndex = 8;
-        CursorSelectButton5.Text = "Pick";
-        CursorSelectButton5.UseVisualStyleBackColor = true;
-        CursorSelectButton5.Click += CursorSelectButton5_Click;
+        CursorResetButton5.Anchor = AnchorStyles.Right;
+        CursorResetButton5.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton5.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton5.Cursor = Cursors.Hand;
+        CursorResetButton5.Location = new Point(159, 4);
+        CursorResetButton5.Name = "CursorResetButton5";
+        CursorResetButton5.Size = new Size(40, 40);
+        CursorResetButton5.TabIndex = 11;
+        CursorResetButton5.UseVisualStyleBackColor = true;
+        CursorResetButton5.Click += CursorResetButton5_Click;
         // 
         // CursorNameLabel5
         // 
@@ -806,6 +1046,19 @@ sealed partial class MainForm
         CursorNameLabel5.Size = new Size(90, 19);
         CursorNameLabel5.TabIndex = 8;
         CursorNameLabel5.Text = "Cursor Name";
+        // 
+        // CursorSelectButton5
+        // 
+        CursorSelectButton5.Anchor = AnchorStyles.Right;
+        CursorSelectButton5.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton5.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton5.Cursor = Cursors.Hand;
+        CursorSelectButton5.Location = new Point(202, 4);
+        CursorSelectButton5.Name = "CursorSelectButton5";
+        CursorSelectButton5.Size = new Size(40, 40);
+        CursorSelectButton5.TabIndex = 8;
+        CursorSelectButton5.UseVisualStyleBackColor = true;
+        CursorSelectButton5.Click += CursorSelectButton5_Click;
         // 
         // CursorPictureBox5
         // 
@@ -822,8 +1075,9 @@ sealed partial class MainForm
         CursorPanel4.AllowDrop = true;
         CursorPanel4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel4.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel4.Controls.Add(CursorSelectButton4);
+        CursorPanel4.Controls.Add(CursorResetButton4);
         CursorPanel4.Controls.Add(CursorNameLabel4);
+        CursorPanel4.Controls.Add(CursorSelectButton4);
         CursorPanel4.Controls.Add(CursorPictureBox4);
         CursorPanel4.Location = new Point(3, 62);
         CursorPanel4.Name = "CursorPanel4";
@@ -833,17 +1087,18 @@ sealed partial class MainForm
         CursorPanel4.DragEnter += CursorPanel4_DragEnter;
         CursorPanel4.DragOver += CursorPanel4_DragOver;
         // 
-        // CursorSelectButton4
+        // CursorResetButton4
         // 
-        CursorSelectButton4.Anchor = AnchorStyles.Right;
-        CursorSelectButton4.Cursor = Cursors.Hand;
-        CursorSelectButton4.Location = new Point(192, 0);
-        CursorSelectButton4.Name = "CursorSelectButton4";
-        CursorSelectButton4.Size = new Size(50, 50);
-        CursorSelectButton4.TabIndex = 8;
-        CursorSelectButton4.Text = "Pick";
-        CursorSelectButton4.UseVisualStyleBackColor = true;
-        CursorSelectButton4.Click += CursorSelectButton4_Click;
+        CursorResetButton4.Anchor = AnchorStyles.Right;
+        CursorResetButton4.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton4.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton4.Cursor = Cursors.Hand;
+        CursorResetButton4.Location = new Point(159, 4);
+        CursorResetButton4.Name = "CursorResetButton4";
+        CursorResetButton4.Size = new Size(40, 40);
+        CursorResetButton4.TabIndex = 12;
+        CursorResetButton4.UseVisualStyleBackColor = true;
+        CursorResetButton4.Click += CursorResetButton4_Click;
         // 
         // CursorNameLabel4
         // 
@@ -855,6 +1110,19 @@ sealed partial class MainForm
         CursorNameLabel4.Size = new Size(90, 19);
         CursorNameLabel4.TabIndex = 8;
         CursorNameLabel4.Text = "Cursor Name";
+        // 
+        // CursorSelectButton4
+        // 
+        CursorSelectButton4.Anchor = AnchorStyles.Right;
+        CursorSelectButton4.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton4.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton4.Cursor = Cursors.Hand;
+        CursorSelectButton4.Location = new Point(202, 4);
+        CursorSelectButton4.Name = "CursorSelectButton4";
+        CursorSelectButton4.Size = new Size(40, 40);
+        CursorSelectButton4.TabIndex = 8;
+        CursorSelectButton4.UseVisualStyleBackColor = true;
+        CursorSelectButton4.Click += CursorSelectButton4_Click;
         // 
         // CursorPictureBox4
         // 
@@ -871,8 +1139,9 @@ sealed partial class MainForm
         CursorPanel3.AllowDrop = true;
         CursorPanel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel3.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel3.Controls.Add(CursorSelectButton3);
+        CursorPanel3.Controls.Add(CursorResetButton3);
         CursorPanel3.Controls.Add(CursorNameLabel3);
+        CursorPanel3.Controls.Add(CursorSelectButton3);
         CursorPanel3.Controls.Add(CursorPictureBox3);
         CursorPanel3.Location = new Point(509, 3);
         CursorPanel3.Name = "CursorPanel3";
@@ -882,17 +1151,18 @@ sealed partial class MainForm
         CursorPanel3.DragEnter += CursorPanel3_DragEnter;
         CursorPanel3.DragOver += CursorPanel3_DragOver;
         // 
-        // CursorSelectButton3
+        // CursorResetButton3
         // 
-        CursorSelectButton3.Anchor = AnchorStyles.Right;
-        CursorSelectButton3.Cursor = Cursors.Hand;
-        CursorSelectButton3.Location = new Point(192, 0);
-        CursorSelectButton3.Name = "CursorSelectButton3";
-        CursorSelectButton3.Size = new Size(50, 50);
-        CursorSelectButton3.TabIndex = 8;
-        CursorSelectButton3.Text = "Pick";
-        CursorSelectButton3.UseVisualStyleBackColor = true;
-        CursorSelectButton3.Click += CursorSelectButton3_Click;
+        CursorResetButton3.Anchor = AnchorStyles.Right;
+        CursorResetButton3.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton3.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton3.Cursor = Cursors.Hand;
+        CursorResetButton3.Location = new Point(159, 5);
+        CursorResetButton3.Name = "CursorResetButton3";
+        CursorResetButton3.Size = new Size(40, 40);
+        CursorResetButton3.TabIndex = 11;
+        CursorResetButton3.UseVisualStyleBackColor = true;
+        CursorResetButton3.Click += CursorResetButton3_Click;
         // 
         // CursorNameLabel3
         // 
@@ -904,6 +1174,19 @@ sealed partial class MainForm
         CursorNameLabel3.Size = new Size(90, 19);
         CursorNameLabel3.TabIndex = 8;
         CursorNameLabel3.Text = "Cursor Name";
+        // 
+        // CursorSelectButton3
+        // 
+        CursorSelectButton3.Anchor = AnchorStyles.Right;
+        CursorSelectButton3.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton3.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton3.Cursor = Cursors.Hand;
+        CursorSelectButton3.Location = new Point(202, 5);
+        CursorSelectButton3.Name = "CursorSelectButton3";
+        CursorSelectButton3.Size = new Size(40, 40);
+        CursorSelectButton3.TabIndex = 8;
+        CursorSelectButton3.UseVisualStyleBackColor = true;
+        CursorSelectButton3.Click += CursorSelectButton3_Click;
         // 
         // CursorPictureBox3
         // 
@@ -920,8 +1203,9 @@ sealed partial class MainForm
         CursorPanel1.AllowDrop = true;
         CursorPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel1.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel1.Controls.Add(CursorSelectButton1);
+        CursorPanel1.Controls.Add(CursorResetButton1);
         CursorPanel1.Controls.Add(CursorNameLabel1);
+        CursorPanel1.Controls.Add(CursorSelectButton1);
         CursorPanel1.Controls.Add(CursorPictureBox1);
         CursorPanel1.Location = new Point(3, 3);
         CursorPanel1.Name = "CursorPanel1";
@@ -931,17 +1215,18 @@ sealed partial class MainForm
         CursorPanel1.DragEnter += CursorPanel1_DragEnter;
         CursorPanel1.DragOver += CursorPanel1_DragOver;
         // 
-        // CursorSelectButton1
+        // CursorResetButton1
         // 
-        CursorSelectButton1.Anchor = AnchorStyles.Right;
-        CursorSelectButton1.Cursor = Cursors.Hand;
-        CursorSelectButton1.Location = new Point(192, 0);
-        CursorSelectButton1.Name = "CursorSelectButton1";
-        CursorSelectButton1.Size = new Size(50, 50);
-        CursorSelectButton1.TabIndex = 8;
-        CursorSelectButton1.Text = "Pick";
-        CursorSelectButton1.UseVisualStyleBackColor = true;
-        CursorSelectButton1.Click += CursorSelectButton1_Click;
+        CursorResetButton1.Anchor = AnchorStyles.Right;
+        CursorResetButton1.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton1.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton1.Cursor = Cursors.Hand;
+        CursorResetButton1.Location = new Point(159, 5);
+        CursorResetButton1.Name = "CursorResetButton1";
+        CursorResetButton1.Size = new Size(40, 40);
+        CursorResetButton1.TabIndex = 9;
+        CursorResetButton1.UseVisualStyleBackColor = true;
+        CursorResetButton1.Click += CursorResetButton1_Click;
         // 
         // CursorNameLabel1
         // 
@@ -953,6 +1238,19 @@ sealed partial class MainForm
         CursorNameLabel1.Size = new Size(90, 19);
         CursorNameLabel1.TabIndex = 8;
         CursorNameLabel1.Text = "Cursor Name";
+        // 
+        // CursorSelectButton1
+        // 
+        CursorSelectButton1.Anchor = AnchorStyles.Right;
+        CursorSelectButton1.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton1.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton1.Cursor = Cursors.Hand;
+        CursorSelectButton1.Location = new Point(202, 5);
+        CursorSelectButton1.Name = "CursorSelectButton1";
+        CursorSelectButton1.Size = new Size(40, 40);
+        CursorSelectButton1.TabIndex = 8;
+        CursorSelectButton1.UseVisualStyleBackColor = true;
+        CursorSelectButton1.Click += CursorSelectButton1_Click;
         // 
         // CursorPictureBox1
         // 
@@ -969,8 +1267,9 @@ sealed partial class MainForm
         CursorPanel2.AllowDrop = true;
         CursorPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         CursorPanel2.BorderStyle = BorderStyle.FixedSingle;
-        CursorPanel2.Controls.Add(CursorSelectButton2);
+        CursorPanel2.Controls.Add(CursorResetButton2);
         CursorPanel2.Controls.Add(CursorNameLabel2);
+        CursorPanel2.Controls.Add(CursorSelectButton2);
         CursorPanel2.Controls.Add(CursorPictureBox2);
         CursorPanel2.Location = new Point(256, 3);
         CursorPanel2.Name = "CursorPanel2";
@@ -980,17 +1279,18 @@ sealed partial class MainForm
         CursorPanel2.DragEnter += CursorPanel2_DragEnter;
         CursorPanel2.DragOver += CursorPanel2_DragOver;
         // 
-        // CursorSelectButton2
+        // CursorResetButton2
         // 
-        CursorSelectButton2.Anchor = AnchorStyles.Right;
-        CursorSelectButton2.Cursor = Cursors.Hand;
-        CursorSelectButton2.Location = new Point(192, 0);
-        CursorSelectButton2.Name = "CursorSelectButton2";
-        CursorSelectButton2.Size = new Size(50, 50);
-        CursorSelectButton2.TabIndex = 8;
-        CursorSelectButton2.Text = "Pick";
-        CursorSelectButton2.UseVisualStyleBackColor = true;
-        CursorSelectButton2.Click += CursorSelectButton2_Click;
+        CursorResetButton2.Anchor = AnchorStyles.Right;
+        CursorResetButton2.BackgroundImage = Properties.Resources.reset_png;
+        CursorResetButton2.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorResetButton2.Cursor = Cursors.Hand;
+        CursorResetButton2.Location = new Point(159, 5);
+        CursorResetButton2.Name = "CursorResetButton2";
+        CursorResetButton2.Size = new Size(40, 40);
+        CursorResetButton2.TabIndex = 11;
+        CursorResetButton2.UseVisualStyleBackColor = true;
+        CursorResetButton2.Click += CursorResetButton2_Click;
         // 
         // CursorNameLabel2
         // 
@@ -1002,6 +1302,19 @@ sealed partial class MainForm
         CursorNameLabel2.Size = new Size(90, 19);
         CursorNameLabel2.TabIndex = 8;
         CursorNameLabel2.Text = "Cursor Name";
+        // 
+        // CursorSelectButton2
+        // 
+        CursorSelectButton2.Anchor = AnchorStyles.Right;
+        CursorSelectButton2.BackgroundImage = Properties.Resources.file_open_png;
+        CursorSelectButton2.BackgroundImageLayout = ImageLayout.Zoom;
+        CursorSelectButton2.Cursor = Cursors.Hand;
+        CursorSelectButton2.Location = new Point(202, 4);
+        CursorSelectButton2.Name = "CursorSelectButton2";
+        CursorSelectButton2.Size = new Size(40, 40);
+        CursorSelectButton2.TabIndex = 8;
+        CursorSelectButton2.UseVisualStyleBackColor = true;
+        CursorSelectButton2.Click += CursorSelectButton2_Click;
         // 
         // CursorPictureBox2
         // 
@@ -1124,7 +1437,6 @@ sealed partial class MainForm
         AcceptButton = OkButton;
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        CancelButton = CancelButton;
         ClientSize = new Size(783, 506);
         Controls.Add(DragDropLabel);
         Controls.Add(AdminLabel);
@@ -1142,6 +1454,7 @@ sealed partial class MainForm
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Cursor Installer Creator";
         CursorsTableLayoutPanel.ResumeLayout(false);
+        CursorsAllPanel.ResumeLayout(false);
         CursorPanel16.ResumeLayout(false);
         CursorPanel16.PerformLayout();
         ((System.ComponentModel.ISupportInitialize)CursorPictureBox16).EndInit();
@@ -1277,4 +1590,24 @@ sealed partial class MainForm
     private Label CursorNameLabel17;
     private Button CursorSelectButton17;
     private PictureBox CursorPictureBox17;
+    private Button CursorResetButton1;
+    private Button CursorResetButton16;
+    private Button CursorResetButton17;
+    private Button CursorResetButton15;
+    private Button CursorResetButton14;
+    private Button CursorResetButton13;
+    private Button CursorResetButton12;
+    private Button CursorResetButton11;
+    private Button CursorResetButton10;
+    private Button CursorResetButton9;
+    private Button CursorResetButton8;
+    private Button CursorResetButton7;
+    private Button CursorResetButton6;
+    private Button CursorResetButton5;
+    private Button CursorResetButton4;
+    private Button CursorResetButton3;
+    private Button CursorResetButton2;
+    private Panel CursorsAllPanel;
+    private Button CursorsAllImportButton;
+    private Button CursorsAllResetButton;
 }
