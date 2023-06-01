@@ -4,7 +4,7 @@
 
 Ein Programm zum einfachen und schnellen Erstellen von Cursor-Installer Dateien.
 
-![Cursor-Installer-Creator-Preview](https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/9fae892f-b22c-41b7-9804-3584452b6cf4)
+![Cursor-Installer-Creator-Preview](https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/dd64aade-8082-419c-bc53-fe6ffad09ac4)
 
 Die Aktuelle Version kann unter [Releases](https://github.com/Der-Floh/Cursor-Installer-Creator/releases) gefunden werden
 
@@ -18,10 +18,8 @@ Wähle die Cursordateien aus oder ziehe sie per Drag & Drop an den entsprechende
 - Ziehen und Ablegen von .cur- und .ani-Cursordateien per Drag & Drop
 - Installer-Paket als Ordner oder .zip-Archiv erstellen
 - Direktes Installieren eines neuen Cursors aus dem Programm
-
-## Geplante Funktionen
-
 - Zurücksetzen einzelner Cursor zum standard Cursor
+- Importieren einer Cursor-Installer (.inf) Datei
 
 &nbsp;
 
