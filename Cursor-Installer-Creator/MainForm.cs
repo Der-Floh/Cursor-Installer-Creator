@@ -54,6 +54,7 @@ public sealed partial class MainForm : Form
             string cursorName = kvp.Value;
 
             PictureBox? pictureBox = CursorsTableLayoutPanel.Controls.Find(pictureBoxName, true).FirstOrDefault() as PictureBox;
+            Panel? panel = pictureBox?.Parent as Panel;
             Label? label = CursorsTableLayoutPanel.Controls.Find(pictureBoxName.Replace("CursorPictureBox", "CursorNameLabel"), true).FirstOrDefault() as Label;
 
             if (pictureBox is null || label is null)
@@ -61,6 +62,12 @@ public sealed partial class MainForm : Form
 
             pictureBox.Image?.Dispose();
             label.Text = cursorName;
+            if (PreviewCheckBox.Checked && panel is not null)
+            {
+                string? cursorPath = CCursors?.Find(x => x.Name?.ToLower() == cursorName.ToLower())?.CursorPath;
+                if (!string.IsNullOrEmpty(cursorPath))
+                    panel.Cursor = AdvancedCursors.Create(cursorPath);
+            }
 
             CCursor? cursor = CCursors.FirstOrDefault(c => c.Name?.ToLower() == cursorName.ToLower());
             if (cursor is null || !File.Exists(cursor.ImagePath))
@@ -80,10 +87,20 @@ public sealed partial class MainForm : Form
         string cursorName = BoxCursorAssignment[boxname];
 
         PictureBox? pictureBox = CursorsTableLayoutPanel.Controls.Find(pictureBoxName, true).FirstOrDefault() as PictureBox;
+        Panel? panel = pictureBox?.Parent as Panel;
         Label? label = CursorsTableLayoutPanel.Controls.Find(pictureBoxName.Replace("CursorPictureBox", "CursorNameLabel"), true).FirstOrDefault() as Label;
 
         if (pictureBox is null || label is null)
             return;
+
+        pictureBox.Image?.Dispose();
+        label.Text = cursorName;
+        if (PreviewCheckBox.Checked && panel is not null)
+        {
+            string? cursorPath = CCursors?.Find(x => x.Name?.ToLower() == cursorName.ToLower())?.CursorPath;
+            if (!string.IsNullOrEmpty(cursorPath))
+                panel.Cursor = AdvancedCursors.Create(cursorPath);
+        }
 
         CCursor? cursor = CCursors.FirstOrDefault(c => c.Name?.ToLower() == cursorName.ToLower());
         if (cursor is null || !File.Exists(cursor.ImagePath))
@@ -330,6 +347,46 @@ public sealed partial class MainForm : Form
         CursorHelper.CreateInstaller(PackageNameTextBox.Text, Program.TempPath, CCursors, false);
         string installerPath = Path.Combine(Program.TempPath, PackageNameTextBox.Text, "installer.inf");
         CursorHelper.InstallCursor(installerPath);
+    }
+
+    private void PreviewCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        if (PreviewCheckBox.Checked)
+        {
+            foreach (KeyValuePair<string, string> kvp in BoxCursorAssignment)
+            {
+                string pictureBoxName = kvp.Key;
+                string cursorName = kvp.Value;
+
+                PictureBox? pictureBox = CursorsTableLayoutPanel.Controls.Find(pictureBoxName, true).FirstOrDefault() as PictureBox;
+                Panel? panel = pictureBox?.Parent as Panel;
+
+                if (panel is null)
+                    continue;
+
+                string? cursorPath = CCursors?.Find(x => x.Name?.ToLower() == cursorName.ToLower())?.CursorPath;
+                if (string.IsNullOrEmpty(cursorPath))
+                    continue;
+
+                panel.Cursor = AdvancedCursors.Create(cursorPath);
+            }
+        }
+        else
+        {
+            foreach (KeyValuePair<string, string> kvp in BoxCursorAssignment)
+            {
+                string pictureBoxName = kvp.Key;
+                string cursorName = kvp.Value.ToLower();
+
+                PictureBox? pictureBox = CursorsTableLayoutPanel.Controls.Find(pictureBoxName, true).FirstOrDefault() as PictureBox;
+                Panel? panel = pictureBox?.Parent as Panel;
+
+                if (panel is null)
+                    continue;
+
+                panel.Cursor = Cursors.Default;
+            }
+        }
     }
 
     private void CursorPanel1_DragEnter(object sender, DragEventArgs e)

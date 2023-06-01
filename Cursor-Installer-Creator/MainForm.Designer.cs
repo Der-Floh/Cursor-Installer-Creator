@@ -127,6 +127,7 @@ sealed partial class MainForm
         InstallButton = new Button();
         AdminLabel = new Label();
         DragDropLabel = new Label();
+        PreviewCheckBox = new CheckBox();
         CursorsTableLayoutPanel.SuspendLayout();
         CursorsAllPanel.SuspendLayout();
         CursorPanel16.SuspendLayout();
@@ -1432,12 +1433,26 @@ sealed partial class MainForm
         DragDropLabel.Text = "Supports Drag and Drop";
         DragDropLabel.TextAlign = ContentAlignment.MiddleRight;
         // 
+        // PreviewCheckBox
+        // 
+        PreviewCheckBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+        PreviewCheckBox.AutoSize = true;
+        PreviewCheckBox.Cursor = Cursors.Hand;
+        PreviewCheckBox.Location = new Point(12, 75);
+        PreviewCheckBox.Name = "PreviewCheckBox";
+        PreviewCheckBox.Size = new Size(139, 19);
+        PreviewCheckBox.TabIndex = 10;
+        PreviewCheckBox.Text = "Cursor Preview Mode";
+        PreviewCheckBox.UseVisualStyleBackColor = true;
+        PreviewCheckBox.CheckedChanged += PreviewCheckBox_CheckedChanged;
+        // 
         // MainForm
         // 
         AcceptButton = OkButton;
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(783, 506);
+        Controls.Add(PreviewCheckBox);
         Controls.Add(DragDropLabel);
         Controls.Add(AdminLabel);
         Controls.Add(InstallButton);
@@ -1610,4 +1625,5 @@ sealed partial class MainForm
     private Panel CursorsAllPanel;
     private Button CursorsAllImportButton;
     private Button CursorsAllResetButton;
+    private CheckBox PreviewCheckBox;
 }

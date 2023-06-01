@@ -21,6 +21,7 @@ Pick or Drag & Drop cursor files in their corresponding slot. Give the cursor pa
 - Directly insall a new cursor from the program
 - Reset individual cursors to default
 - Import Cursor-Installer (.inf) File
+- Preview Cursors
 
 &nbsp;
 
