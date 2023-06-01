@@ -5,7 +5,7 @@
 
 A program to create Cursor-Installer files simply and fast.
 
-![Cursor-Installer-Creator-Preview](https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/9fae892f-b22c-41b7-9804-3584452b6cf4)
+![Cursor-Installer-Creator-Preview](https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/dd64aade-8082-419c-bc53-fe6ffad09ac4)
 
 Current Version can be found under [Releases](https://github.com/Der-Floh/Cursor-Installer-Creator/releases)
 
@@ -19,10 +19,8 @@ Pick or Drag & Drop cursor files in their corresponding slot. Give the cursor pa
 - Drag and Drop .cur and .ani files
 - Create Installer-Package as Folder or .zip archive
 - Directly insall a new cursor from the program
-
-## Planned Features
-
 - Reset individual cursors to default
+- Import Cursor-Installer (.inf) File
 
 &nbsp;
 
