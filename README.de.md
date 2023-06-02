@@ -4,7 +4,10 @@
 
 Ein Programm zum einfachen und schnellen Erstellen von Cursor-Installer Dateien.
 
-![Cursor-Installer-Creator-Preview](https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/255d7ab7-1ad2-46c6-bbf8-82ef06caff21)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/89177eee-28ee-463d-b09a-99a00e69f6b0">
+  <img alt="Shows a preview of the Cursor-Installer-Creator" src="https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/15f1eda4-c6c4-429e-a02d-b39326662b28">
+</picture>
 
 Die Aktuelle Version kann unter [Releases](https://github.com/Der-Floh/Cursor-Installer-Creator/releases) gefunden werden
 
@@ -21,6 +24,7 @@ Wähle die Cursordateien aus oder ziehe sie per Drag & Drop an den entsprechende
 - Zurücksetzen einzelner Cursor zum standard Cursor
 - Importieren einer Cursor-Installer (.inf) Datei
 - Cursor Vorschau
+- Heller und Dunkler Modus
 
 &nbsp;
 
