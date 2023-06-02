@@ -128,6 +128,7 @@ sealed partial class MainForm
         AdminLabel = new Label();
         DragDropLabel = new Label();
         PreviewCheckBox = new CheckBox();
+        DarkModeCheckBox = new CheckBox();
         CursorsTableLayoutPanel.SuspendLayout();
         CursorsAllPanel.SuspendLayout();
         CursorPanel16.SuspendLayout();
@@ -224,6 +225,7 @@ sealed partial class MainForm
         CursorsAllImportButton.Name = "CursorsAllImportButton";
         CursorsAllImportButton.Size = new Size(131, 36);
         CursorsAllImportButton.TabIndex = 24;
+        CursorsAllImportButton.TabStop = false;
         CursorsAllImportButton.Text = "Import Installer File";
         CursorsAllImportButton.UseVisualStyleBackColor = true;
         CursorsAllImportButton.Click += CursorsAllImportButton_Click;
@@ -235,6 +237,7 @@ sealed partial class MainForm
         CursorsAllResetButton.Name = "CursorsAllResetButton";
         CursorsAllResetButton.Size = new Size(82, 36);
         CursorsAllResetButton.TabIndex = 23;
+        CursorsAllResetButton.TabStop = false;
         CursorsAllResetButton.Text = "Reset All";
         CursorsAllResetButton.UseVisualStyleBackColor = true;
         CursorsAllResetButton.Click += CursorsAllResetButton_Click;
@@ -1310,7 +1313,7 @@ sealed partial class MainForm
         CursorSelectButton2.BackgroundImage = Properties.Resources.file_open_png;
         CursorSelectButton2.BackgroundImageLayout = ImageLayout.Zoom;
         CursorSelectButton2.Cursor = Cursors.Hand;
-        CursorSelectButton2.Location = new Point(202, 4);
+        CursorSelectButton2.Location = new Point(202, 5);
         CursorSelectButton2.Name = "CursorSelectButton2";
         CursorSelectButton2.Size = new Size(40, 40);
         CursorSelectButton2.TabIndex = 8;
@@ -1334,6 +1337,7 @@ sealed partial class MainForm
         PackageNameTextBox.Name = "PackageNameTextBox";
         PackageNameTextBox.Size = new Size(310, 23);
         PackageNameTextBox.TabIndex = 1;
+        PackageNameTextBox.TabStop = false;
         PackageNameTextBox.Text = "Cursor-Installer";
         PackageNameTextBox.TextChanged += PackageNameTextBox_TextChanged;
         // 
@@ -1355,6 +1359,7 @@ sealed partial class MainForm
         CancelButton.Name = "CancelButton";
         CancelButton.Size = new Size(107, 40);
         CancelButton.TabIndex = 3;
+        CancelButton.TabStop = false;
         CancelButton.Text = "Cancel";
         CancelButton.UseVisualStyleBackColor = true;
         CancelButton.Click += CancelButton_Click;
@@ -1368,6 +1373,7 @@ sealed partial class MainForm
         OkButton.Name = "OkButton";
         OkButton.Size = new Size(117, 40);
         OkButton.TabIndex = 4;
+        OkButton.TabStop = false;
         OkButton.Text = "Create Package";
         OkButton.UseVisualStyleBackColor = true;
         OkButton.Click += OkButton_Click;
@@ -1407,6 +1413,7 @@ sealed partial class MainForm
         InstallButton.Name = "InstallButton";
         InstallButton.Size = new Size(107, 40);
         InstallButton.TabIndex = 7;
+        InstallButton.TabStop = false;
         InstallButton.Text = "Install Cursor";
         InstallButton.UseVisualStyleBackColor = true;
         InstallButton.Click += InstallButton_Click;
@@ -1435,23 +1442,37 @@ sealed partial class MainForm
         // 
         // PreviewCheckBox
         // 
-        PreviewCheckBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
         PreviewCheckBox.AutoSize = true;
         PreviewCheckBox.Cursor = Cursors.Hand;
         PreviewCheckBox.Location = new Point(12, 75);
         PreviewCheckBox.Name = "PreviewCheckBox";
         PreviewCheckBox.Size = new Size(139, 19);
         PreviewCheckBox.TabIndex = 10;
+        PreviewCheckBox.TabStop = false;
         PreviewCheckBox.Text = "Cursor Preview Mode";
         PreviewCheckBox.UseVisualStyleBackColor = true;
         PreviewCheckBox.CheckedChanged += PreviewCheckBox_CheckedChanged;
         // 
+        // DarkModeCheckBox
+        // 
+        DarkModeCheckBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+        DarkModeCheckBox.AutoSize = true;
+        DarkModeCheckBox.Cursor = Cursors.Hand;
+        DarkModeCheckBox.Location = new Point(687, 12);
+        DarkModeCheckBox.Name = "DarkModeCheckBox";
+        DarkModeCheckBox.Size = new Size(84, 19);
+        DarkModeCheckBox.TabIndex = 11;
+        DarkModeCheckBox.TabStop = false;
+        DarkModeCheckBox.Text = "Dark Mode";
+        DarkModeCheckBox.UseVisualStyleBackColor = true;
+        DarkModeCheckBox.CheckedChanged += DarkModeCheckBox_CheckedChanged;
+        // 
         // MainForm
         // 
-        AcceptButton = OkButton;
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(783, 506);
+        Controls.Add(DarkModeCheckBox);
         Controls.Add(PreviewCheckBox);
         Controls.Add(DragDropLabel);
         Controls.Add(AdminLabel);
@@ -1468,6 +1489,8 @@ sealed partial class MainForm
         Name = "MainForm";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Cursor Installer Creator";
+        ResizeEnd += MainForm_ResizeEnd;
+        Resize += MainForm_Resize;
         CursorsTableLayoutPanel.ResumeLayout(false);
         CursorsAllPanel.ResumeLayout(false);
         CursorPanel16.ResumeLayout(false);
@@ -1626,4 +1649,5 @@ sealed partial class MainForm
     private Button CursorsAllImportButton;
     private Button CursorsAllResetButton;
     private CheckBox PreviewCheckBox;
+    private CheckBox DarkModeCheckBox;
 }
