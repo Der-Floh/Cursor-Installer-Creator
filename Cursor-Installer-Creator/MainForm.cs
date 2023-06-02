@@ -1,3 +1,4 @@
+using Microsoft.Win32;
 using System.Diagnostics;
 using System.Security.Principal;
 using System.Text.Json;
@@ -9,13 +10,97 @@ public sealed partial class MainForm : Form
     private Dictionary<string, string> BoxCursorAssignment { get; set; } = new Dictionary<string, string>();
     private Dictionary<string, string> CursorBoxAssignment { get; set; }
     private List<CCursor>? CCursors { get; set; }
+    private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+    private bool isResizing;
 
     public MainForm(List<CCursor>? cCursors = null)
     {
+        timer.Interval = 1000;
+        timer.Tick += (sender, e) =>
+        {
+            Refresh();
+        };
+
         InitializeComponent();
+
+        DarkModeCheckBox.Checked = IsDarkModeEnabled();
+        DarkModeCheckBox_CheckedChanged(DarkModeCheckBox, EventArgs.Empty);
         AdminLabel.Visible = !IsRunningWithAdminPrivileges();
+
         SetUpBoxCursorAssignment();
         FillCursors(cCursors);
+    }
+
+    public static bool IsDarkModeEnabled()
+    {
+        const string keyPath = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+        const string valueName = "AppsUseLightTheme";
+
+        using var key = Registry.CurrentUser.OpenSubKey(keyPath);
+        if (key is not null && key.GetValue(valueName) is int value)
+            return value == 0;
+        return false;
+    }
+
+    public void ChangeTheme(bool light, Control.ControlCollection container)
+    {
+        if (light)
+        {
+            BackColor = SystemColors.Control;
+            ForeColor = SystemColors.ControlText;
+        }
+        else
+        {
+            BackColor = SystemColors.ControlDarkDark;
+            ForeColor = SystemColors.Control;
+        }
+        foreach (Control component in container)
+        {
+            if (component is Panel || component is Button || component is TextBox)
+            {
+                if (component is Panel)
+                {
+                    var panel = component as Panel;
+                    if (panel is not null)
+                        if (light)
+                        {
+                            if (panel.HasBorderColor())
+                            {
+                                panel.BorderStyle = BorderStyle.FixedSingle;
+                                panel.RemoveBorderColor();
+                            }
+                        }
+                        else if (panel.BorderStyle == BorderStyle.FixedSingle)
+                        {
+                            panel.BorderStyle = BorderStyle.None;
+                            panel.SetBorderColor(SystemColors.ControlDark);
+                        }
+                    ChangeTheme(light, component.Controls);
+                }
+                else if (component is Button)
+                {
+                    var button = component as Button;
+                    if (button is not null)
+                        if (light)
+                            button.FlatStyle = FlatStyle.Standard;
+                        else
+                        {
+                            button.FlatStyle = FlatStyle.Flat;
+                            button.FlatAppearance.BorderColor = SystemColors.ControlDark;
+                        }
+                }
+                if (light)
+                {
+                    component.BackColor = SystemColors.Control;
+                    component.ForeColor = SystemColors.ControlText;
+                }
+                else
+                {
+                    component.BackColor = SystemColors.ControlDarkDark;
+                    component.ForeColor = SystemColors.Control;
+                }
+            }
+        }
     }
 
     private void SetUpBoxCursorAssignment()
@@ -308,6 +393,29 @@ public sealed partial class MainForm : Form
 
     #region EventListeners
 
+    private void MainForm_Resize(object sender, EventArgs e)
+    {
+        if (DarkModeCheckBox.Checked && !isResizing)
+        {
+            isResizing = true;
+            timer.Start();
+        }
+    }
+    private void MainForm_ResizeEnd(object sender, EventArgs e)
+    {
+        if (isResizing)
+        {
+            timer.Stop();
+            isResizing = false;
+            Refresh();
+        }
+    }
+
+    private void DarkModeCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+        ChangeTheme(!DarkModeCheckBox.Checked, this.Controls);
+    }
+
     private void PackageNameTextBox_TextChanged(object sender, EventArgs e)
     {
         if (string.IsNullOrWhiteSpace(PackageNameTextBox.Text))
@@ -362,7 +470,8 @@ public sealed partial class MainForm : Form
                 Panel? panel = pictureBox?.Parent as Panel;
 
                 if (panel is null)
-                    continue;
+                    if (panel is null)
+                        continue;
 
                 string? cursorPath = CCursors?.Find(x => x.Name?.ToLower() == cursorName.ToLower())?.CursorPath;
                 if (string.IsNullOrEmpty(cursorPath))
