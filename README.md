@@ -5,7 +5,10 @@
 
 A program to create Cursor-Installer files simply and fast.
 
-![Cursor-Installer-Creator-Preview](https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/dd64aade-8082-419c-bc53-fe6ffad09ac4)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/89177eee-28ee-463d-b09a-99a00e69f6b0">
+  <img alt="Shows a preview of the Cursor-Installer-Creator" src="https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/15f1eda4-c6c4-429e-a02d-b39326662b28">
+</picture>
 
 Current Version can be found under [Releases](https://github.com/Der-Floh/Cursor-Installer-Creator/releases)
 
@@ -22,6 +25,7 @@ Pick or Drag & Drop cursor files in their corresponding slot. Give the cursor pa
 - Reset individual cursors to default
 - Import Cursor-Installer (.inf) File
 - Preview Cursors
+- Light and Dark Mode
 
 &nbsp;
 
