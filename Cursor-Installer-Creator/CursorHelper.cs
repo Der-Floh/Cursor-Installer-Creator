@@ -272,7 +272,7 @@ public sealed class CursorHelper
         ProcessStartInfo startInfo = new ProcessStartInfo
         {
             FileName = "cmd.exe",
-            Arguments = $"/k \"{command} {arguments}\"",
+            Arguments = $"/c \"{command} {arguments}\"",
             Verb = "runas",
             UseShellExecute = true,
             CreateNoWindow = true,
