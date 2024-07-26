@@ -1,0 +1,24 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="Cursor_Installer_Creator.App"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceInclude Source="/Accents/Styles.axaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
+
+	<Application.Styles>
+		<FluentTheme>
+			<FluentTheme.Palettes>
+				<ColorPaletteResources x:Key="Light" RegionColor="#EEEEEE" Accent="#00ADB5"/>
+				<ColorPaletteResources x:Key="Dark" RegionColor="#2b2b2b" Accent="#0D7377"/>
+			</FluentTheme.Palettes>
+		</FluentTheme>
+	</Application.Styles>
+	
+</Application>

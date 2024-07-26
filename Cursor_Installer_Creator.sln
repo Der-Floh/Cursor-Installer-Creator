@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35103.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cursor_Installer_Creator", "Cursor_Installer_Creator.csproj", "{903A5D99-5920-409D-A5D9-414AFB6F65B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{903A5D99-5920-409D-A5D9-414AFB6F65B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{903A5D99-5920-409D-A5D9-414AFB6F65B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{903A5D99-5920-409D-A5D9-414AFB6F65B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{903A5D99-5920-409D-A5D9-414AFB6F65B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24116C50-2A30-4A91-B18A-C1FB8255EBE7}
+	EndGlobalSection
+EndGlobal

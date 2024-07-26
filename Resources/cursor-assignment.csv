@@ -1,0 +1,18 @@
+ID,Name,DisplayName,Windows,WindowsReg,WindowsInstall,Avalonia
+32512,IDC_ARROW,Normal Select,arrow_m,Arrow,pointer,Arrow
+32513,IDC_IBEAM,Text Select,beam_im,IBeam,text,Ibeam
+32514,IDC_WAIT,Busy,busy_m,Wait,busy,Wait
+32515,IDC_CROSS,Precision Select,cross_im,Crosshair,cross,Cross
+32516,IDC_UPARROW,Alternate Select,up_m,UpArrow,alternate,UpArrow
+32642,IDC_SIZENWSE,Diagonal Resize 1,lnwse,SizeNWSE,dgn1,TopLeftCorner
+32643,IDC_SIZENESW,Diagonal Resize 2,lnesw,SizeNESW,dgn2,TopRightCorner
+32644,IDC_SIZEWE,Horizontal Resize,lwe,SizeWE,horz,SizeWestEast
+32645,IDC_SIZENS,Vertical Resize,lns,SizeNS,vert,SizeNorthSouth
+32646,IDC_SIZEALL,Move,move_m,SizeAll,move,SizeAll
+32648,IDC_NO,Unavailable,no_m,No,unavailiable,No
+32649,IDC_HAND,Link Select,aero_link_im,Hand,link,Hand
+32650,IDC_APPSTARTING,Working in Background,wait_m,AppStarting,work,AppStarting
+32651,IDC_HELP,Help Select,help_m,Help,help,Help
+32671,IDC_PIN,Location Select,pin_m,Pin,pin,
+32672,IDC_PERSON,Person Select,person_m,Person,person,
+32631,OCR_NWPEN,Handwriting,pen_m,NWPen,handwrt,

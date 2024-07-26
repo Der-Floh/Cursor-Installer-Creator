@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:views="clr-namespace:Cursor_Installer_Creator.Views"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Cursor_Installer_Creator.Views.CursorInstallerMainView">
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="10*"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<TextBlock Grid.Column="1" Text="Supports Drag and Drop" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+		<StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="8,0,0,0">
+			<TextBlock Text="Cursor Packagename" VerticalAlignment="Center" Margin="0,0,16,0"/>
+			<TextBox Name="CursorPackagenameTextBox" Watermark="My Custom Cursor" MinWidth="146" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+		</StackPanel>
+		
+		<views:CursorListView Grid.Row="1" Grid.ColumnSpan="2" Name="CursorListViewElem"/>
+	
+		<Button Grid.Row="2" Content="Install Cursor" Cursor="Hand" Click="CursorInstallButton_Click" Margin="8,0,0,0"/>
+
+		<StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,8,0">
+			<TextBlock Name="OperationSuccessTextBlock" Text="Finished" FontWeight="Bold" Foreground="Green" IsVisible="False" VerticalAlignment="Center" Margin="0,0,16,0"/>
+			<ComboBox Name="CursorPackageTypeComboBox" SelectedIndex="0" Cursor="Hand" MinWidth="196" VerticalAlignment="Center" Margin="0,0,16,0">
+				<ComboBoxItem Content="Target Folder"/>
+				<ComboBoxItem Content="Compressed Archive (.zip)"/>
+				<ComboBoxItem Content="Installer (.exe) WIP" Foreground="Gray" IsEnabled="False"/>
+			</ComboBox>
+			<Button Name="CreateCursorPackageButton" Content="Create Package" Cursor="Hand" Click="CreateCursorPackageButton_Click" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+		</StackPanel>
+	</Grid>
+	
+</UserControl>

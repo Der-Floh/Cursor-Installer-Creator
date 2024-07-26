@@ -1,27 +1,24 @@
 # Cursor-Installer-Creator
 
-[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/Der-Floh/Cursor-Installer-Creator/blob/master/README.md)
-[![de](https://img.shields.io/badge/lang-de-green.svg)](https://github.com/Der-Floh/Cursor-Installer-Creator/blob/master/README.de.md)
-
 A program to create Cursor-Installer files simply and fast.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/89177eee-28ee-463d-b09a-99a00e69f6b0">
-  <img alt="Shows a preview of the Cursor-Installer-Creator" src="https://github.com/Der-Floh/Cursor-Installer-Creator/assets/65826571/15f1eda4-c6c4-429e-a02d-b39326662b28">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Der-Floh/Cursor-Installer-Creator/main/Resources/preview-dark.png">
+  <img alt="Shows a preview of the Cursor-Installer-Creator" src="https://raw.githubusercontent.com/Der-Floh/Cursor-Installer-Creator/main/Resources/preview-light.png">
 </picture>
 
-Current Version can be found under [Releases](https://github.com/Der-Floh/Cursor-Installer-Creator/releases)
+[Download Latest Release](https://github.com/Der-Floh/Cursor-Installer-Creator/releases/latest)
 
 ## Usage
 
-Pick or Drag & Drop cursor files in their corresponding slot. Give the cursor package a name and hit create package. Optionally you can also decide wether to create the package inside a .zip compressed folder or just inside a folder.
+Pick or Drag & Drop cursor files in their corresponding slot. Give the cursor package a name and hit create package. Optionally you can also decide wether to create the package inside a .zip compressed archive or just inside a folder.
 
-## Current Features
+## Features
 
 - Pick .cur and .ani cursor files
 - Drag and Drop .cur and .ani files
 - Create Installer-Package as Folder or .zip archive
-- Directly insall a new cursor from the program
+- Directly install a new cursor from the program
 - Reset individual cursors to default
 - Import Cursor-Installer (.inf) File
 - Preview Cursors

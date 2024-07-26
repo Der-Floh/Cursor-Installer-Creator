@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Cursor_Installer_Creator"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Cursor_Installer_Creator.Views.CursorItemView">
+
+	<Grid Name="CursorItemGrid" Margin="8" Background="{DynamicResource RegionColor}">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<Border Grid.ColumnSpan="4" BorderBrush="{DynamicResource RegionColorDamp}" BorderThickness="4" CornerRadius="2"/>
+		<Image Grid.Column="0" Name="CursorImage" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="16"/>
+		<TextBlock Grid.Column="1" Name="CursorNameTextBlock" VerticalAlignment="Center"/>
+		<Button Grid.Column="2" Name="CursorResetButton" Cursor="Hand" Click="CursorResetButton_Click" CornerRadius="4" HorizontalAlignment="Right" Margin="16,16,8,16">
+			<Image Name="ResetImage" Source="{DynamicResource ResetImage}"/>
+		</Button>
+		<Button Grid.Column="3" Name="CursorPickButton" Cursor="Hand" Click="CursorPickButton_Click" CornerRadius="4" Margin="8,16,16,16">
+			<Image Name="FileOpenImage" Source="{DynamicResource FileOpenImage}"/>
+		</Button>
+	</Grid>
+
+</UserControl>
