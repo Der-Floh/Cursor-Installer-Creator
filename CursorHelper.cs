@@ -260,11 +260,11 @@ public static class CursorHelper
         sb.AppendLine("Scheme.Txt = 10,\"%CUR_DIR%\"");
         sb.AppendLine();
         sb.AppendLine("[Scheme.Reg]");
-        sb.AppendLine(@$"HKCU,""Control Panel\Cursors\Schemes"",""%SCHEME_NAME%"",,""{string.Join(',', ccursors.Select(x => @$"%10%\%CUR_DIR%\{x.Assignment.WindowsInstall}"))}""");
+        sb.AppendLine(@$"HKCU,""Control Panel\Cursors\Schemes"",""%SCHEME_NAME%"",,""{string.Join(',', ccursors.OrderBy(x => x.Assignment.Order).Select(x => @$"%10%\%CUR_DIR%\%{x.Assignment.WindowsInstall}%"))}""");
         sb.AppendLine();
 
         sb.AppendLine("[Scheme.Cur]");
-        foreach (var ccursor in ccursors)
+        foreach (var ccursor in ccursors.OrderBy(x => x.Assignment.ID))
         {
             var extension = Path.GetExtension(ccursor.CursorPath);
             sb.AppendLine($"\"{ccursor.Assignment.WindowsReg}{extension}\"");
@@ -274,7 +274,7 @@ public static class CursorHelper
         sb.AppendLine("[Strings]");
         sb.AppendLine($"CUR_DIR      = \"Cursors\\{packageName}\"");
         sb.AppendLine($"SCHEME_NAME  = \"{packageName}\"");
-        foreach (var ccursor in ccursors)
+        foreach (var ccursor in ccursors.OrderBy(x => x.Assignment.ID))
         {
             var extension = Path.GetExtension(ccursor.CursorPath);
             var spaceCount = 12 - ccursor.Assignment.WindowsInstall.ToCharArray().Length;
