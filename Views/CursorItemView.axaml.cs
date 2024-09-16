@@ -121,7 +121,7 @@ public partial class CursorItemView : UserControl
         var files = e.Data.GetFiles()?.ToArray();
         if (files is not null && files.Length == 1)
         {
-            UpdateCursorFromFile(files[0].Path.AbsolutePath);
+            UpdateCursorFromFile(Uri.UnescapeDataString(files[0].Path.AbsolutePath));
         }
     }
 
@@ -137,6 +137,6 @@ public partial class CursorItemView : UserControl
         var filePath = await GetCursorFile();
         if (filePath is null)
             return;
-        UpdateCursorFromFile(filePath.AbsolutePath);
+        UpdateCursorFromFile(Uri.UnescapeDataString(filePath.AbsolutePath));
     }
 }
