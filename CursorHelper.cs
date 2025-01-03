@@ -19,9 +19,11 @@ public static class CursorHelper
     {
         var ccursors = new List<CCursor>();
 
+        var assignmentsAll = CursorAssignment.CursorAssignments.Values.ToList();
         using var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Cursors");
         if (key is not null)
         {
+            // Search Registry for cursors
             var valueNames = key.GetValueNames();
             foreach (var valueName in valueNames)
             {
@@ -35,6 +37,21 @@ public static class CursorHelper
                 if (File.Exists(cursorPath))
                 {
                     var ccursor = ConvertCursorFile(cursorPath, valueName);
+                    if (ccursor is not null)
+                    {
+                        ccursors.Add(ccursor);
+                    }
+                }
+            }
+
+            // Add missing cursors from CursorAssignment
+            foreach (var assignment in assignmentsAll)
+            {
+                var cursorAssignment = CursorAssignment.FromName(assignment.WindowsReg, CursorAssignmentType.WindowsReg);
+                var cursorPath = $"C:/Windows/Cursors/{cursorAssignment?.Windows}.cur";
+                if (File.Exists(cursorPath))
+                {
+                    var ccursor = ConvertCursorFile(cursorPath, assignment.WindowsReg);
                     if (ccursor is not null)
                     {
                         ccursors.Add(ccursor);
