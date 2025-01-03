@@ -70,6 +70,7 @@ public static class CursorHelper
                     Assignment = assignment.Value,
                     CursorPath = @$"C:\Windows\Cursors\{assignment.Value.Windows}.cur",
                 };
+                ccursor.CursorPath = ConvertCursorFile(ccursor.CursorPath, ccursor.Assignment)?.CursorPath ?? ccursor.CursorPath;
                 if (File.Exists(ccursor.CursorPath))
                 {
                     ccursors.Add(ccursor);
