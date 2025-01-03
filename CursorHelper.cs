@@ -43,23 +43,9 @@ public static class CursorHelper
                     }
                 }
             }
-
-            // Add missing cursors from CursorAssignment
-            foreach (var assignment in assignmentsAll)
-            {
-                var cursorAssignment = CursorAssignment.FromName(assignment.WindowsReg, CursorAssignmentType.WindowsReg);
-                var cursorPath = $"C:/Windows/Cursors/{cursorAssignment?.Windows}.cur";
-                if (File.Exists(cursorPath))
-                {
-                    var ccursor = ConvertCursorFile(cursorPath, assignment.WindowsReg);
-                    if (ccursor is not null)
-                    {
-                        ccursors.Add(ccursor);
-                    }
-                }
-            }
         }
 
+        // Add missing cursors from CursorAssignment
         foreach (var assignment in CursorAssignment.CursorAssignments)
         {
             var ccursor = ccursors.FirstOrDefault(x => x.Assignment.ID == assignment.Key);
