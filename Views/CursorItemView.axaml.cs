@@ -1,7 +1,10 @@
 using Avalonia.Controls;
 using Avalonia.Input;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
+using Cursor_Installer_Creator.Data;
+using Cursor_Installer_Creator.Utils;
 using System;
 using System.IO;
 using System.Linq;
@@ -10,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Cursor_Installer_Creator.Views;
 
-public partial class CursorItemView : UserControl
+public sealed partial class CursorItemView : UserControl
 {
     public CCursor CCursor
     {
@@ -38,9 +41,9 @@ public partial class CursorItemView : UserControl
         AddHandler(DragDrop.DropEvent, Drop);
         DragDrop.SetAllowDrop(this, true);
 
-        Avalonia.Media.RenderOptions.SetBitmapInterpolationMode(CursorImage, BitmapInterpolationMode.HighQuality);
-        Avalonia.Media.RenderOptions.SetBitmapInterpolationMode(ResetImage, BitmapInterpolationMode.HighQuality);
-        Avalonia.Media.RenderOptions.SetBitmapInterpolationMode(FileOpenImage, BitmapInterpolationMode.HighQuality);
+        RenderOptions.SetBitmapInterpolationMode(CursorImage, BitmapInterpolationMode.HighQuality);
+        RenderOptions.SetBitmapInterpolationMode(ResetImage, BitmapInterpolationMode.HighQuality);
+        RenderOptions.SetBitmapInterpolationMode(FileOpenImage, BitmapInterpolationMode.HighQuality);
 
         _cCursor = _defaultCursor;
         UpdateCursorFromFile(CCursor.CursorPath);
@@ -53,14 +56,14 @@ public partial class CursorItemView : UserControl
         CursorNameTextBlock.Text = CCursor.Assignment.WindowsReg;
 
         var avaloniaCursorName = CCursor.Assignment.Avalonia;
-        if (string.IsNullOrEmpty(avaloniaCursorName))
+        if (string.IsNullOrWhiteSpace(avaloniaCursorName))
         {
             avaloniaCursorName = "Arrow";
         }
         CursorItemGrid.Cursor = Cursor.Parse(avaloniaCursorName);
 
         var imagePath = CCursor.GetImagePath();
-        if (!string.IsNullOrEmpty(imagePath))
+        if (!string.IsNullOrWhiteSpace(imagePath))
         {
             _cursorImage?.Dispose();
             _cursorImage = new Bitmap(imagePath);

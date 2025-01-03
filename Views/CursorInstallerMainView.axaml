@@ -13,7 +13,8 @@
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
-			<RowDefinition Height="10*"/>
+			<RowDefinition Height="5*"/>
+			<RowDefinition Height="5*"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
@@ -23,11 +24,11 @@
 			<TextBox Name="CursorPackagenameTextBox" Watermark="My Custom Cursor" MinWidth="146" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
 		</StackPanel>
 		
-		<views:CursorListView Grid.Row="1" Grid.ColumnSpan="2" Name="CursorListViewElem"/>
+		<views:CursorListView Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Name="CursorListViewElem"/>
 	
-		<Button Grid.Row="2" Content="Install Cursor" Cursor="Hand" Click="CursorInstallButton_Click" Margin="8,0,0,0"/>
+		<Button Grid.Row="3" Content="Install Cursor" Cursor="Hand" Click="CursorInstallButton_Click" Margin="8,0,0,0"/>
 
-		<StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,8,0">
+		<StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,8,0">
 			<TextBlock Name="OperationSuccessTextBlock" Text="Finished" FontWeight="Bold" Foreground="Green" IsVisible="False" VerticalAlignment="Center" Margin="0,0,16,0"/>
 			<ComboBox Name="CursorPackageTypeComboBox" SelectedIndex="0" Cursor="Hand" MinWidth="196" VerticalAlignment="Center" Margin="0,0,16,0">
 				<ComboBoxItem Content="Target Folder"/>
@@ -36,6 +37,8 @@
 			</ComboBox>
 			<Button Name="CreateCursorPackageButton" Content="Create Package" Cursor="Hand" Click="CreateCursorPackageButton_Click" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 		</StackPanel>
+		
+		<views:UpdateNotifyView Name="UpdateNotifyViewElem" IsVisible="False" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Right"/>
 	</Grid>
 	
 </UserControl>

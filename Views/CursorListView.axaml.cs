@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using Cursor_Installer_Creator.Extensions;
+using Cursor_Installer_Creator.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ using UserControl = Avalonia.Controls.UserControl;
 
 namespace Cursor_Installer_Creator.Views;
 
-public partial class CursorListView : UserControl
+public sealed partial class CursorListView : UserControl
 {
-    public event EventHandler<string> OnImportInfFile;
+    public event EventHandler<string>? OnImportInfFile;
     public List<CursorItemView> Cursors { get; set; } = [];
 
     public CursorListView()

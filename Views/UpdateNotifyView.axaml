@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Cursor_Installer_Creator.Views.UpdateNotifyView">
+
+	<UserControl.Styles>
+		<Style Selector="Border.update">
+			<Setter Property="Opacity" Value="1"/>
+		</Style>
+		<Style Selector="Border">
+			<Setter Property="Opacity" Value="0"/>
+		</Style>
+	</UserControl.Styles>
+
+	<Border Name="UpdateBorderElem" Classes="noupdate" Background="{DynamicResource RegionColor}" BorderBrush="{DynamicResource Accent}" BorderThickness="4" CornerRadius="4" Margin="14">
+		<StackPanel Orientation="Vertical" Spacing="10" HorizontalAlignment="Right" Margin="14">
+			<TextBlock Text="Update Available" HorizontalAlignment="Right" />
+			<StackPanel Orientation="Horizontal" Spacing="10">
+				<Button Name="ViewOnGitHubButton" Content="View on GitHub" Click="ViewOnGitHubButton_Click" Cursor="Hand" />
+				<Button Name="DismissButton" Content="Dismiss" Click="DismissButton_Click" Cursor="Hand" />
+			</StackPanel>
+		</StackPanel>
+		<Border.Transitions>
+			<Transitions>
+				<DoubleTransition Property="Opacity" Duration="0:0:1.0"/>
+			</Transitions>
+		</Border.Transitions>
+	</Border>
+	
+</UserControl>

@@ -1,6 +1,7 @@
-﻿using System.IO;
+﻿using Cursor_Installer_Creator.Utils;
+using System.IO;
 
-namespace Cursor_Installer_Creator;
+namespace Cursor_Installer_Creator.Data;
 
 public enum CCursorType
 {
@@ -16,7 +17,7 @@ public sealed class CCursor
 
     public CCursorType GetCursorType()
     {
-        if (string.IsNullOrEmpty(CursorPath))
+        if (string.IsNullOrWhiteSpace(CursorPath))
             return CCursorType.unknown;
 
         if (CursorPath.EndsWith(".ani"))

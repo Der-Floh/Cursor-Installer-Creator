@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Cursor_Installer_Creator.Data;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +12,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Cursor = System.Windows.Forms.Cursor;
 
-namespace Cursor_Installer_Creator;
+namespace Cursor_Installer_Creator.Utils;
 
 public static class CursorHelper
 {
@@ -28,19 +29,17 @@ public static class CursorHelper
             foreach (var valueName in valueNames)
             {
                 var cursorPath = key.GetValue(valueName)?.ToString();
-                if (string.IsNullOrEmpty(cursorPath) || !File.Exists(cursorPath))
+                if (string.IsNullOrWhiteSpace(cursorPath) || !File.Exists(cursorPath))
                 {
                     var assignment = CursorAssignment.FromName(valueName, CursorAssignmentType.WindowsReg);
-                    cursorPath = $"C:/Windows/Cursors/{assignment?.Windows}.cur";
+                    cursorPath = @$"C:\Windows\Cursors\{assignment?.Windows}.cur";
                 }
 
                 if (File.Exists(cursorPath))
                 {
                     var ccursor = ConvertCursorFile(cursorPath, valueName);
                     if (ccursor is not null)
-                    {
                         ccursors.Add(ccursor);
-                    }
                 }
             }
         }
@@ -58,9 +57,7 @@ public static class CursorHelper
                 };
                 ccursor.CursorPath = ConvertCursorFile(ccursor.CursorPath, ccursor.Assignment)?.CursorPath ?? ccursor.CursorPath;
                 if (File.Exists(ccursor.CursorPath))
-                {
                     ccursors.Add(ccursor);
-                }
             }
         }
 
@@ -74,9 +71,7 @@ public static class CursorHelper
         {
             var cursorPath = key.GetValue(assignment.WindowsReg)?.ToString();
             if (!File.Exists(cursorPath))
-            {
                 cursorPath = @$"C:\Windows\Cursors\{assignment.Windows}.cur";
-            }
 
             return ConvertCursorFile(cursorPath, assignment.ID);
         }
@@ -108,9 +103,7 @@ public static class CursorHelper
                     var value = parts[1].Trim().TrimStart('\"').TrimEnd('\"');
                     var assignment = CursorAssignment.FromName(key, CursorAssignmentType.WindowsInstall);
                     if (assignment is not null)
-                    {
                         stringsDictionary[assignment.WindowsReg] = value;
-                    }
                 }
             }
         }
@@ -129,9 +122,7 @@ public static class CursorHelper
             {
                 var ccursor = ConvertCursorFile(Path.Combine(Path.GetDirectoryName(filePath)!, kvp.Value), assignment);
                 if (ccursor is not null)
-                {
                     ccursors.Add(ccursor);
-                }
             }
         }
         return ccursors;
@@ -163,9 +154,7 @@ public static class CursorHelper
     {
         var prevCursorImagePath = Path.ChangeExtension(ccursor.CursorPath, ".png");
         if (File.Exists(prevCursorImagePath))
-        {
             File.Delete(prevCursorImagePath);
-        }
     }
 
     public static CCursor? ConvertCursorFile(string cursorPath, int cursorID) => ConvertCursorFile(cursorPath, CursorAssignment.CursorAssignments[cursorID]);
@@ -188,9 +177,7 @@ public static class CursorHelper
 
             var prevCursorImagePath = Path.ChangeExtension(destinationFullPath, ".png");
             if (File.Exists(prevCursorImagePath))
-            {
                 File.Delete(prevCursorImagePath);
-            }
 
             var ccursor = new CCursor
             {
@@ -207,24 +194,24 @@ public static class CursorHelper
     }
 
     [DllImport("User32.dll", CharSet = CharSet.Unicode)]
-    private static extern IntPtr LoadCursorFromFile(string str);
+    private static extern nint LoadCursorFromFile(string str);
     private static Cursor GetCursorFromFile(string filename)
     {
         var hCursor = LoadCursorFromFile(filename);
-        return !IntPtr.Zero.Equals(hCursor)
+        return !nint.Zero.Equals(hCursor)
             ? new Cursor(hCursor)
             : throw new ApplicationException("Could not create cursor from file " + filename);
     }
 
     public static void CreateInstaller(string packageName, string folderPath, IEnumerable<CCursor> ccursors, bool createZip = true)
     {
-        using (var writer = new StreamWriter($"{Program.TempPath}/installer.inf"))
+        using (var writer = new StreamWriter(@$"{Program.TempPath}\installer.inf"))
         {
             writer.Write(CreateInstallerInfString(packageName, ccursors));
         }
 
         var files = ccursors.Select(x => x.CursorPath).ToList();
-        files.Add($"{Program.TempPath}/installer.inf");
+        files.Add(@$"{Program.TempPath}\installer.inf");
 
         if (createZip)
         {
@@ -291,9 +278,7 @@ public static class CursorHelper
     private static void CreateZipFile(string zipPath, IEnumerable<string> files)
     {
         if (File.Exists(zipPath))
-        {
             File.Delete(zipPath);
-        }
         using var archive = ZipFile.Open(zipPath, ZipArchiveMode.Create);
         var folder = Path.GetFileNameWithoutExtension(zipPath);
         foreach (var file in files)
@@ -331,9 +316,7 @@ public static class CursorHelper
         catch (System.ComponentModel.Win32Exception ex)
         {
             if (ex.NativeErrorCode != 1223)
-            {
                 throw new Exception(ex.Message + Environment.NewLine + ex.ErrorCode);
-            }
         }
     }
 }

@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
+using Cursor_Installer_Creator.Utils;
 using System;
 using System.IO;
 using System.Linq;
@@ -7,13 +8,24 @@ using System.Threading.Tasks;
 
 namespace Cursor_Installer_Creator.Views;
 
-public partial class CursorInstallerMainView : UserControl
+public sealed partial class CursorInstallerMainView : UserControl
 {
     public CursorInstallerMainView()
     {
         InitializeComponent();
 
         CursorListViewElem.OnImportInfFile += CursorListViewElem_OnImportInfFile;
+        Task.Run(CheckUpdate);
+    }
+
+    private async Task CheckUpdate()
+    {
+        var hasUpdate = await UpdateNotifyViewElem.HasUpdateAsync();
+        if (hasUpdate)
+        {
+            await Task.Delay(1000);
+            await UpdateNotifyViewElem.ShowUpdateNotify();
+        }
     }
 
     private void CreateCursorInstaller(string packageName, string location)
@@ -51,7 +63,7 @@ public partial class CursorInstallerMainView : UserControl
     private void CursorInstallButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         var packageName = CursorPackagenameTextBox.Text;
-        if (string.IsNullOrEmpty(packageName))
+        if (string.IsNullOrWhiteSpace(packageName))
             packageName = CursorPackagenameTextBox.Watermark!;
 
         CursorHelper.CreateInstaller(packageName, Program.TempPath, CursorListViewElem.Cursors.Select(x => x.CCursor), false);
@@ -63,7 +75,7 @@ public partial class CursorInstallerMainView : UserControl
     {
         CreateCursorPackageButton.IsEnabled = false;
         var packageName = CursorPackagenameTextBox.Text;
-        if (string.IsNullOrEmpty(packageName))
+        if (string.IsNullOrWhiteSpace(packageName))
             packageName = CursorPackagenameTextBox.Watermark!;
 
         var location = await PickFolderLocation();

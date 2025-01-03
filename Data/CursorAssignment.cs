@@ -5,7 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-namespace Cursor_Installer_Creator;
+namespace Cursor_Installer_Creator.Data;
 
 public enum CursorAssignmentType
 {
@@ -40,7 +40,7 @@ public sealed class CursorAssignment
         var dictionary = new Dictionary<int, CursorAssignment>();
         foreach (var record in records)
         {
-            if (string.IsNullOrEmpty(record.Name))
+            if (string.IsNullOrWhiteSpace(record.Name))
                 continue;
             dictionary[record.ID] = record;
         }
