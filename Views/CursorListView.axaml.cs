@@ -54,9 +54,9 @@ public partial class CursorListView : UserControl
         if (filePath is null)
             return;
 
-        OnImportInfFile?.Invoke(this, filePath.AbsolutePath);
+        OnImportInfFile?.Invoke(this, Uri.UnescapeDataString(filePath.AbsolutePath));
 
-        var ccursors = CursorHelper.CursorsFromInstallerInf(filePath.AbsolutePath);
+        var ccursors = CursorHelper.CursorsFromInstallerInf(Uri.UnescapeDataString(filePath.AbsolutePath));
         foreach (var ccursor in ccursors)
         {
             var cursorItemView = Cursors.FirstOrDefault(x => x.CCursor.Assignment.ID == ccursor.Assignment.ID);

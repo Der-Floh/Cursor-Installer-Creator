@@ -18,18 +18,7 @@ public partial class CursorInstallerMainView : UserControl
 
     private void CreateCursorInstaller(string packageName, string location)
     {
-        var cursors = CursorListViewElem.Cursors.Select(x => x.CCursor);
-        CursorHelper.CreateInstaller(packageName, Program.TempPath, cursors, false);
-
-        var innoSetupCompiler = new InnoSetupCompiler
-        {
-            AppName = packageName
-        };
-        innoSetupCompiler.Files.AddRange(cursors.Select(x => Path.Combine(Program.TempPath, packageName, x.Assignment.WindowsReg)));
-        innoSetupCompiler.Files.Add(Path.Combine(Program.TempPath, packageName, "installer.inf"));
-        innoSetupCompiler.Files.Add(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tools", "Cursor-Installer.exe"));
-        innoSetupCompiler.FileToExecute = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tools", "Cursor-Installer.exe");
-        innoSetupCompiler.CreateInstaller(Path.Combine(location, $"{packageName}.exe"));
+        throw new NotImplementedException("Not yet implemented");
     }
 
     private async Task<Uri?> PickFolderLocation()
@@ -85,13 +74,13 @@ public partial class CursorInstallerMainView : UserControl
         switch (CursorPackageTypeComboBox.SelectedIndex)
         {
             case 0:
-                CursorHelper.CreateInstaller(packageName, location.AbsolutePath, cursors, false);
+                CursorHelper.CreateInstaller(packageName, Uri.UnescapeDataString(location.AbsolutePath), cursors, false);
                 break;
             case 1:
-                CursorHelper.CreateInstaller(packageName, location.AbsolutePath, cursors, true);
+                CursorHelper.CreateInstaller(packageName, Uri.UnescapeDataString(location.AbsolutePath), cursors, true);
                 break;
             case 2:
-                CreateCursorInstaller(packageName, location.AbsolutePath);
+                CreateCursorInstaller(packageName, Uri.UnescapeDataString(location.AbsolutePath));
                 break;
         }
         CreateCursorPackageButton.IsEnabled = true;
