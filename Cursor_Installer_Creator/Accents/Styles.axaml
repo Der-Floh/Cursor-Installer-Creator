@@ -3,10 +3,10 @@
 
 	<!-- Svg Enabled / Disabled -->
 	<Style Selector="Svg">
-		<Setter Property="Css" Value="{DynamicResource SvgCssEnabled}"/>
+		<Setter Property="Svg.Css" Value="{DynamicResource SvgCssEnabled}"/>
 	</Style>
 	<Style Selector="Svg:disabled">
-		<Setter Property="Css" Value="{DynamicResource SvgCssDisabled}"/>
+		<Setter Property="Svg.Css" Value="{DynamicResource SvgCssDisabled}"/>
 	</Style>
 
 	<Style Selector="Button">

@@ -1,8 +1,8 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-	<x:String x:Key="FileOpenIcon">/Assets/file_open.svg</x:String>
-	<x:String x:Key="FileErrorIcon">/Assets/file_error.svg</x:String>
-	<x:String x:Key="ResetIcon">/Assets/reset.svg</x:String>
+	<x:String x:Key="FileOpenIcon">avares://Cursor_Installer_Creator/Assets/file_open.svg</x:String>
+	<x:String x:Key="FileErrorIcon">avares://Cursor_Installer_Creator/Assets/file_error.svg</x:String>
+	<x:String x:Key="ResetIcon">avares://Cursor_Installer_Creator/Assets/reset.svg</x:String>
 
 </ResourceDictionary>
