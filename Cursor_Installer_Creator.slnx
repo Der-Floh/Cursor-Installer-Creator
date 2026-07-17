@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Cursor_Installer_Creator.Browser/Cursor_Installer_Creator.Browser.csproj" />
+  <Project Path="Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj" />
+  <Project Path="Cursor_Installer_Creator/Cursor_Installer_Creator.csproj" />
+</Solution>

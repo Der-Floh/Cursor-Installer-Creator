@@ -1,0 +1,16 @@
+name: Create ZIP Archive
+description: Creates a high-compression ZIP archive from the publish output
+
+inputs:
+  version:
+    description: Version number (without v prefix)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Create ZIP
+      shell: pwsh
+      run: |
+        New-Item -ItemType Directory -Force -Path ./artifacts | Out-Null
+        7z a -tzip -mx=9 "./artifacts/Cursor-Installer-Creator-v${{ inputs.version }}-win-x64.zip" "./Cursor_Installer_Creator.Desktop/bin/Publish/*"

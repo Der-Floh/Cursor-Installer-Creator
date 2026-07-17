@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<Color x:Key="Palette.RegionColor.Light">#eeeeee</Color>
+	<Color x:Key="Palette.RegionColorDamp.Light">#d9d9d9</Color>
+	<Color x:Key="Palette.AccentColor.Light">#00adb5</Color>
+	<Color x:Key="Palette.RegionColor.Dark">#2b2b2b</Color>
+	<Color x:Key="Palette.RegionColorDamp.Dark">#404040</Color>
+	<Color x:Key="Palette.AccentColor.Dark">#0d7377</Color>
+
+	<ResourceDictionary.ThemeDictionaries>
+		<ResourceDictionary x:Key="Light">
+			<SolidColorBrush x:Key="SvgColor">#2b2b2b</SolidColorBrush>
+			<x:String x:Key="SvgCssEnabled">path { fill: #2b2b2b; }</x:String>
+			<x:String x:Key="SvgCssDisabled">path { fill: #555555; }</x:String>
+			<SolidColorBrush x:Key="FontColor">#000000</SolidColorBrush>
+			<SolidColorBrush x:Key="AccentColor" Color="{StaticResource Palette.AccentColor.Light}"/>
+			<SolidColorBrush x:Key="RegionColor" Color="{StaticResource Palette.RegionColor.Light}"/>
+			<SolidColorBrush x:Key="RegionColorDamp" Color="{StaticResource Palette.RegionColorDamp.Light}"/>
+			<SolidColorBrush x:Key="BorderColor">#8f8f8f</SolidColorBrush>
+			<SolidColorBrush x:Key="WarningColor">#bb8e23</SolidColorBrush>
+			<SolidColorBrush x:Key="ErrorColor">#c50500</SolidColorBrush>
+
+			<!-- FluentTheme Overrides -->
+			<SolidColorBrush x:Key="ExpanderHeaderBackground" Color="#f5f5f5"/>
+			<SolidColorBrush x:Key="ExpanderHeaderBackgroundPointerOver" Color="#f8f8f8"/>
+			<SolidColorBrush x:Key="ExpanderHeaderBackgroundPressed" Color="#ffffff"/>
+
+		</ResourceDictionary>
+		<ResourceDictionary x:Key="Dark">
+			<SolidColorBrush x:Key="SvgColor">#eeeeee</SolidColorBrush>
+			<x:String x:Key="SvgCssEnabled">path { fill: #eeeeee; }</x:String>
+			<x:String x:Key="SvgCssDisabled">path { fill: #888888; }</x:String>
+			<SolidColorBrush x:Key="FontColor">#ffffff</SolidColorBrush>
+			<SolidColorBrush x:Key="AccentColor" Color="{StaticResource Palette.AccentColor.Dark}"/>
+			<SolidColorBrush x:Key="RegionColor" Color="{StaticResource Palette.RegionColor.Dark}"/>
+			<SolidColorBrush x:Key="RegionColorDamp" Color="{StaticResource Palette.RegionColorDamp.Dark}"/>
+			<SolidColorBrush x:Key="BorderColor">#808080</SolidColorBrush>
+			<SolidColorBrush x:Key="WarningColor">#fff000</SolidColorBrush>
+			<SolidColorBrush x:Key="ErrorColor">#c50500</SolidColorBrush>
+
+			<!-- FluentTheme Overrides -->
+			<SolidColorBrush x:Key="ExpanderHeaderBackground" Color="#1a1a1a"/>
+			<SolidColorBrush x:Key="ExpanderHeaderBackgroundPointerOver" Color="#111111"/>
+			<SolidColorBrush x:Key="ExpanderHeaderBackgroundPressed" Color="#000000"/>
+
+		</ResourceDictionary>
+	</ResourceDictionary.ThemeDictionaries>
+
+</ResourceDictionary>

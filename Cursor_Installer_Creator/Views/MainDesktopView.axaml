@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:Cursor_Installer_Creator.ViewModels"
+			 xmlns:views="using:Cursor_Installer_Creator.Views"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="Cursor_Installer_Creator.Views.CursorInstallerMainView"
+			 x:DataType="vm:CursorInstallerMainViewModel">
+
+	<Panel>
+		<Grid ColumnDefinitions="*" RowDefinitions="Auto,*,Auto">
+			<Grid ColumnDefinitions="*,Auto">
+				<WrapPanel Orientation="Horizontal" LineSpacing="4" ClipToBounds="True" Margin="8">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding PackageNameLabel}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+						<TextBox Text="{Binding CursorListViewModel.CurrentInfFile.SchemeName}" PlaceholderText="{Binding PackageNameDefaultValue}" MinWidth="146" Margin="0,0,20,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding PackageProviderLabel}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+						<TextBox Text="{Binding CursorListViewModel.CurrentInfFile.Provider}" PlaceholderText="{Binding PackageProviderDefaultValue}" MinWidth="146" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+					</StackPanel>
+				</WrapPanel>
+				<StackPanel Grid.Column="1" Orientation="Vertical">
+					<WrapPanel Orientation="Horizontal" LineSpacing="4" Margin="8">
+						<TextBlock Text="{Binding CursorPreviewSizeLabel}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,12,0"/>
+						<ComboBox ItemsSource="{Binding CursorListViewModel.CursorPreviewSizes}" SelectedItem="{Binding CursorListViewModel.CursorPreviewSize}" MinWidth="128">
+							<ComboBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Display}" />
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+					</WrapPanel>
+					<TextBlock Text="{Binding DragDropLabel}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+				</StackPanel>
+			</Grid>
+
+			<views:CursorListView Grid.Row="1" DataContext="{Binding CursorListViewModel}" />
+
+			<Panel Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="8">
+				<Button Content="{Binding InstallButtonLabel}" Command="{Binding InstallCursorCommand}" Margin="0,0,16,0" HorizontalAlignment="Left"/>
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+					<ComboBox ItemsSource="{Binding CursorPackageTypes}" SelectedItem="{Binding CursorPackageType}" MinWidth="196" Margin="0,0,16,0" VerticalAlignment="Center">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding Display}" />
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+					<Button Content="{Binding PackageCreateLabel}" IsEnabled="{Binding !ExportingPackage}" Command="{Binding ExportPackageCommand}"/>
+				</StackPanel>
+			</Panel>
+		</Grid>
+	</Panel>
+
+</UserControl>

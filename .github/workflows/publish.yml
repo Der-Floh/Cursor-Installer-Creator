@@ -1,0 +1,56 @@
+name: Publish Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Extract version from tag
+        id: version
+        shell: bash
+        run: echo "value=$(echo '${{ github.ref_name }}' | sed 's/^v//')" >> $GITHUB_OUTPUT
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Publish
+        run: >
+          dotnet publish Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj
+          -p:PublishProfile=winx64
+          -p:Version=${{ steps.version.outputs.value }}
+
+      - name: Create ZIP
+        uses: ./.github/actions/create-zip
+        with:
+          version: ${{ steps.version.outputs.value }}
+
+      - name: Create MSI
+        uses: ./.github/actions/create-msi
+        with:
+          version: ${{ steps.version.outputs.value }}
+          advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            ./artifacts/*.zip
+            ./artifacts/*.msi
+
+      - name: Publish to WinGet
+        uses: ./.github/actions/publish-winget
+        with:
+          version: ${{ steps.version.outputs.value }}
+          token: ${{ secrets.WINGET_TOKEN }}

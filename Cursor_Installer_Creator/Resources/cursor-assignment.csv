@@ -1,0 +1,18 @@
+Id,Order,Name,DisplayName,WindowsDefault,WindowsReg,WindowsInstall,Avalonia
+32512,1,IDC_ARROW,Normal Select,aero_arrow,Arrow,pointer,Arrow
+32513,6,IDC_IBEAM,Text Select,aero_ibeam,IBeam,text,Ibeam
+32514,4,IDC_WAIT,Busy,aero_busy,Wait,busy,Wait
+32515,5,IDC_CROSS,Precision Select,aero_cross,Crosshair,cross,Cross
+32516,14,IDC_UPARROW,Alternate Select,aero_up,UpArrow,alternate,UpArrow
+32642,11,IDC_SIZENWSE,Diagonal Resize 1,aero_nwse,SizeNWSE,dgn1,TopLeftCorner
+32643,12,IDC_SIZENESW,Diagonal Resize 2,aero_nesw,SizeNESW,dgn2,TopRightCorner
+32644,10,IDC_SIZEWE,Horizontal Resize,aero_ew,SizeWE,horz,SizeWestEast
+32645,9,IDC_SIZENS,Vertical Resize,aero_ns,SizeNS,vert,SizeNorthSouth
+32646,13,IDC_SIZEALL,Move,aero_move,SizeAll,move,SizeAll
+32648,8,IDC_NO,Unavailable,aero_unavail,No,unavailiable,No
+32649,15,IDC_HAND,Link Select,aero_link,Hand,link,Hand
+32650,3,IDC_APPSTARTING,Working in Background,aero_working,AppStarting,work,AppStarting
+32651,2,IDC_HELP,Help Select,aero_helpsel,Help,help,Help
+32671,16,IDC_PIN,Location Select,aero_pin,Pin,pin,
+32672,17,IDC_PERSON,Person Select,aero_person,Person,person,
+32631,7,OCR_NWPEN,Handwriting,aero_pen,NWPen,hand,

@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.10.0.schema.json
+PackageIdentifier: Der_Floh.CursorInstallerCreator
+PackageVersion: 3.0.0
+InstallerLocale: en-US
+InstallerType: msi
+ProductCode: '{6A73C67B-A695-4A63-81CC-EBE5C5BC25F6}'
+Installers:
+- Architecture: x64
+  InstallerUrl: https://github.com/Der-Floh/Cursor-Installer-Creator/releases/download/v3.0.0/Cursor_Installer_Creator-Setup-v3.0.0.msi
+  InstallerSha256: 15D0209B8D4A2273C9E2DCF41D8925C217EC08E1E646B250D00C73F3DB615F5D
+InstallerSwitches:
+  Silent: /quiet /qn
+  SilentWithProgress: /passive
+  InstallLocation: APPDIR="<INSTALLPATH>"
+  Log: /log "<LOGPATH>"
+ManifestType: installer
+ManifestVersion: 1.10.0

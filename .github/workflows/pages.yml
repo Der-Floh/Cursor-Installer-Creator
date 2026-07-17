@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+env:
+  PROJECT_PATH: Cursor_Installer_Creator.Browser/Cursor_Installer_Creator.Browser.csproj
+  OUTPUT_PATH: publish-output/wwwroot
+
+jobs:
+  deploy-to-github-pages:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Install wasm-tools
+        run: dotnet workload install wasm-tools
+
+      - name: Publish .NET Project
+        run: dotnet publish "$PROJECT_PATH" -c Release --nologo -o ./publish-output
+
+      - name: Copy index.html to 404.html
+        run: cp "$OUTPUT_PATH/index.html" "$OUTPUT_PATH/404.html"
+
+      - name: Add .nojekyll file
+        run: touch "$OUTPUT_PATH/.nojekyll"
+
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: ${{ env.OUTPUT_PATH }}
+          single-commit: true

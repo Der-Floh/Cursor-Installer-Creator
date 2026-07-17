@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:data="using:Cursor_Installer_Creator.Data"
+			 xmlns:vm="using:Cursor_Installer_Creator.ViewModels"
+			 xmlns:views="using:Cursor_Installer_Creator.Views"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="Cursor_Installer_Creator.Views.CursorItemView"
+			 x:DataType="data:InfCursorEntry"
+			 x:Name="Root"
+			 DataContextChanged="OnDataContextChanged">
+
+	<Border BorderBrush="{DynamicResource RegionColorDamp}" BorderThickness="4" CornerRadius="2" Margin="8" Background="Transparent"
+			DragDrop.AllowDrop="True" DragDrop.DragEnter="OnDragEnter" DragDrop.DragLeave="OnDragLeave" DragDrop.DragOver="OnDragOver" DragDrop.Drop="OnDrop">
+		<Grid ColumnDefinitions="*,*">
+
+			<Grid Name="CursorDisplay" ColumnDefinitions="*,*" Background="Transparent"
+				  PointerEntered="OnPointerEntered" PointerMoved="OnPointerMoved" PointerExited="OnPointerExited">
+				<views:BitmapAnimation ICursor="{Binding Cursor}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="16" />
+				<TextBlock Grid.Column="1" Text="{Binding Assignment.DisplayName}" VerticalAlignment="Center"/>
+			</Grid>
+
+			<Grid Grid.Column="1" ColumnDefinitions="*,*" x:DataType="vm:CursorListViewModel" DataContext="{Binding $parent[ItemsControl].DataContext}">
+				<Button Grid.Column="0" Command="{Binding CursorItemResetCursorCommand}" CommandParameter="{Binding #Root.DataContext}" CornerRadius="4" HorizontalAlignment="Right" Margin="16,16,8,16">
+					<Svg Path="{StaticResource ResetIcon}"/>
+				</Button>
+
+				<Button Grid.Column="1" Command="{Binding CursorItemImportCursorFileCommand}" CommandParameter="{Binding #Root.DataContext}" CornerRadius="4" Margin="8,16,16,16">
+					<Svg Path="{StaticResource FileOpenIcon}"/>
+				</Button>
+			</Grid>
+		</Grid>
+	</Border>
+
+</UserControl>

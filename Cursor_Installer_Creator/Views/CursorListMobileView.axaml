@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:Cursor_Installer_Creator.ViewModels"
+             xmlns:views="using:Cursor_Installer_Creator.Views"
+             xmlns:data="using:Cursor_Installer_Creator.Data"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="800"
+             x:Class="Cursor_Installer_Creator.Views.CursorListMobileView"
+             x:DataType="vm:CursorListViewModel">
+
+    <Grid RowDefinitions="*,Auto" Margin="16">
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding CurrentInfFile.Cursors}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="data:InfCursorEntry">
+                        <views:CursorItemView />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Border Grid.Row="1" BorderThickness="0" CornerRadius="2" BorderBrush="{DynamicResource AccentColor}" Margin="8" Background="Transparent"
+			   DragDrop.AllowDrop="True" DragDrop.DragEnter="ImportInfPanel_DragEnter" DragDrop.DragLeave="ImportInfPanel_DragLeave" DragDrop.DragOver="ImportInfPanel_DragOver" DragDrop.Drop="ImportInfPanel_Drop"
+			   VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+			<Button Content="Import Installer File (.inf)" Command="{Binding ImportInfFileCommand}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+		</Border>
+
+        <Panel IsVisible="{Binding IsLoading}" Background="{DynamicResource RegionColor}" Opacity="0.8">
+            <LoadingIndicator VerticalAlignment="Center" HorizontalAlignment="Center"
+                              IsActive="{Binding IsLoading}" Mode="Chase" />
+        </Panel>
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,23 @@
+name: Publish to WinGet
+description: Submits the generated WinGet manifests to microsoft/winget-pkgs
+
+inputs:
+  version:
+    description: Version number (without v prefix)
+    required: true
+  token:
+    description: GitHub PAT for submitting PR to microsoft/winget-pkgs
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Download wingetcreate
+      shell: pwsh
+      run: Invoke-WebRequest -Uri "https://github.com/microsoft/winget-create/releases/latest/download/wingetcreate.exe" -OutFile "$env:TEMP\wingetcreate.exe"
+
+    - name: Submit manifests to WinGet
+      shell: pwsh
+      run: |
+        $manifestPath = ".github/Cursor_Installer_Creator/manifests/d/Der_Floh/Cursor Installer Creator/${{ inputs.version }}"
+        & "$env:TEMP\wingetcreate.exe" submit $manifestPath --token "${{ inputs.token }}"

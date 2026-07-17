@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Cursor_Installer_Creator.Views.CursorInstallerMainContainer"
+             AttachedToVisualTree="UserControl_AttachedToVisualTree"
+             SizeChanged="UserControl_SizeChanged">
+
+    <Panel Name="ResponsiveHost">
+        <WindowNotificationManager Name="MainWindowNotificationManager" FontSize="20">
+			<WindowNotificationManager.Styles>
+                <Style Selector="NotificationCard.clickable">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Style>
+            </WindowNotificationManager.Styles>
+        </WindowNotificationManager>
+    </Panel>
+
+</UserControl>
