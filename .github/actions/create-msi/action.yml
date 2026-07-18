@@ -14,14 +14,18 @@ runs:
   steps:
     - name: Create artifacts directory
       shell: pwsh
-      run: New-Item -ItemType Directory -Force -Path ./artifacts | Out-Null
+      run: New-Item -ItemType Directory -Force -Path "${{ github.workspace }}\artifacts" | Out-Null
 
     - name: Build MSI
       uses: caphyon/advinst-github-action@main
       with:
         advinst-license: ${{ inputs.advinst-license }}
+        advinst-enable-automation: "true"
+
         aip-path: .github/Cursor_Installer_Creator.aip
         aip-build-name: DefaultBuild
-        aip-output-dir: ./artifacts
+        aip-output-dir: ${{ github.workspace }}\artifacts
+        aip-package-name: Cursor-Installer-Creator-v${{ inputs.version }}-win-x64.msi
+
         aip-commands: |
           SetVersion ${{ inputs.version }}
