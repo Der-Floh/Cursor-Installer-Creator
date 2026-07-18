@@ -53,4 +53,4 @@ jobs:
         uses: ./.github/actions/publish-winget
         with:
           version: ${{ steps.version.outputs.value }}
-          token: ${{ secrets.WINGET_TOKEN }}
+          token: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
