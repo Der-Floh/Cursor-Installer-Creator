@@ -9,6 +9,8 @@ A program to create Cursor-Installer files simply and fast.
 
 ### [Download Latest Release](https://github.com/Der-Floh/Cursor-Installer-Creator/releases/latest)
 
+### [Use Web Version](https://der-floh.github.io/Cursor-Installer-Creator/)
+
 ## Usage
 
 Pick or Drag & Drop cursor files in their corresponding slot. Give the cursor package a name and hit create package. Optionally you can also decide wether to create the package inside a .zip compressed archive or just inside a folder.
