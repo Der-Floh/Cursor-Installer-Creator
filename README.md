@@ -3,8 +3,8 @@
 A program to create Cursor-Installer files simply and fast.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Der-Floh/Cursor-Installer-Creator/main/Resources/preview-dark.png">
-  <img alt="Shows a preview of the Cursor-Installer-Creator" src="https://raw.githubusercontent.com/Der-Floh/Cursor-Installer-Creator/main/Resources/preview-light.png">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Der-Floh/Cursor-Installer-Creator/main/Cursor_Installer_Creator/Resources/preview-dark.png">
+  <img alt="Shows a preview of the Cursor-Installer-Creator" src="https://raw.githubusercontent.com/Der-Floh/Cursor-Installer-Creator/main/Cursor_Installer_Creator/Resources/preview-light.png">
 </picture>
 
 ### [Download Latest Release](https://github.com/Der-Floh/Cursor-Installer-Creator/releases/latest)
