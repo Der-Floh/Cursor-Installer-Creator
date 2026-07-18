@@ -19,5 +19,5 @@ runs:
     - name: Submit manifests to WinGet
       shell: pwsh
       run: |
-        $manifestPath = ".github/Cursor_Installer_Creator/manifests/d/Der_Floh/Cursor Installer Creator/${{ inputs.version }}"
+        $manifestPath = Join-Path $env:GITHUB_WORKSPACE "artifacts\manifests\d\Der_Floh\Cursor Installer Creator\${{ inputs.version }}"
         & "$env:TEMP\wingetcreate.exe" submit $manifestPath --token "${{ inputs.token }}"
