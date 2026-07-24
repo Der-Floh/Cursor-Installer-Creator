@@ -7,6 +7,7 @@ using Avalonia.Platform.Storage;
 using Cursor_Installer_Creator.Data;
 using Cursor_Installer_Creator.Extensions;
 using Cursor_Installer_Creator.Repository.CursorAssignmentRepo;
+using Cursor_Installer_Creator.Repository.CursorRepo;
 using Cursor_Installer_Creator.Service.InfServ;
 
 using Microsoft.Extensions.Logging;
@@ -19,12 +20,14 @@ public sealed class InfFileRepository : IInfFileRepository
 
     private readonly IInfParserService _infParserService;
     private readonly ICursorAssignmentRepository _cursorAssignmentRepository;
+    private readonly ICursorRepository _cursorRepository;
     private readonly ILogger<InfFileRepository> _logger;
 
-    public InfFileRepository(IInfParserService infParserService, ICursorAssignmentRepository cursorAssignmentRepository, ILogger<InfFileRepository> logger)
+    public InfFileRepository(IInfParserService infParserService, ICursorAssignmentRepository cursorAssignmentRepository, ICursorRepository cursorRepository, ILogger<InfFileRepository> logger)
     {
         _infParserService = infParserService;
         _cursorAssignmentRepository = cursorAssignmentRepository;
+        _cursorRepository = cursorRepository;
         _logger = logger;
     }
 
@@ -105,7 +108,7 @@ public sealed class InfFileRepository : IInfFileRepository
             return;
         }
 
-        var cleanedInfFile = CreateCleanedInfFile(infFile);
+        var cleanedInfFile = await CreateCleanedInfFileAsync(infFile);
 
         foreach (var cursorEntry in cleanedInfFile.Cursors)
         {
@@ -126,7 +129,7 @@ public sealed class InfFileRepository : IInfFileRepository
         ArgumentNullException.ThrowIfNull(infFile);
         ArgumentNullException.ThrowIfNull(destination);
 
-        var cleanedInfFile = CreateCleanedInfFile(infFile);
+        var cleanedInfFile = await CreateCleanedInfFileAsync(infFile);
 
         var schemeName = string.IsNullOrWhiteSpace(cleanedInfFile.SchemeName) ? Constants.DefaultInstallerSchemeName : cleanedInfFile.SchemeName;
         var zipStorageFile = await destination.CreateFileAsync($"{schemeName}.zip")
@@ -165,7 +168,7 @@ public sealed class InfFileRepository : IInfFileRepository
 
         _logger.LogInformation("Exporting installer script: SchemeName={SchemeName}", infFile.SchemeName);
 
-        var cleanedInfFile = CreateCleanedInfFile(infFile);
+        var cleanedInfFile = await CreateCleanedInfFileAsync(infFile);
 
         var cursors = new Dictionary<string, string>(cleanedInfFile.Cursors.Count);
         foreach (var cursorEntry in cleanedInfFile.Cursors)
@@ -215,7 +218,7 @@ public sealed class InfFileRepository : IInfFileRepository
         return Convert.ToBase64String(output.ToArray());
     }
 
-    private static InfFile CreateCleanedInfFile(InfFile infFile)
+    private async Task<InfFile> CreateCleanedInfFileAsync(InfFile infFile)
     {
         var cleaned = new InfFile
         {
@@ -223,11 +226,34 @@ public sealed class InfFileRepository : IInfFileRepository
             Provider = infFile.Provider,
             CursorDirectory = infFile.CursorDirectory,
         };
-        cleaned.Cursors.AddRange(infFile.Cursors.Where(x => x is not null && x.Cursor is not null));
 
-        if (cleaned.Cursors.Any(x => x is null || x.Assignment is null))
+        var candidates = infFile.Cursors.Where(x => x is not null && x.Cursor is not null).ToList();
+
+        if (candidates.Any(x => x.Assignment is null))
             throw new InvalidOperationException("All cursor entries must have an assigned cursor and assignment.");
+
+        var defaultBytesById = await GetDefaultBytesByAssignmentIdAsync(candidates);
+        cleaned.Cursors.AddRange(candidates.Where(x => !IsDefaultCursor(x, defaultBytesById)));
+
+        if (cleaned.Cursors.Count == 0)
+            throw new InvalidOperationException("Package contains no non-default cursors — customize at least one cursor before creating a package.");
 
         return cleaned;
     }
+
+    private async Task<Dictionary<int, byte[]>> GetDefaultBytesByAssignmentIdAsync(IEnumerable<InfCursorEntry> entries)
+    {
+        var defaultBytesById = new Dictionary<int, byte[]>();
+        foreach (var assignment in entries.Select(x => x.Assignment!).DistinctBy(a => a.Id))
+        {
+            var defaultCursor = await _cursorRepository.GetDefaultCursorAsync(assignment);
+            if (defaultCursor is not null)
+                defaultBytesById[assignment.Id] = defaultCursor.CursorBytes;
+        }
+        return defaultBytesById;
+    }
+
+    private static bool IsDefaultCursor(InfCursorEntry entry, IReadOnlyDictionary<int, byte[]> defaultBytesById)
+        => defaultBytesById.TryGetValue(entry.Assignment!.Id, out var defaultBytes)
+            && entry.Cursor!.CursorBytes.SequenceEqual(defaultBytes);
 }
