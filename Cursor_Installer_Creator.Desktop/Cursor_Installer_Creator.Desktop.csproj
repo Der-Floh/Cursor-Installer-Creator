@@ -26,4 +26,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Cursor_Installer_Creator\Cursor_Installer_Creator.csproj" />
   </ItemGroup>
+
+  <Target Name="StripPdbsFromPublish" AfterTargets="ComputeResolvedFilesToPublishList">
+    <ItemGroup>
+      <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(Extension)' == '.pdb'" />
+    </ItemGroup>
+  </Target>
 </Project>
