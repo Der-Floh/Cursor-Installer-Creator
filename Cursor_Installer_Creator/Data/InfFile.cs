@@ -26,6 +26,12 @@ public sealed partial class InfFile : ObservableObject
 
     public ObservableCollection<InfCursorEntry> Cursors { get; } = [];
 
+    /// <summary>
+    /// Entries that were present in the parsed INF but could not be mapped to a cursor slot,
+    /// either because the name is unknown or because the slot was already taken.
+    /// </summary>
+    public List<string> SkippedEntries { get; } = [];
+
     public override string ToString()
         => $"{SchemeName ?? "Unknown Scheme"} by {Provider ?? "Unknown Provider"}";
 }

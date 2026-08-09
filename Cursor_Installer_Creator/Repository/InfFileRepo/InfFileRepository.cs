@@ -67,9 +67,6 @@ public sealed class InfFileRepository : IInfFileRepository
     public async Task AddMissingCursorEntriesAsync(InfFile infFile)
     {
         var assignments = _cursorAssignmentRepository.GetAllAssignments().ToList();
-        if (infFile.Cursors.Count >= assignments.Count)
-            return;
-
         assignments.RemoveAll(x => infFile.Cursors.Any(c => c.Assignment == x));
         foreach (var assignment in assignments)
         {

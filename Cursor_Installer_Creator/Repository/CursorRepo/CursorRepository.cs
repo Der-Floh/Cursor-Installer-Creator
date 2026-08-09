@@ -115,7 +115,13 @@ public sealed class CursorRepository : ICursorRepository
                 {
                     var registryPath = key.GetValue(valueName)?.ToString();
                     var assignment = _cursorAssignmentRepository.GetAssignmentFromName(valueName, CursorAssignmentType.WindowsReg);
-                    var cursorPath = ResolveWindowsCursorPath(registryPath, assignment?.WindowsDefault);
+                    if (assignment is null)
+                    {
+                        LogUnknownRegistryValue(valueName, registryPath);
+                        continue;
+                    }
+
+                    var cursorPath = ResolveWindowsCursorPath(registryPath, assignment.WindowsDefault);
 
                     if (cursorPath is not null)
                     {
@@ -137,10 +143,18 @@ public sealed class CursorRepository : ICursorRepository
         return [.. cursors.OrderBy(x => x.Assignment?.Order)];
     }
 
+    private void LogUnknownRegistryValue(string valueName, string? registryPath)
+    {
+        if (!string.IsNullOrWhiteSpace(registryPath) && _cursorService.IsValidCursorFile(registryPath))
+            _logger.LogWarning("Skipping cursor registry value with no known assignment: {ValueName} -> {Path}", valueName, registryPath);
+        else
+            _logger.LogDebug("Skipping non-cursor registry value: {ValueName}", valueName);
+    }
+
     public async Task<ICursor[]> AddMissingCursorsAsync(IEnumerable<ICursor?> cursors)
     {
         var allCursors = new List<ICursor>();
-        allCursors.AddRange(cursors.Where(x => x is not null).Select(x => x!));
+        allCursors.AddRange(cursors.Where(x => x?.Assignment is not null).Select(x => x!));
         var assignments = _cursorAssignmentRepository.GetAllAssignments().ToList();
         assignments.RemoveAll(x => allCursors.Any(c => c.Assignment == x));
 

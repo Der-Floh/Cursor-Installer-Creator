@@ -38,7 +38,10 @@ public sealed partial class CursorListViewModel : ViewModelBase
         new() { Display = "Very Large (x128)", Value = 128 }
     ];
 
+    private const int MaxListedSkippedEntries = 3;
+
     private readonly IStorageService _storageService;
+    private readonly INotificationService _notificationService;
     private readonly ICursorRepository _cursorRepository;
     private readonly IInfFileRepository _infFileRepository;
     private readonly IInfService _infService;
@@ -62,6 +65,7 @@ public sealed partial class CursorListViewModel : ViewModelBase
     public CursorListViewModel(IStorageService storageService, INotificationService notificationService, ICursorRepository cursorRepository, IInfFileRepository infFileRepository, IInfService infService, ICursorService cursorService) : base(notificationService)
     {
         _storageService = storageService;
+        _notificationService = notificationService;
         _cursorRepository = cursorRepository;
         _infFileRepository = infFileRepository;
         _infService = infService;
@@ -202,5 +206,20 @@ public sealed partial class CursorListViewModel : ViewModelBase
 
         await _infService.LoadCursorsAsync(infFile, file);
         CurrentInfFile = infFile;
+
+        NotifySkippedEntries(infFile);
+    }
+
+    private void NotifySkippedEntries(InfFile infFile)
+    {
+        if (infFile.SkippedEntries.Count == 0)
+            return;
+
+        var listed = string.Join(", ", infFile.SkippedEntries.Take(MaxListedSkippedEntries));
+        var remaining = infFile.SkippedEntries.Count - MaxListedSkippedEntries;
+        if (remaining > 0)
+            listed += $" and {remaining} more";
+
+        _notificationService.ShowWarning("Some entries could not be read", $"The following entries were skipped: {listed}");
     }
 }

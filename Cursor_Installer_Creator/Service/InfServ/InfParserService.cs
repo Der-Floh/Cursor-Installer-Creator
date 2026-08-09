@@ -90,14 +90,22 @@ public sealed class InfParserService : IInfParserService
         if (TryReadSchemeEntry(parsed, assignments, inf, diskSubdirs, fileDisks))
         {
             _logger.LogInformation("INF loaded via Scheme.Reg entry: SchemeName={SchemeName}, cursors={Count}", inf.SchemeName, inf.Cursors.Count);
+            LogSkippedEntries(inf);
             return inf;
         }
 
         _logger.LogDebug("No Scheme.Reg entry found, falling back to per-cursor registry entries");
         TryReadCursorEntries(parsed, inf, diskSubdirs, fileDisks);
         _logger.LogInformation("INF loaded via per-cursor entries: SchemeName={SchemeName}, cursors={Count}", inf.SchemeName, inf.Cursors.Count);
+        LogSkippedEntries(inf);
 
         return inf;
+    }
+
+    private void LogSkippedEntries(InfFile inf)
+    {
+        if (inf.SkippedEntries.Count != 0)
+            _logger.LogWarning("Skipped {Count} INF cursor entries that could not be mapped: {Entries}", inf.SkippedEntries.Count, string.Join(", ", inf.SkippedEntries));
     }
 
     private static Dictionary<string, string> ParseSourceDisksNames(ParsedInf parsed)
@@ -249,9 +257,21 @@ public sealed class InfParserService : IInfParserService
                     .Where(x => !string.IsNullOrWhiteSpace(x))
                     .ToArray();
 
+                var usedAssignments = new HashSet<int>();
                 for (var i = 0; i < cursorPaths.Length; i++)
                 {
                     var assignment = i < assignments.Length ? assignments[i] : null;
+                    if (assignment is null)
+                    {
+                        inf.SkippedEntries.Add($"position {i + 1}");
+                        continue;
+                    }
+
+                    if (!usedAssignments.Add(assignment.Id))
+                    {
+                        inf.SkippedEntries.Add($"{assignment.DisplayName} (duplicate)");
+                        continue;
+                    }
 
                     inf.Cursors.Add(new InfCursorEntry
                     {
@@ -272,6 +292,7 @@ public sealed class InfParserService : IInfParserService
     private bool TryReadCursorEntries(ParsedInf parsed, InfFile inf, Dictionary<string, string> diskSubdirs, Dictionary<string, (string DiskId, string Subdir)> fileDisks)
     {
         var foundAny = false;
+        var usedAssignments = new HashSet<int>();
 
         foreach (var section in parsed.Sections.Values)
         {
@@ -302,6 +323,18 @@ public sealed class InfParserService : IInfParserService
                     name: valueName,
                     order: [CursorAssignmentType.WindowsReg, CursorAssignmentType.WindowsInstall, CursorAssignmentType.Name]
                 );
+
+                if (assignment is null)
+                {
+                    inf.SkippedEntries.Add(valueName);
+                    continue;
+                }
+
+                if (!usedAssignments.Add(assignment.Id))
+                {
+                    inf.SkippedEntries.Add($"{assignment.DisplayName} (duplicate)");
+                    continue;
+                }
 
                 var sourcePath = ResolveRelativePath(
                     ExtractFilenameFromAbsolutePath(data),
