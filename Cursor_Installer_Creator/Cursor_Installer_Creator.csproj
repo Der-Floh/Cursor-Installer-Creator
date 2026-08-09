@@ -1,14 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-    <ImplicitUsings>enable</ImplicitUsings>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>0.0.0</Version>
+    <AssemblyTitle>Cursor Installer Creator Core</AssemblyTitle>
+    <Description>Shared UI, cursor parsing and installer-package logic for Cursor Installer Creator.</Description>
   </PropertyGroup>
 
   <ItemGroup>

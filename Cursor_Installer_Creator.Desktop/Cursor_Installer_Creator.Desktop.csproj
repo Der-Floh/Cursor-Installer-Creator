@@ -2,14 +2,13 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>icon.ico</ApplicationIcon>
+    <AssemblyTitle>Cursor Installer Creator</AssemblyTitle>
+    <Description>Create, package and install Windows cursor schemes from .cur and .ani files.</Description>
   </PropertyGroup>
 
   <ItemGroup>

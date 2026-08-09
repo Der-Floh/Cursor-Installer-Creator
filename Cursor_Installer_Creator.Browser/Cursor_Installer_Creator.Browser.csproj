@@ -3,11 +3,13 @@
     <TargetFramework>net10.0-browser</TargetFramework>
     <OutputType>Exe</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-    <ImplicitUsings>enable</ImplicitUsings>
     <WasmBuildNative>true</WasmBuildNative>
     <PublishTrimmed>false</PublishTrimmed>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyTitle>Cursor Installer Creator Web</AssemblyTitle>
+    <Description>Browser host for Cursor Installer Creator.</Description>
   </PropertyGroup>
 
   <ItemGroup>
