@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="23.6" version="23.6" Modules="professional" RootPath="." Language="en" Id="{F0F1C442-387A-4B9E-ABDF-2F6137FE2494}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="23.6" version="23.9" Modules="professional" RootPath="." Language="en" Id="{F0F1C442-387A-4B9E-ABDF-2F6137FE2494}">
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_APP_FILE" Value="[#Cursor_Installer_Creator.Desktop.exe]"/>
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
     <ROW Property="AI_SHORTCUTSREG" Value="0|0|0|0|"/>
     <ROW Property="ALLUSERS" Value="1" MultiBuildValue="DefaultBuild:"/>
-    <ROW Property="ARPCOMMENTS" Value="A program to create Cursor-Installer files simply and fast " ValueLocId="*"/>
+    <ROW Property="ARPCOMMENTS" Value="Create, package and install Windows cursor schemes from .cur and .ani files." ValueLocId="*"/>
     <ROW Property="ARPCONTACT" Value="derr.floh@gmail.com"/>
     <ROW Property="ARPHELPLINK" Value="https://github.com/Der-Floh/Cursor-Installer-Creator"/>
     <ROW Property="ARPPRODUCTICON" Value="icon.exe" Type="8"/>
@@ -16,10 +16,10 @@
     <ROW Property="AppLogoIconDark" Value="applogodark.png" MultiBuildValue="DefaultBuild:iconx256.png" Type="1" MsiKey="AppLogoIconDark"/>
     <ROW Property="CTRLS" Value="2"/>
     <ROW Property="Manufacturer" Value="Der_Floh"/>
-    <ROW Property="ProductCode" Value="1033:{6A73C67B-A695-4A63-81CC-EBE5C5BC25F6} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{60DF086C-D635-4338-AC6D-092BA38A5C8B} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Cursor Installer Creator"/>
-    <ROW Property="ProductVersion" Value="3.0.0" Options="32"/>
+    <ROW Property="ProductVersion" Value="0.0.0" Options="32"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{91DBAE32-C98B-4D7A-827F-8649ADB08CBD}"/>
@@ -47,13 +47,12 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AI_SHORTCUTSREG" ComponentId="{85DBD41D-BF43-4370-B4EC-86CC5806C523}" Directory_="APPDIR" Attributes="260" KeyPath="AI_SHORTCUTSREG" Options="1"/>
     <ROW Component="APPDIR" ComponentId="{48A506F3-C7EB-4165-94F2-08E8BC4B550A}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="Cursor_Installer_Creator.Desktop.exe" ComponentId="{E417EACC-A6BB-4C9D-9F4E-38F43EFE1C51}" Directory_="APPDIR" Attributes="256" KeyPath="Cursor_Installer_Creator.Desktop.exe"/>
-    <ROW Component="Cursor_Installer_Creator.pdb" ComponentId="{59C3AD85-17CD-49E8-9221-FBF8126885DB}" Directory_="APPDIR" Attributes="0" KeyPath="Cursor_Installer_Creator.pdb" Type="4"/>
-    <ROW Component="Magick.NativeQ16x64.dll" ComponentId="{B50E6DB9-EFF6-4D5E-B559-C45EA3A73C53}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NativeQ16x64.dll"/>
+    <ROW Component="Cursor_Installer_Creator.Desktop.exe" ComponentId="{446CB3DD-AAED-4626-A400-38736F2D9972}" Directory_="APPDIR" Attributes="256" KeyPath="Cursor_Installer_Creator.Desktop.exe"/>
+    <ROW Component="Magick.NativeQ16x64.dll" ComponentId="{17128551-8034-4229-9DF9-D4C961AE06FD}" Directory_="APPDIR" Attributes="256" KeyPath="Magick.NativeQ16x64.dll"/>
     <ROW Component="ProductInformation" ComponentId="{014D878B-E174-4989-AB60-3B15442AE4FF}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
-    <ROW Component="av_libglesv2.dll" ComponentId="{20327C90-798A-4552-B994-C99AD905A7B6}" Directory_="APPDIR" Attributes="256" KeyPath="av_libglesv2.dll"/>
-    <ROW Component="libHarfBuzzSharp.dll" ComponentId="{B2DA26F7-CB7C-4245-BB40-59DBFEC9CB09}" Directory_="APPDIR" Attributes="256" KeyPath="libHarfBuzzSharp.dll"/>
-    <ROW Component="libSkiaSharp.dll" ComponentId="{D451683E-5540-422E-866C-293FFF89DB6E}" Directory_="APPDIR" Attributes="256" KeyPath="libSkiaSharp.dll"/>
+    <ROW Component="av_libglesv2.dll" ComponentId="{6FC72C54-E289-4DFF-98AF-18411A521333}" Directory_="APPDIR" Attributes="256" KeyPath="av_libglesv2.dll"/>
+    <ROW Component="libHarfBuzzSharp.dll" ComponentId="{6240DB30-717D-4AAD-B133-01A72B9C4B2D}" Directory_="APPDIR" Attributes="256" KeyPath="libHarfBuzzSharp.dll"/>
+    <ROW Component="libSkiaSharp.dll" ComponentId="{79E67037-B8F7-44C6-BF3F-EC53C4782255}" Directory_="APPDIR" Attributes="256" KeyPath="libSkiaSharp.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
     <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
@@ -61,13 +60,9 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="av_libglesv2.dll" Component_="av_libglesv2.dll" FileName="AV_LIB~1.DLL|av_libglesv2.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\av_libglesv2.dll" SelfReg="false"/>
-    <ROW File="Cursor_Installer_Creator.Desktop.exe" Component_="Cursor_Installer_Creator.Desktop.exe" FileName="CURSOR~1.EXE|Cursor_Installer_Creator.Desktop.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\Cursor_Installer_Creator.Desktop.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="Cursor_Installer_Creator.Desktop.pdb" Component_="Cursor_Installer_Creator.Desktop.exe" FileName="CURSOR~1.PDB|Cursor_Installer_Creator.Desktop.pdb" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\Cursor_Installer_Creator.Desktop.pdb" SelfReg="false"/>
-    <ROW File="Cursor_Installer_Creator.pdb" Component_="Cursor_Installer_Creator.pdb" FileName="CURSOR~2.PDB|Cursor_Installer_Creator.pdb" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\Cursor_Installer_Creator.pdb" SelfReg="false"/>
+    <ROW File="Cursor_Installer_Creator.Desktop.exe" Component_="Cursor_Installer_Creator.Desktop.exe" FileName="CURSOR~1.EXE|Cursor_Installer_Creator.Desktop.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\Cursor_Installer_Creator.Desktop.exe" SelfReg="false" DigSign="false"/>
     <ROW File="libHarfBuzzSharp.dll" Component_="libHarfBuzzSharp.dll" FileName="LIBHAR~1.DLL|libHarfBuzzSharp.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\libHarfBuzzSharp.dll" SelfReg="false"/>
-    <ROW File="libHarfBuzzSharp.pdb" Component_="libHarfBuzzSharp.dll" FileName="LIBHAR~1.PDB|libHarfBuzzSharp.pdb" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\libHarfBuzzSharp.pdb" SelfReg="false"/>
     <ROW File="libSkiaSharp.dll" Component_="libSkiaSharp.dll" FileName="LIBSKI~1.DLL|libSkiaSharp.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\libSkiaSharp.dll" SelfReg="false"/>
-    <ROW File="libSkiaSharp.pdb" Component_="libSkiaSharp.dll" FileName="LIBSKI~1.PDB|libSkiaSharp.pdb" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\libSkiaSharp.pdb" SelfReg="false"/>
     <ROW File="Magick.NativeQ16x64.dll" Component_="Magick.NativeQ16x64.dll" FileName="MAGICK~1.DLL|Magick.Native-Q16-x64.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\Magick.Native-Q16-x64.dll" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AiPersistentPropComponent">
@@ -77,7 +72,7 @@
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="[|AI_AIP_FOLDER][|AI_AIP_FILENAME]" PackageFileName="[|AI_AIP_FILENAME]-Setup-v[|ProductVersion]" Languages="en" InstallationType="4" SummInfoMetadata="Page Count:450" UseLargeSchema="true" MsiPackageType="x64"/>
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="[|AI_AIP_FOLDER]" PackageFileName="[|AI_AIP_FILENAME]-Setup-v[|ProductVersion]" Languages="en" InstallationType="4" SummInfoMetadata="Page Count:450" UseLargeSchema="true" MsiPackageType="x64"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.CacheComponent">
     <ATTRIBUTE name="Enable" value="false"/>
@@ -203,11 +198,10 @@
     <ROW Feature_="MainFeature" Component_="ProductInformation"/>
     <ROW Feature_="MainFeature" Component_="av_libglesv2.dll"/>
     <ROW Feature_="MainFeature" Component_="Cursor_Installer_Creator.Desktop.exe"/>
-    <ROW Feature_="MainFeature" Component_="Cursor_Installer_Creator.pdb"/>
     <ROW Feature_="MainFeature" Component_="libHarfBuzzSharp.dll"/>
     <ROW Feature_="MainFeature" Component_="libSkiaSharp.dll"/>
-    <ROW Feature_="MainFeature" Component_="Magick.NativeQ16x64.dll"/>
     <ROW Feature_="MainFeature" Component_="AI_SHORTCUTSREG"/>
+    <ROW Feature_="MainFeature" Component_="Magick.NativeQ16x64.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="icon.exe" SourcePath="..\Cursor_Installer_Creator\Assets\icon.ico" Index="0"/>
@@ -265,7 +259,10 @@
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
     <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
   </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
+    <ROW Directory_="APPDIR" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
+  </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.WingetComponent">
-    <ROW Build="DefaultBuild" PackageIdentifier="[Manufacturer].[ProductName]" PackageVersion="[ProductVersion]" DefaultLocale="en-US" Publisher="[Manufacturer]" PackageName="[ProductName]" License="MIT" ShortDescription="[ARPCOMMENTS]" ProductCode="[ProductCode]" Architecture="x64" InstallerURL="https://github.com/Der-Floh/Cursor-Installer-Creator/releases/download/v[ProductVersion]/[|AI_AIP_FILENAME]-Setup-v[|ProductVersion].msi" SwitchSilent="/quiet /qn" SwitchSilentWithProgress="/passive" SwitchLocation="APPDIR=&quot;&lt;INSTALLPATH&gt;&quot;" SwitchLog="/log &quot;&lt;LOGPATH&gt;&quot;"/>
+    <ROW Build="DefaultBuild" PackageIdentifier="[Manufacturer].[ProductName]" PackageVersion="[ProductVersion]" DefaultLocale="en-US" Publisher="[Manufacturer]" PackageName="[ProductName]" License="MIT" ShortDescription="[ARPCOMMENTS]" ProductCode="[ProductCode]" Architecture="x64" InstallerURL="https://github.com/Der-Floh/Cursor-Installer-Creator/releases/download/v[ProductVersion]/[" SwitchSilent="/quiet /qn" SwitchSilentWithProgress="/passive" SwitchLocation="APPDIR=&quot;&lt;INSTALLPATH&gt;&quot;" SwitchLog="/log &quot;&lt;LOGPATH&gt;&quot;"/>
   </COMPONENT>
 </DOCUMENT>
