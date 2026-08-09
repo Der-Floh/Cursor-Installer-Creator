@@ -1,8 +1,8 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches: [ main ]
+  release:
+    types: [published]
   workflow_dispatch: {}
 
 concurrency:
@@ -24,6 +24,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Extract version from tag
+        id: version
+        shell: bash
+        run: echo "value=$(echo '${{ github.ref_name }}' | sed 's/^v//')" >> $GITHUB_OUTPUT
+
       - name: Setup .NET 10
         uses: actions/setup-dotnet@v5
         with:
@@ -33,7 +38,7 @@ jobs:
         run: dotnet workload install wasm-tools
 
       - name: Publish .NET Project
-        run: dotnet publish "$PROJECT_PATH" -c Release --nologo -o ./publish-output
+        run: dotnet publish "$PROJECT_PATH" -c Release --nologo -o ./publish-output -p:Version=${{ steps.version.outputs.value }}
 
       - name: Copy index.html to 404.html
         run: cp "$OUTPUT_PATH/index.html" "$OUTPUT_PATH/404.html"
