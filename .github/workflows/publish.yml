@@ -31,6 +31,7 @@ jobs:
           dotnet publish Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj
           -p:PublishProfile=winx64
           -p:Version=${{ steps.version.outputs.value }}
+          -clp:ForceConsoleColor
 
       - name: Create MSI
         uses: ./.github/actions/create-msi

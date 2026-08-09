@@ -38,10 +38,10 @@ jobs:
           restore-keys: nuget-${{ runner.os }}-
 
       - name: Restore
-        run: dotnet restore Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj
+        run: dotnet restore Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj -clp:ForceConsoleColor
 
       - name: Build
-        run: dotnet build Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj -c Release --no-restore
+        run: dotnet build Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj -c Release --no-restore -clp:ForceConsoleColor
 
   build-web:
     name: Build web
@@ -67,7 +67,7 @@ jobs:
         run: dotnet workload install wasm-tools
 
       - name: Restore
-        run: dotnet restore Cursor_Installer_Creator.Browser/Cursor_Installer_Creator.Browser.csproj
+        run: dotnet restore Cursor_Installer_Creator.Browser/Cursor_Installer_Creator.Browser.csproj -clp:ForceConsoleColor
 
       - name: Build
-        run: dotnet build Cursor_Installer_Creator.Browser/Cursor_Installer_Creator.Browser.csproj -c Release --no-restore
+        run: dotnet build Cursor_Installer_Creator.Browser/Cursor_Installer_Creator.Browser.csproj -c Release --no-restore -clp:ForceConsoleColor

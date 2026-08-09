@@ -38,7 +38,7 @@ jobs:
         run: dotnet workload install wasm-tools
 
       - name: Publish .NET Project
-        run: dotnet publish "$PROJECT_PATH" -c Release --nologo -o ./publish-output -p:Version=${{ steps.version.outputs.value }}
+        run: dotnet publish "$PROJECT_PATH" -c Release --nologo -o ./publish-output -p:Version=${{ steps.version.outputs.value }} -clp:ForceConsoleColor
 
       - name: Copy index.html to 404.html
         run: cp "$OUTPUT_PATH/index.html" "$OUTPUT_PATH/404.html"
