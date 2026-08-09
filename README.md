@@ -1,6 +1,6 @@
 # Cursor-Installer-Creator
 
-A program to create Cursor-Installer files simply and fast.
+Cursor Installer Creator builds distributable Windows cursor schemes from individual cursor files. Packaging one by hand means collecting the .cur and .ani files, mapping each one to the system role it should replace, and writing the .inf file that Windows uses to register the scheme — tedious work that is easy to get wrong. This application handles that assembly and produces a self-contained package that anyone can install with a right-click, or apply directly to the machine it is running on. It is intended for people who create or redistribute custom cursor sets.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Der-Floh/Cursor-Installer-Creator/main/Cursor_Installer_Creator/Resources/preview-dark.png">
