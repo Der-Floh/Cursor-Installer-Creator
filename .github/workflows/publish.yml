@@ -6,7 +6,6 @@ on:
 
 permissions:
   contents: write
-  actions: read
 
 jobs:
   publish:
@@ -39,45 +38,10 @@ jobs:
           version: ${{ steps.version.outputs.value }}
           advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
 
-      - name: Upload unsigned artifacts
-        id: upload-unsigned
-        uses: actions/upload-artifact@v7
-        with:
-          name: unsigned
-          path: |
-            Cursor_Installer_Creator.Desktop/bin/Publish/Cursor_Installer_Creator.Desktop.exe
-            artifacts/Cursor-Installer-Creator-v${{ steps.version.outputs.value }}-win-x64.msi
-          if-no-files-found: error
-
-      - name: Sign executable and MSI (SignPath)
-        uses: signpath/github-action-submit-signing-request@v2
-        with:
-          connector-url: ${{ secrets.SIGNPATH_CONNECTOR_URL }}
-          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
-          organization-id: ${{ secrets.SIGNPATH_ORGANIZATION_ID }}
-          project-slug: cursor-installer-creator
-          signing-policy-slug: release-signing
-          artifact-configuration-slug: release
-          github-artifact-id: ${{ steps.upload-unsigned.outputs.artifact-id }}
-          github-token: ${{ github.token }}
-          wait-for-completion: true
-          wait-for-completion-timeout-in-seconds: 3600
-          output-artifact-directory: ${{ github.workspace }}
-
       - name: Create ZIP
         uses: ./.github/actions/create-zip
         with:
           version: ${{ steps.version.outputs.value }}
-
-      - name: Update WinGet manifest hash for signed MSI
-        shell: pwsh
-        run: |
-          $msi = "artifacts/Cursor-Installer-Creator-v${{ steps.version.outputs.value }}-win-x64.msi"
-          $hash = (Get-FileHash -Algorithm SHA256 -Path $msi).Hash
-          $manifestDir = "artifacts/manifests/d/Der_Floh/Cursor Installer Creator/${{ steps.version.outputs.value }}"
-          Get-ChildItem -Path $manifestDir -Filter *.yaml | ForEach-Object {
-              (Get-Content $_.FullName) -replace 'InstallerSha256:\s*[A-Fa-f0-9]+', "InstallerSha256: $hash" | Set-Content $_.FullName
-          }
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v3
