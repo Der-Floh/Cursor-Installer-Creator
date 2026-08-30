@@ -19,7 +19,7 @@
     <ROW Property="ProductCode" Value="1033:{60DF086C-D635-4338-AC6D-092BA38A5C8B} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Cursor Installer Creator"/>
-    <ROW Property="ProductVersion" Value="0.0.0" Options="32"/>
+    <ROW Property="ProductVersion" Value="0.0.0" Options="4"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{91DBAE32-C98B-4D7A-827F-8649ADB08CBD}"/>
@@ -60,7 +60,7 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="av_libglesv2.dll" Component_="av_libglesv2.dll" FileName="AV_LIB~1.DLL|av_libglesv2.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\av_libglesv2.dll" SelfReg="false"/>
-    <ROW File="Cursor_Installer_Creator.Desktop.exe" Component_="Cursor_Installer_Creator.Desktop.exe" FileName="CURSOR~1.EXE|Cursor_Installer_Creator.Desktop.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\Cursor_Installer_Creator.Desktop.exe" SelfReg="false" DigSign="false"/>
+    <ROW File="Cursor_Installer_Creator.Desktop.exe" Component_="Cursor_Installer_Creator.Desktop.exe" FileName="CURSOR~1.EXE|Cursor_Installer_Creator.Desktop.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\Cursor_Installer_Creator.Desktop.exe" SelfReg="false"/>
     <ROW File="libHarfBuzzSharp.dll" Component_="libHarfBuzzSharp.dll" FileName="LIBHAR~1.DLL|libHarfBuzzSharp.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\libHarfBuzzSharp.dll" SelfReg="false"/>
     <ROW File="libSkiaSharp.dll" Component_="libSkiaSharp.dll" FileName="LIBSKI~1.DLL|libSkiaSharp.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\libSkiaSharp.dll" SelfReg="false"/>
     <ROW File="Magick.NativeQ16x64.dll" Component_="Magick.NativeQ16x64.dll" FileName="MAGICK~1.DLL|Magick.Native-Q16-x64.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish\Magick.Native-Q16-x64.dll" SelfReg="false"/>
@@ -72,7 +72,7 @@
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="[|AI_AIP_FOLDER]" PackageFileName="[|AI_AIP_FILENAME]-Setup-v[|ProductVersion]" Languages="en" InstallationType="4" SummInfoMetadata="Page Count:450" UseLargeSchema="true" MsiPackageType="x64"/>
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="[|AI_AIP_FOLDER]" PackageFileName="[|AI_AIP_FILENAME]-Setup-v[|ProductVersion]-win-x64" Languages="en" InstallationType="4" SummInfoMetadata="Page Count:450" UseLargeSchema="true" MsiPackageType="x64"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.CacheComponent">
     <ATTRIBUTE name="Enable" value="false"/>
@@ -263,6 +263,6 @@
     <ROW Directory_="APPDIR" SourcePath="..\Cursor_Installer_Creator.Desktop\bin\Publish" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store" ExcludeFlags="6" FileAddOptions="4"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.WingetComponent">
-    <ROW Build="DefaultBuild" PackageIdentifier="[Manufacturer].[ProductName]" PackageVersion="[ProductVersion]" DefaultLocale="en-US" Publisher="[Manufacturer]" PackageName="[ProductName]" License="MIT" ShortDescription="[ARPCOMMENTS]" ProductCode="[ProductCode]" Architecture="x64" InstallerURL="https://github.com/Der-Floh/Cursor-Installer-Creator/releases/download/v[ProductVersion]/[" SwitchSilent="/quiet /qn" SwitchSilentWithProgress="/passive" SwitchLocation="APPDIR=&quot;&lt;INSTALLPATH&gt;&quot;" SwitchLog="/log &quot;&lt;LOGPATH&gt;&quot;"/>
+    <ROW Build="DefaultBuild" PackageIdentifier="[Manufacturer].[AI_AIP_FILENAME]" PackageVersion="[ProductVersion]" DefaultLocale="en-US" Publisher="[Manufacturer]" PackageName="[AI_AIP_FILENAME]" License="MIT" ShortDescription="[ARPCOMMENTS]" ProductCode="[ProductCode]" Architecture="x64" InstallerURL="https://github.com/Der-Floh/Cursor-Installer-Creator/releases/download/v[ProductVersion]/[AI_AIP_FILENAME]-Setup-v[ProductVersion]-win-x64.msi" SwitchSilent="/quiet /qn" SwitchSilentWithProgress="/passive" SwitchLocation="APPDIR=&quot;&lt;INSTALLPATH&gt;&quot;" SwitchLog="/log &quot;&lt;LOGPATH&gt;&quot;"/>
   </COMPONENT>
 </DOCUMENT>

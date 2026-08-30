@@ -1,9 +1,21 @@
 name: Create ZIP Archive
-description: Creates a high-compression ZIP archive from the publish output
+description: Creates a high-compression ZIP archive from a publish output directory
 
 inputs:
+  name:
+    description: Base name of the archive, without version or target
+    required: true
   version:
     description: Version number (without v prefix)
+    required: true
+  target:
+    description: Runtime identifier the archive is built for (e.g. win-x64)
+    required: true
+  source-path:
+    description: Directory whose contents are archived
+    required: true
+  output-dir:
+    description: Directory the archive is written to
     required: true
 
 runs:
@@ -12,5 +24,6 @@ runs:
     - name: Create ZIP
       shell: pwsh
       run: |
-        New-Item -ItemType Directory -Force -Path ./artifacts | Out-Null
-        7z a -tzip -mx=9 "./artifacts/Cursor-Installer-Creator-v${{ inputs.version }}-win-x64.zip" "./Cursor_Installer_Creator.Desktop/bin/Publish/*"
+        New-Item -ItemType Directory -Force -Path "${{ inputs.output-dir }}" | Out-Null
+        $archive = Join-Path "${{ inputs.output-dir }}" "${{ inputs.name }}-v${{ inputs.version }}-${{ inputs.target }}.zip"
+        7z a -tzip -mx=9 $archive "${{ inputs.source-path }}/*"

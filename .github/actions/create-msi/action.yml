@@ -2,8 +2,18 @@ name: Create MSI Installer
 description: Builds an MSI installer using Advanced Installer
 
 inputs:
+  aip-path:
+    description: Path to the Advanced Installer project file
+    required: true
+  build-name:
+    description: Name of the build defined in the Advanced Installer project
+    required: false
+    default: DefaultBuild
   version:
     description: Version number (without v prefix)
+    required: true
+  output-dir:
+    description: Directory the installer and its WinGet manifests are written to
     required: true
   advinst-license:
     description: Advanced Installer license key
@@ -12,9 +22,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Create artifacts directory
+    - name: Create output directory
       shell: pwsh
-      run: New-Item -ItemType Directory -Force -Path "${{ github.workspace }}\artifacts" | Out-Null
+      run: New-Item -ItemType Directory -Force -Path "${{ inputs.output-dir }}" | Out-Null
 
     - name: Build MSI
       uses: caphyon/advinst-github-action@main
@@ -22,10 +32,9 @@ runs:
         advinst-license: ${{ inputs.advinst-license }}
         advinst-enable-automation: "true"
 
-        aip-path: .github/Cursor_Installer_Creator.aip
-        aip-build-name: DefaultBuild
-        aip-output-dir: ${{ github.workspace }}\artifacts
-        aip-package-name: Cursor-Installer-Creator-v${{ inputs.version }}-win-x64.msi
+        aip-path: ${{ inputs.aip-path }}
+        aip-build-name: ${{ inputs.build-name }}
+        aip-output-dir: ${{ inputs.output-dir }}
 
         aip-commands: |
           SetVersion ${{ inputs.version }}

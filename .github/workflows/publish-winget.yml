@@ -1,35 +1,40 @@
-name: Publish Release
+name: Publish to WinGet
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to publish (e.g. v1.2.3)
+        required: true
+        type: string
 
 permissions:
-  contents: write
+  contents: read
 
 env:
   DOTNET_VERSION: "10.0.x"
   PROJECT_PATH: Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj
   PUBLISH_PROFILE: winx64
-  PUBLISH_PATH: Cursor_Installer_Creator.Desktop/bin/Publish
   AIP_PATH: .github/CursorInstallerCreator.aip
   ARTIFACTS_PATH: artifacts
   MANIFEST_PATH: artifacts/manifests/d/Der_Floh/CursorInstallerCreator
-  PACKAGE_NAME: CursorInstallerCreator
   TARGET: win-x64
+  FILE_TYPE: msi
 
 jobs:
-  publish:
+  publish-winget:
     runs-on: windows-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.tag }}
 
       - name: Extract version from tag
         id: version
         shell: bash
-        run: echo "value=$(echo '${{ github.ref_name }}' | sed 's/^v//')" >> $GITHUB_OUTPUT
+        run: echo "value=$(echo '${{ inputs.tag }}' | sed 's/^v//')" >> $GITHUB_OUTPUT
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
@@ -51,21 +56,16 @@ jobs:
           output-dir: ${{ env.ARTIFACTS_PATH }}
           advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
 
-      - name: Create ZIP
-        uses: ./.github/actions/create-zip
+      - name: Sync manifest hash with released MSI
+        uses: ./.github/actions/sync-manifest-hash
         with:
-          name: ${{ env.PACKAGE_NAME }}
+          repository: ${{ github.repository }}
+          tag: ${{ inputs.tag }}
           version: ${{ steps.version.outputs.value }}
           target: ${{ env.TARGET }}
-          source-path: ${{ env.PUBLISH_PATH }}
-          output-dir: ${{ env.ARTIFACTS_PATH }}
-
-      - name: Upload to Release
-        uses: softprops/action-gh-release@v3
-        with:
-          files: |
-            ./${{ env.ARTIFACTS_PATH }}/*.zip
-            ./${{ env.ARTIFACTS_PATH }}/*.msi
+          file-type: ${{ env.FILE_TYPE }}
+          manifest-path: ${{ env.MANIFEST_PATH }}/${{ steps.version.outputs.value }}
+          token: ${{ github.token }}
 
       - name: Publish to WinGet
         uses: ./.github/actions/publish-winget
