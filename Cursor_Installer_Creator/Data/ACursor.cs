@@ -9,11 +9,11 @@ public sealed class ACursor : CursorBase
 {
     public ACursor(byte[] cursorBytes, CursorType type, CursorAssignment? assignment = null) : base(cursorBytes, type, assignment) { }
 
-    public override async Task<CursorAnimationFrame[]> GetCursorFramesAsync(int targetSize = 0)
+    public override async Task<CursorAnimationFrame[]> GetCursorFramesAsync(int targetSize = 0, CancellationToken cancellationToken = default)
     {
         var frames = new List<CursorAnimationFrame>();
         var aniReader = new AniReader();
-        var aniDatas = await Task.Run(() => aniReader.Read(CursorBytes));
+        var aniDatas = await Task.Run(() => aniReader.Read(CursorBytes), cancellationToken);
         if (aniDatas is null)
             return [];
 
@@ -30,25 +30,39 @@ public sealed class ACursor : CursorBase
         ushort? globalHotspotX = hasGlobalHotspot ? hotspots[0].HotspotX : null;
         ushort? globalHotspotY = hasGlobalHotspot ? hotspots[0].HotspotY : null;
 
-        foreach (var frame in aniData.Frames)
+        try
         {
-            var bytes = await aniData.GetFrameBytes(aniData.Animations[index], frame);
-            if (bytes is null)
-                continue;
-
-            var hotspotX = globalHotspotX ?? 0;
-            var hotspotY = globalHotspotY ?? 0;
-            if (!hasGlobalHotspot)
+            foreach (var frame in aniData.Frames)
             {
-                var hotspot = hotspots.FirstOrDefault(x => x.FramePosition == frame.Position);
-                hotspotX = hotspot?.HotspotX ?? 0;
-                hotspotY = hotspot?.HotspotY ?? 0;
-            }
+                cancellationToken.ThrowIfCancellationRequested();
 
-            var stream = new MemoryStream(bytes);
-            var bitmap = new Bitmap(stream);
-            frames.Add(new CursorAnimationFrame(frame.Duration, bitmap, hotspotX, hotspotY));
+                var bytes = await aniData.GetFrameBytes(aniData.Animations[index], frame);
+                if (bytes is null)
+                    continue;
+
+                var hotspotX = globalHotspotX ?? 0;
+                var hotspotY = globalHotspotY ?? 0;
+                if (!hasGlobalHotspot)
+                {
+                    var hotspot = hotspots.FirstOrDefault(x => x.FramePosition == frame.Position);
+                    hotspotX = hotspot?.HotspotX ?? 0;
+                    hotspotY = hotspot?.HotspotY ?? 0;
+                }
+
+                var stream = new MemoryStream(bytes);
+                var bitmap = new Bitmap(stream);
+                frames.Add(new CursorAnimationFrame(frame.Duration, bitmap, hotspotX, hotspotY));
+            }
         }
+        catch (OperationCanceledException)
+        {
+            foreach (var decoded in frames)
+            {
+                decoded.Dispose();
+            }
+            throw;
+        }
+
         return [.. frames];
     }
 

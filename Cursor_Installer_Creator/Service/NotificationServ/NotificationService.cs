@@ -17,16 +17,16 @@ public sealed class NotificationService : INotificationService
 
     public void Setup(WindowNotificationManager notificationManager) => _manager = notificationManager;
 
-    public void ShowInfo(string message) => ShowInfo("ℹ️ Information", message);
+    public void ShowInfo(string message) => ShowInfo("ℹ️ Information", message);
     public void ShowInfo(string title, string message) => ShowNotification(title, message, NotificationType.Information);
 
-    public void ShowSuccess(string message) => ShowSuccess("✅ Success", message);
+    public void ShowSuccess(string message) => ShowSuccess("✅ Success", message);
     public void ShowSuccess(string title, string message) => ShowNotification(title, message, NotificationType.Success);
 
-    public void ShowWarning(string message) => ShowWarning("⚠️ Warning", message);
+    public void ShowWarning(string message) => ShowWarning("⚠️ Warning", message);
     public void ShowWarning(string title, string message) => ShowNotification(title, message, NotificationType.Warning);
 
-    public void ShowError(string message) => ShowError("❌ Error", message);
+    public void ShowError(string message) => ShowError("❌ Error", message);
     public void ShowError(string title, string message) => ShowNotification(title, message, NotificationType.Error);
 
     public void ShowNotification(string title, string message, NotificationType type)

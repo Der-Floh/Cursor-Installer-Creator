@@ -9,10 +9,10 @@ public sealed class CCursor : CursorBase
 {
     public CCursor(byte[] cursorBytes, CursorType type, CursorAssignment? assignment = null) : base(cursorBytes, type, assignment) { }
 
-    public override async Task<CursorAnimationFrame[]> GetCursorFramesAsync(int targetSize = 0)
+    public override async Task<CursorAnimationFrame[]> GetCursorFramesAsync(int targetSize = 0, CancellationToken cancellationToken = default)
     {
         var icoReader = new IcoReader();
-        var icoData = await Task.Run(() => icoReader.Read(CursorBytes));
+        var icoData = await Task.Run(() => icoReader.Read(CursorBytes), cancellationToken);
         if (icoData is null)
             return [];
 
@@ -20,6 +20,9 @@ public sealed class CCursor : CursorBase
         var bytes = await icoData.GetImageAsync(index);
         if (bytes is null)
             return [];
+
+        cancellationToken.ThrowIfCancellationRequested();
+
         var stream = new MemoryStream(bytes);
         var bitmap = new Bitmap(stream);
 

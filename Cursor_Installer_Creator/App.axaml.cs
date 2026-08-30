@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 
 using Cursor_Installer_Creator.Repository.CursorAssignmentRepo;
 using Cursor_Installer_Creator.Repository.CursorRepo;
@@ -22,6 +23,17 @@ namespace Cursor_Installer_Creator;
 public sealed partial class App : Application
 {
     public static IServiceProvider Services { get; private set; } = null!;
+    public static FontManagerOptions NotoFontFallback { get; } =
+        new FontManagerOptions
+        {
+            FontFallbacks =
+            [
+                new FontFallback
+                {
+                    FontFamily = new FontFamily("avares://Cursor_Installer_Creator/Assets/Fonts#Noto Color Emoji for CIC")
+                }
+            ]
+        };
 
     public override void Initialize()
     {

@@ -162,7 +162,7 @@ public sealed partial class CursorInstallerMainViewModel : ViewModelBase
 
         _notificationService.ShowNotification(new Notification
         {
-            Title = "Update available",
+            Title = "ℹ️ Update available",
             Message = "A new version of Cursor Installer Creator is available.",
             Type = NotificationType.Information,
             OnClick = () =>

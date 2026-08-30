@@ -8,6 +8,9 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 
 using Cursor_Installer_Creator.Data;
+using Cursor_Installer_Creator.Service.NotificationServ;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cursor_Installer_Creator.Views;
 
@@ -28,6 +31,7 @@ public sealed partial class BitmapAnimation : UserControl
     private CursorAnimationFrame[] _frames = [];
     private int _frameIndex;
     private CancellationTokenSource? _loadCts;
+    private int _loadGeneration;
     private ICursor? _loadedForCursor;
     private int _loadedForSize;
     private readonly TranslateTransform _imageTransform = new();
@@ -48,16 +52,16 @@ public sealed partial class BitmapAnimation : UserControl
         base.OnPropertyChanged(change);
 
         if (change.Property == ICursorProperty && this.IsAttachedToVisualTree())
-            _ = ReloadAsync();
+            StartReload();
 
         if (change.Property == WidthProperty && this.IsAttachedToVisualTree() && ICursor is not null)
-            _ = ReloadAsync();
+            StartReload();
     }
 
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
         base.OnAttachedToVisualTree(e);
-        _ = ReloadAsync();
+        StartReload();
     }
 
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
@@ -65,74 +69,85 @@ public sealed partial class BitmapAnimation : UserControl
         base.OnDetachedFromVisualTree(e);
         StopAnimation();
         CancelLoad();
+        _loadGeneration++;
         _loadedForSize = 0;
-        // Keep _frames alive — if the same ICursor is reattached we can skip re-decoding.
+        // Keep _frames alive - if the same ICursor is reattached we can skip re-decoding.
+    }
+
+    private async void StartReload()
+    {
+        try
+        {
+            await ReloadAsync();
+        }
+        catch (OperationCanceledException) { /* superseded by a newer load */ }
+        catch (Exception ex)
+        {
+            App.Services.GetService<INotificationService>()?.ShowError(ex.Message);
+        }
     }
 
     public async Task ReloadAsync()
     {
-        StopAnimation();
-        CancelLoad();
-
         var cursor = ICursor;
-
-        if (cursor is null)
-        {
-            DisposeFrames();
-            ShowFrameDirect(null);
-            return;
-        }
-
-        // If the same cursor is already decoded at the same size, just restart the animation.
         var targetSize = (int)Math.Max(0, double.IsNaN(Width) ? 0 : Width);
-        if (cursor == _loadedForCursor && targetSize == _loadedForSize && _frames.Length > 0)
+
+        if (cursor is not null && cursor == _loadedForCursor && targetSize == _loadedForSize && _frames.Length > 0)
         {
+            StopAnimation();
             _frameIndex = 0;
             RestartAnimation();
             return;
         }
 
-        DisposeFrames();
+        StopAnimation();
+        CancelLoad();
+        var generation = ++_loadGeneration;
+
+        if (cursor is null)
+        {
+            DisposeFrames();
+            return;
+        }
 
         var cts = new CancellationTokenSource();
         _loadCts = cts;
 
-        CursorAnimationFrame[] frames;
+        CursorAnimationFrame[] decoded;
         try
         {
-            frames = await cursor.GetCursorFramesAsync(targetSize);
-            if (cts.IsCancellationRequested)
-                return;
+            decoded = await cursor.GetCursorFramesAsync(targetSize, cts.Token);
         }
         catch (OperationCanceledException)
         {
             return;
         }
-        finally
+
+        var usable = decoded.Where(x => x is not null && x.Frame is not null).ToArray();
+
+        // A newer reload has taken over: dispose only what this call decoded and
+        // leave all shared state (frames, image source, CTS) to the winner.
+        if (generation != _loadGeneration)
         {
-            if (cts.IsCancellationRequested)
-                CancelLoad();
+            DisposeAll(usable);
+            return;
         }
 
-        _frames = [.. frames.Where(x => x is not null && x.Frame is not null)];
+        // The previously displayed frames stay alive until the new ones are on screen.
+        var previous = _frames;
+        _frames = usable;
         _loadedForCursor = cursor;
         _loadedForSize = targetSize;
         _frameIndex = 0;
 
-        if (_frames.Length == 0)
-        {
+        if (usable.Length == 0)
             ShowFrameDirect(null);
-            return;
-        }
+        else if (cursor.Type != CursorType.ani)
+            ShowFrameDirect(usable[0].Frame); // Non-ANI cursors are treated as static images.
+        else
+            RestartAnimation();
 
-        // Non-ANI cursors are treated as static images.
-        if (cursor.Type != CursorType.ani)
-        {
-            ShowFrameDirect(_frames[0].Frame);
-            return;
-        }
-
-        RestartAnimation();
+        DisposeAll(previous);
     }
 
     private void Timer_Tick(object? sender, EventArgs e)
@@ -227,11 +242,20 @@ public sealed partial class BitmapAnimation : UserControl
 
     private void DisposeFrames()
     {
-        foreach (var frame in _frames)
-            frame.Dispose();
-
+        var frames = _frames;
         _frames = [];
         _loadedForCursor = null;
         _frameIndex = 0;
+
+        ShowFrameDirect(null);
+        DisposeAll(frames);
+    }
+
+    private static void DisposeAll(IEnumerable<CursorAnimationFrame> frames)
+    {
+        foreach (var frame in frames)
+        {
+            frame.Dispose();
+        }
     }
 }

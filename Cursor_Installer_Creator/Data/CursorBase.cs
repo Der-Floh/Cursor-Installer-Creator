@@ -22,7 +22,7 @@ public abstract partial class CursorBase : ObservableObject, ICursor
         Assignment = assignment;
     }
 
-    public abstract Task<CursorAnimationFrame[]> GetCursorFramesAsync(int targetSize = 0);
+    public abstract Task<CursorAnimationFrame[]> GetCursorFramesAsync(int targetSize = 0, CancellationToken cancellationToken = default);
 
     public override string ToString()
         => $"{Assignment?.ToString() ?? "Unknown"} ({Type})";

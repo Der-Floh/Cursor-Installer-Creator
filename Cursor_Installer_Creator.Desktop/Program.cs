@@ -1,6 +1,4 @@
-﻿using System;
-
-using Avalonia;
+﻿using Avalonia;
 
 namespace Cursor_Installer_Creator.Desktop;
 

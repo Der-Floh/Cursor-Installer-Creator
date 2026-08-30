@@ -7,5 +7,5 @@ public interface ICursor
     string FileExtension { get; }
     CursorAssignment? Assignment { get; set; }
 
-    Task<CursorAnimationFrame[]> GetCursorFramesAsync(int targetSize = 0);
+    Task<CursorAnimationFrame[]> GetCursorFramesAsync(int targetSize = 0, CancellationToken cancellationToken = default);
 }
