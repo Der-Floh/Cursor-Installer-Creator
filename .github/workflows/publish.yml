@@ -19,7 +19,7 @@ env:
   AIP_PATH: .github/CursorInstallerCreator.aip
   ARTIFACTS_PATH: artifacts
   MANIFEST_ARTIFACT: winget-manifests
-  PACKAGE_NAME: CursorInstallerCreator
+  ZIP_PACKAGE_NAME: CursorInstallerCreator-Portable
   TARGET: win-x64
   FILE_TYPE: msi
 
@@ -68,7 +68,7 @@ jobs:
       - name: Create ZIP
         uses: ./.github/actions/create-zip
         with:
-          name: ${{ env.PACKAGE_NAME }}
+          name: ${{ env.ZIP_PACKAGE_NAME }}
           version: ${{ steps.version.outputs.value }}
           target: ${{ env.TARGET }}
           source-path: ${{ env.PUBLISH_PATH }}
