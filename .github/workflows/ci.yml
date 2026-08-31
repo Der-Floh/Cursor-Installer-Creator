@@ -16,6 +16,8 @@ env:
   DOTNET_NOLOGO: "true"
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: "true"
   DOTNET_VERSION: "10.0.x"
+  DESKTOP_PROJECT: Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj
+  PUBLISH_PROFILE: winx64
 
 jobs:
   build:
@@ -58,3 +60,29 @@ jobs:
 
       - name: Build
         run: dotnet build ${{ matrix.project }} -c Release --no-restore -clp:ForceConsoleColor
+
+  publish-desktop:
+    name: Publish desktop (win-x64)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj', 'Directory.Packages.props') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      - name: Publish
+        run: >
+          dotnet publish ${{ env.DESKTOP_PROJECT }}
+          -p:PublishProfile=${{ env.PUBLISH_PROFILE }}
+          -clp:ForceConsoleColor

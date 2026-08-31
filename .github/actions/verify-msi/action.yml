@@ -1,0 +1,58 @@
+name: Verify MSI
+description: Installs the MSI silently, checks it registers correctly, and uninstalls it
+
+inputs:
+  installer-path:
+    description: Path to the MSI to verify
+    required: true
+  product-name:
+    description: Display name the installer registers in Programs and Features
+    required: true
+  version:
+    description: Version the installer is expected to register (without v prefix)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Install, verify and uninstall
+      shell: pwsh
+      run: |
+        $installer = '${{ inputs.installer-path }}'
+        $productName = '${{ inputs.product-name }}'
+        $expectedVersion = '${{ inputs.version }}'
+        $log = Join-Path $env:RUNNER_TEMP 'msi-verify.log'
+        $uninstallKey = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall'
+
+        function Invoke-Msiexec([string[]] $arguments, [string] $activity) {
+            $process = Start-Process -FilePath 'msiexec.exe' -ArgumentList $arguments -Wait -PassThru
+            if ($process.ExitCode -notin 0, 3010) {
+                if (Test-Path $log) { Get-Content $log -Tail 40 | Write-Host }
+                throw "$activity failed with exit code $($process.ExitCode)."
+            }
+        }
+
+        function Get-InstalledProduct {
+            Get-ChildItem $uninstallKey -ErrorAction SilentlyContinue |
+                ForEach-Object { Get-ItemProperty $_.PSPath -ErrorAction SilentlyContinue } |
+                Where-Object { $_.DisplayName -eq $productName } |
+                Select-Object -First 1
+        }
+
+        Invoke-Msiexec @('/i', ('"{0}"' -f $installer), '/quiet', '/norestart', '/log', ('"{0}"' -f $log)) 'Install'
+
+        $product = Get-InstalledProduct
+        if (-not $product) {
+            throw "$productName is not registered in Programs and Features after installing $installer."
+        }
+        if ($product.DisplayVersion -ne $expectedVersion) {
+            throw "$productName registered version $($product.DisplayVersion) but the release is $expectedVersion."
+        }
+        Write-Host "Installed $productName $($product.DisplayVersion) to $($product.InstallLocation)."
+
+        Invoke-Msiexec @('/x', ('"{0}"' -f $installer), '/quiet', '/norestart') 'Uninstall'
+
+        if (Get-InstalledProduct) {
+            throw "$productName is still registered after uninstalling."
+        }
+        Write-Host "$productName installs and uninstalls cleanly."
