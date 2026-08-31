@@ -18,12 +18,20 @@ inputs:
     description: Directory the archive is written to
     required: true
 
+outputs:
+  archive-path:
+    description: Absolute path of the created archive
+    value: ${{ steps.zip.outputs.archive-path }}
+
 runs:
   using: composite
   steps:
     - name: Create ZIP
+      id: zip
       shell: pwsh
       run: |
-        New-Item -ItemType Directory -Force -Path "${{ inputs.output-dir }}" | Out-Null
-        $archive = Join-Path "${{ inputs.output-dir }}" "${{ inputs.name }}-v${{ inputs.version }}-${{ inputs.target }}.zip"
-        7z a -tzip -mx=9 $archive "${{ inputs.source-path }}/*"
+        $dir = [IO.Path]::GetFullPath([IO.Path]::Combine($env:GITHUB_WORKSPACE, '${{ inputs.output-dir }}'))
+        New-Item -ItemType Directory -Force -Path $dir | Out-Null
+        $archive = Join-Path $dir '${{ inputs.name }}-v${{ inputs.version }}-${{ inputs.target }}.zip'
+        "archive-path=$archive" >> $env:GITHUB_OUTPUT
+        7z a -tzip -mx=9 $archive '${{ inputs.source-path }}/*'

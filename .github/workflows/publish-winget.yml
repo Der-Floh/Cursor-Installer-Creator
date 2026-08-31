@@ -8,16 +8,18 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: winget-publish
+  cancel-in-progress: false
+
 permissions:
   contents: read
+  actions: read
 
 env:
-  DOTNET_VERSION: "10.0.x"
-  PROJECT_PATH: Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj
-  PUBLISH_PROFILE: winx64
-  AIP_PATH: .github/CursorInstallerCreator.aip
-  ARTIFACTS_PATH: artifacts
-  MANIFEST_PATH: artifacts/manifests/d/Der_Floh/CursorInstallerCreator
+  RELEASE_WORKFLOW: publish.yml
+  MANIFEST_ARTIFACT: winget-manifests
+  MANIFEST_PATH: winget-manifests
   TARGET: win-x64
   FILE_TYPE: msi
 
@@ -27,48 +29,67 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
-        with:
-          ref: ${{ inputs.tag }}
+        uses: actions/checkout@v7
 
-      - name: Extract version from tag
+      - name: Resolve version
         id: version
         shell: bash
-        run: echo "value=$(echo '${{ inputs.tag }}' | sed 's/^v//')" >> $GITHUB_OUTPUT
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          value="${TAG#v}"
+          if [[ ! "$value" =~ ^[0-9]+(\.[0-9]+){0,3}$ ]]; then
+            echo "::error::'$TAG' is not a version tag."
+            exit 1
+          fi
+          echo "value=$value" >> "$GITHUB_OUTPUT"
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
+      - name: Resolve release run
+        id: run
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          $sha = gh api "repos/$env:GITHUB_REPOSITORY/commits/$env:TAG" --jq '.sha'
+          if (-not $sha) { throw "Tag $env:TAG does not resolve to a commit." }
+
+          $runs = @(gh api "repos/$env:GITHUB_REPOSITORY/actions/workflows/$env:RELEASE_WORKFLOW/runs?head_sha=$sha&per_page=20" --jq '.workflow_runs[].id')
+          if ($runs.Count -eq 0) { throw "No $env:RELEASE_WORKFLOW run found for $env:TAG ($sha)." }
+
+          $runId = $null
+          foreach ($candidate in $runs) {
+              $artifacts = @(gh api "repos/$env:GITHUB_REPOSITORY/actions/runs/$candidate/artifacts" --jq '.artifacts[] | select(.expired == false) | .name')
+              if ($artifacts -contains $env:MANIFEST_ARTIFACT) { $runId = $candidate; break }
+          }
+          if (-not $runId) {
+              throw "None of the $($runs.Count) $env:RELEASE_WORKFLOW run(s) for $env:TAG ($sha) has an unexpired '$env:MANIFEST_ARTIFACT' artifact. Artifacts expire after 90 days, and runs that failed before the archive step never produced one; re-run the release workflow for that tag."
+          }
+
+          Write-Host "Using $env:RELEASE_WORKFLOW run $runId for $env:TAG."
+          "id=$runId" >> $env:GITHUB_OUTPUT
+
+      - name: Download WinGet manifests
+        uses: actions/download-artifact@v8
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          name: ${{ env.MANIFEST_ARTIFACT }}
+          run-id: ${{ steps.run.outputs.id }}
+          github-token: ${{ github.token }}
+          path: ${{ env.MANIFEST_PATH }}
 
-      - name: Publish
-        run: >
-          dotnet publish ${{ env.PROJECT_PATH }}
-          -p:PublishProfile=${{ env.PUBLISH_PROFILE }}
-          -p:Version=${{ steps.version.outputs.value }}
-          -clp:ForceConsoleColor
-
-      - name: Create MSI
-        uses: ./.github/actions/create-msi
-        with:
-          aip-path: ${{ env.AIP_PATH }}
-          version: ${{ steps.version.outputs.value }}
-          output-dir: ${{ env.ARTIFACTS_PATH }}
-          advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
-
-      - name: Sync manifest hash with released MSI
-        uses: ./.github/actions/sync-manifest-hash
+      - name: Verify WinGet manifest
+        uses: ./.github/actions/verify-manifest
         with:
           repository: ${{ github.repository }}
           tag: ${{ inputs.tag }}
           version: ${{ steps.version.outputs.value }}
           target: ${{ env.TARGET }}
           file-type: ${{ env.FILE_TYPE }}
-          manifest-path: ${{ env.MANIFEST_PATH }}/${{ steps.version.outputs.value }}
+          manifest-path: ${{ env.MANIFEST_PATH }}
           token: ${{ github.token }}
 
       - name: Publish to WinGet
         uses: ./.github/actions/publish-winget
         with:
-          manifest-path: ${{ env.MANIFEST_PATH }}/${{ steps.version.outputs.value }}
+          manifest-path: ${{ env.MANIFEST_PATH }}
           token: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}

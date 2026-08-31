@@ -15,46 +15,32 @@ permissions:
 env:
   DOTNET_NOLOGO: "true"
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: "true"
+  DOTNET_VERSION: "10.0.x"
 
 jobs:
-  build-desktop:
-    name: Build desktop
+  build:
+    name: Build ${{ matrix.name }}
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: desktop
+            project: Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj
+            wasm: false
+          - name: web
+            project: Cursor_Installer_Creator.Browser/Cursor_Installer_Creator.Browser.csproj
+            wasm: true
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
-      - name: Setup .NET 10
-        uses: actions/setup-dotnet@v5
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: "10.0.x"
-
-      - name: Cache NuGet packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.nuget/packages
-          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.csproj', 'Directory.Packages.props') }}
-          restore-keys: nuget-${{ runner.os }}-
-
-      - name: Restore
-        run: dotnet restore Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj -clp:ForceConsoleColor
-
-      - name: Build
-        run: dotnet build Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj -c Release --no-restore -clp:ForceConsoleColor
-
-  build-web:
-    name: Build web
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup .NET 10
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: "10.0.x"
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Cache NuGet packages
         uses: actions/cache@v4
@@ -64,10 +50,11 @@ jobs:
           restore-keys: nuget-${{ runner.os }}-
 
       - name: Install wasm-tools
+        if: matrix.wasm
         run: dotnet workload install wasm-tools
 
       - name: Restore
-        run: dotnet restore Cursor_Installer_Creator.Browser/Cursor_Installer_Creator.Browser.csproj -clp:ForceConsoleColor
+        run: dotnet restore ${{ matrix.project }} -clp:ForceConsoleColor
 
       - name: Build
-        run: dotnet build Cursor_Installer_Creator.Browser/Cursor_Installer_Creator.Browser.csproj -c Release --no-restore -clp:ForceConsoleColor
+        run: dotnet build ${{ matrix.project }} -c Release --no-restore -clp:ForceConsoleColor

@@ -15,26 +15,64 @@ inputs:
   output-dir:
     description: Directory the installer and its WinGet manifests are written to
     required: true
+  advinst-version:
+    description: Advanced Installer version to deploy
+    required: false
+    default: "23.9"
   advinst-license:
     description: Advanced Installer license key
     required: true
 
+outputs:
+  output-dir:
+    description: Absolute path the installer was written to
+    value: ${{ steps.resolve.outputs.dir }}
+  installer-path:
+    description: Absolute path of the built installer
+    value: ${{ steps.locate.outputs.installer-path }}
+  manifest-dir:
+    description: Absolute path of the generated WinGet manifest directory
+    value: ${{ steps.locate.outputs.manifest-dir }}
+
 runs:
   using: composite
   steps:
-    - name: Create output directory
+    - name: Resolve output directory
+      id: resolve
       shell: pwsh
-      run: New-Item -ItemType Directory -Force -Path "${{ inputs.output-dir }}" | Out-Null
+      run: |
+        $dir = [IO.Path]::GetFullPath([IO.Path]::Combine($env:GITHUB_WORKSPACE, '${{ inputs.output-dir }}'))
+        New-Item -ItemType Directory -Force -Path $dir | Out-Null
+        "dir=$dir" >> $env:GITHUB_OUTPUT
 
     - name: Build MSI
-      uses: caphyon/advinst-github-action@main
+      uses: caphyon/advinst-github-action@v2.0.3
       with:
+        advinst-version: ${{ inputs.advinst-version }}
         advinst-license: ${{ inputs.advinst-license }}
         advinst-enable-automation: "true"
 
         aip-path: ${{ inputs.aip-path }}
         aip-build-name: ${{ inputs.build-name }}
-        aip-output-dir: ${{ inputs.output-dir }}
+        aip-output-dir: ${{ steps.resolve.outputs.dir }}
 
         aip-commands: |
           SetVersion ${{ inputs.version }}
+
+    - name: Locate build outputs
+      id: locate
+      shell: pwsh
+      run: |
+        $dir = '${{ steps.resolve.outputs.dir }}'
+        $installers = @(Get-ChildItem -Path $dir -Filter *.msi -File)
+        if ($installers.Count -ne 1) {
+            throw "Expected exactly one MSI in $dir, found $($installers.Count)."
+        }
+        $manifestRoot = Join-Path $dir 'manifests'
+        $manifests = @(Get-ChildItem -Path $manifestRoot -Recurse -Directory -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -eq '${{ inputs.version }}' })
+        if ($manifests.Count -ne 1) {
+            throw "Expected exactly one WinGet manifest directory named ${{ inputs.version }} under $manifestRoot, found $($manifests.Count)."
+        }
+        "installer-path=$($installers[0].FullName)" >> $env:GITHUB_OUTPUT
+        "manifest-dir=$($manifests[0].FullName)" >> $env:GITHUB_OUTPUT
