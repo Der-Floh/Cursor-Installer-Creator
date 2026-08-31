@@ -1,0 +1,25 @@
+name: Create WinGet Package
+description: Submits generated WinGet manifests to create a package in the WinGet repository
+
+inputs:
+  manifest-path:
+    description: Path to the directory containing the WinGet manifests
+    required: true
+  token:
+    description: GitHub PAT for submitting PR to the WinGet repository
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Setup wingetcreate
+      id: wingetcreate
+      uses: ./.github/actions/setup-wingetcreate
+
+    - name: Submit manifests to WinGet
+      shell: pwsh
+      env:
+        WINGET_CREATE_GITHUB_TOKEN: ${{ inputs.token }}
+      run: |
+        if (-not (Test-Path -Path '${{ inputs.manifest-path }}')) { throw "Manifest path not found: ${{ inputs.manifest-path }}" }
+        & '${{ steps.wingetcreate.outputs.path }}' submit --no-open '${{ inputs.manifest-path }}'

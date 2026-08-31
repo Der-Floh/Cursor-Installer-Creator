@@ -1,0 +1,30 @@
+name: Update WinGet Package
+description: Submits a new version of an existing WinGet package, derived from the released installer
+
+inputs:
+  package-id:
+    description: WinGet package identifier, in Publisher.PackageName form
+    required: true
+  version:
+    description: Version number (without v prefix)
+    required: true
+  installer-url:
+    description: Download URL of the released installer
+    required: true
+  token:
+    description: GitHub PAT for submitting PR to the WinGet repository
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Setup wingetcreate
+      id: wingetcreate
+      uses: ./.github/actions/setup-wingetcreate
+
+    - name: Update manifests in WinGet
+      shell: pwsh
+      env:
+        WINGET_CREATE_GITHUB_TOKEN: ${{ inputs.token }}
+      run: |
+        & '${{ steps.wingetcreate.outputs.path }}' update '${{ inputs.package-id }}' --urls '${{ inputs.installer-url }}' --version '${{ inputs.version }}' --submit --no-open

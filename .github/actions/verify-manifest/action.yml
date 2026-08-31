@@ -1,27 +1,15 @@
 name: Verify WinGet Manifest
-description: Asserts the generated WinGet manifests describe the asset attached to the release
+description: Asserts the generated WinGet manifests describe the released installer
 
 inputs:
-  repository:
-    description: Repository holding the release, in owner/name form
-    required: true
-  tag:
-    description: Release tag holding the asset (e.g. v1.2.3)
-    required: true
-  version:
-    description: Version number (without v prefix)
-    required: true
-  target:
-    description: Runtime identifier the asset was built for (e.g. win-x64)
-    required: true
-  file-type:
-    description: Extension of the released asset (e.g. msi)
-    required: true
   manifest-path:
     description: Path to the directory containing the WinGet manifests
     required: true
-  token:
-    description: Token used to read the release from the GitHub API
+  installer-url:
+    description: Download URL the manifests must point at
+    required: true
+  installer-sha256:
+    description: SHA256 digest the manifests must carry
     required: true
 
 runs:
@@ -29,32 +17,9 @@ runs:
   steps:
     - name: Verify manifest against released asset
       shell: pwsh
-      env:
-        GH_TOKEN: ${{ inputs.token }}
       run: |
-        $headers = @{
-            Accept                 = 'application/vnd.github+json'
-            Authorization          = "Bearer $env:GH_TOKEN"
-            'X-GitHub-Api-Version' = '2022-11-28'
-            'User-Agent'           = 'cursor-installer-creator-ci'
-        }
-        $uri = 'https://api.github.com/repos/${{ inputs.repository }}/releases/tags/${{ inputs.tag }}'
-        $pattern = '*${{ inputs.version }}-${{ inputs.target }}.${{ inputs.file-type }}'
-
-        $asset = $null
-        foreach ($attempt in 1..3) {
-            $release = Invoke-RestMethod -Uri $uri -Headers $headers
-            $asset = $release.assets | Where-Object { $_.name -like $pattern } | Select-Object -First 1
-            if (-not $asset) { throw "Release ${{ inputs.tag }} has no asset matching $pattern." }
-            if ($asset.digest) { break }
-            Start-Sleep -Seconds 5
-        }
-        if (-not $asset.digest) {
-            throw "Asset $($asset.name) has no digest; it predates GitHub's asset digest field."
-        }
-
-        $expectedHash = ($asset.digest -replace '^sha256:', '').ToUpperInvariant()
-        $expectedUrl = $asset.browser_download_url
+        $expectedHash = '${{ inputs.installer-sha256 }}'.ToUpperInvariant()
+        $expectedUrl = '${{ inputs.installer-url }}'
 
         $manifests = @(Get-ChildItem -Path '${{ inputs.manifest-path }}' -Recurse -Filter *.installer.yaml -File)
         if ($manifests.Count -eq 0) {
@@ -75,11 +40,11 @@ runs:
             $actualUrl = $Matches[1].Trim('"').Trim("'")
 
             if ($actualHash -ne $expectedHash) {
-                throw "$($manifest.Name) InstallerSha256 is $actualHash but $($asset.name) hashes to $expectedHash."
+                throw "$($manifest.Name) InstallerSha256 is $actualHash but the released asset hashes to $expectedHash."
             }
             if ($actualUrl -ne $expectedUrl) {
                 throw "$($manifest.Name) InstallerUrl is $actualUrl but the released asset is at $expectedUrl."
             }
 
-            Write-Host "$($manifest.Name) matches $($asset.name)."
+            Write-Host "$($manifest.Name) matches the released asset."
         }

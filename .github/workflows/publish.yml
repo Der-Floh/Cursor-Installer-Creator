@@ -19,7 +19,8 @@ env:
   AIP_PATH: .github/CursorInstallerCreator.aip
   ARTIFACTS_PATH: artifacts
   MANIFEST_ARTIFACT: winget-manifests
-  ZIP_PACKAGE_NAME: CursorInstallerCreator-Portable
+  WINGET_PACKAGE_ID: Der_Floh.CursorInstallerCreator
+  PACKAGE_NAME: CursorInstallerCreator
   TARGET: win-x64
   FILE_TYPE: msi
 
@@ -68,7 +69,7 @@ jobs:
       - name: Create ZIP
         uses: ./.github/actions/create-zip
         with:
-          name: ${{ env.ZIP_PACKAGE_NAME }}
+          name: ${{ env.PACKAGE_NAME }}
           version: ${{ steps.version.outputs.value }}
           target: ${{ env.TARGET }}
           source-path: ${{ env.PUBLISH_PATH }}
@@ -82,16 +83,23 @@ jobs:
             ./${{ env.ARTIFACTS_PATH }}/*.zip
             ./${{ env.ARTIFACTS_PATH }}/*.msi
 
-      - name: Verify WinGet manifest
-        uses: ./.github/actions/verify-manifest
+      - name: Resolve release asset
+        id: asset
+        uses: ./.github/actions/resolve-release-asset
         with:
           repository: ${{ github.repository }}
           tag: ${{ github.event.release.tag_name }}
           version: ${{ steps.version.outputs.value }}
           target: ${{ env.TARGET }}
           file-type: ${{ env.FILE_TYPE }}
-          manifest-path: ${{ steps.msi.outputs.manifest-dir }}
           token: ${{ github.token }}
+
+      - name: Verify WinGet manifest
+        uses: ./.github/actions/verify-manifest
+        with:
+          manifest-path: ${{ steps.msi.outputs.manifest-dir }}
+          installer-url: ${{ steps.asset.outputs.url }}
+          installer-sha256: ${{ steps.asset.outputs.sha256 }}
 
       - name: Archive WinGet manifests
         uses: actions/upload-artifact@v7
@@ -101,9 +109,27 @@ jobs:
           if-no-files-found: error
           retention-days: 90
 
-      - name: Publish to WinGet
+      - name: Resolve WinGet submission mode
+        id: winget
         if: ${{ !github.event.release.prerelease }}
-        uses: ./.github/actions/publish-winget
+        uses: ./.github/actions/resolve-winget-mode
+        with:
+          package-id: ${{ env.WINGET_PACKAGE_ID }}
+          version: ${{ steps.version.outputs.value }}
+          token: ${{ github.token }}
+
+      - name: Create WinGet package
+        if: ${{ steps.winget.outputs.mode == 'create' }}
+        uses: ./.github/actions/winget-publish
         with:
           manifest-path: ${{ steps.msi.outputs.manifest-dir }}
+          token: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
+
+      - name: Update WinGet package
+        if: ${{ steps.winget.outputs.mode == 'update' }}
+        uses: ./.github/actions/winget-update
+        with:
+          package-id: ${{ env.WINGET_PACKAGE_ID }}
+          version: ${{ steps.version.outputs.value }}
+          installer-url: ${{ steps.asset.outputs.url }}
           token: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}

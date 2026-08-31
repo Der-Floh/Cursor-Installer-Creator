@@ -1,0 +1,71 @@
+name: Resolve WinGet Submission Mode
+description: Decides whether a version must be created, updated or skipped in the WinGet repository
+
+inputs:
+  package-id:
+    description: WinGet package identifier, in Publisher.PackageName form
+    required: true
+  version:
+    description: Version number (without v prefix)
+    required: true
+  repository:
+    description: Repository holding the WinGet manifests, in owner/name form
+    required: false
+    default: microsoft/winget-pkgs
+  token:
+    description: Token used to query the WinGet repository
+    required: true
+
+outputs:
+  mode:
+    description: create when the package is absent, update when the version is new, skip when it is already published
+    value: ${{ steps.resolve.outputs.mode }}
+  package-path:
+    description: Path of the package inside the WinGet repository
+    value: ${{ steps.resolve.outputs.package-path }}
+
+runs:
+  using: composite
+  steps:
+    - name: Resolve submission mode
+      id: resolve
+      shell: pwsh
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+      run: |
+        $headers = @{
+            Accept                 = 'application/vnd.github+json'
+            Authorization          = "Bearer $env:GH_TOKEN"
+            'X-GitHub-Api-Version' = '2022-11-28'
+            'User-Agent'           = 'cursor-installer-creator-ci'
+        }
+        $base = 'https://api.github.com/repos/${{ inputs.repository }}/contents'
+
+        $id = '${{ inputs.package-id }}'
+        $letter = $id.Substring(0, 1).ToLowerInvariant()
+        $packagePath = "manifests/$letter/" + ($id.Split('.') -join '/')
+        $versionPath = "$packagePath/${{ inputs.version }}"
+
+        function Test-ManifestPath([string] $path) {
+            try {
+                Invoke-RestMethod -Uri "$base/$path" -Headers $headers | Out-Null
+                return $true
+            } catch {
+                if ([int]$_.Exception.Response.StatusCode -eq 404) { return $false }
+                throw
+            }
+        }
+
+        if (-not (Test-ManifestPath $packagePath)) {
+            $mode = 'create'
+            Write-Host "$id is not in ${{ inputs.repository }}; the package will be created."
+        } elseif (-not (Test-ManifestPath $versionPath)) {
+            $mode = 'update'
+            Write-Host "$id exists in ${{ inputs.repository }}; version ${{ inputs.version }} will be added."
+        } else {
+            $mode = 'skip'
+            Write-Host "::notice::$id version ${{ inputs.version }} is already published in ${{ inputs.repository }}; nothing to submit."
+        }
+
+        "mode=$mode" >> $env:GITHUB_OUTPUT
+        "package-path=$packagePath" >> $env:GITHUB_OUTPUT

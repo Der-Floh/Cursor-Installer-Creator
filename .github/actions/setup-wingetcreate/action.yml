@@ -1,0 +1,36 @@
+name: Setup wingetcreate
+description: Downloads and verifies the pinned wingetcreate executable
+
+inputs:
+  version:
+    description: Release tag of microsoft/winget-create to use
+    required: false
+    default: v1.12.13.0
+  sha256:
+    description: Expected SHA256 of wingetcreate.exe for the pinned version
+    required: false
+    default: 24042BD37915805615E6CF969AC57C6439124C3FE85823327F5F3FB24BD9FFEA
+
+outputs:
+  path:
+    description: Absolute path of the verified wingetcreate executable
+    value: ${{ steps.download.outputs.path }}
+
+runs:
+  using: composite
+  steps:
+    - name: Download wingetcreate
+      id: download
+      shell: pwsh
+      run: |
+        $exe = Join-Path $env:RUNNER_TEMP 'wingetcreate.exe'
+        $uri = 'https://github.com/microsoft/winget-create/releases/download/${{ inputs.version }}/wingetcreate.exe'
+        Invoke-WebRequest -Uri $uri -OutFile $exe
+
+        $actual = (Get-FileHash -Algorithm SHA256 -Path $exe).Hash
+        if ($actual -ne '${{ inputs.sha256 }}') {
+            Remove-Item $exe -Force
+            throw "wingetcreate.exe SHA256 mismatch: expected ${{ inputs.sha256 }}, got $actual."
+        }
+
+        "path=$exe" >> $env:GITHUB_OUTPUT
