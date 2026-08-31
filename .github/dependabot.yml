@@ -26,6 +26,3 @@ updates:
       microsoft-extensions:
         patterns:
           - Microsoft.Extensions.*
-      nuget:
-        patterns:
-          - "*"
