@@ -16,104 +16,11 @@ permissions:
   contents: read
   actions: read
 
-env:
-  RELEASE_WORKFLOW: publish.yml
-  MANIFEST_ARTIFACT: winget-manifests
-  MANIFEST_PATH: winget-manifests
-  WINGET_PACKAGE_ID: Der_Floh.CursorInstallerCreator
-  TARGET: win-x64
-  FILE_TYPE: msi
-
 jobs:
   publish-winget:
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Resolve version
-        id: version
-        uses: Der-Floh/Der-Floh/.github/actions/resolve-version@v1
-        with:
-          tag: ${{ inputs.tag }}
-          allow-prerelease: "false"
-
-      - name: Resolve WinGet submission mode
-        id: winget
-        uses: Der-Floh/Der-Floh/.github/actions/resolve-winget-mode@v1
-        with:
-          package-id: ${{ env.WINGET_PACKAGE_ID }}
-          version: ${{ steps.version.outputs.value }}
-          token: ${{ github.token }}
-
-      - name: Resolve release asset
-        id: asset
-        if: ${{ steps.winget.outputs.mode != 'skip' }}
-        uses: Der-Floh/Der-Floh/.github/actions/resolve-release-asset@v1
-        with:
-          repository: ${{ github.repository }}
-          tag: ${{ inputs.tag }}
-          version: ${{ steps.version.outputs.value }}
-          target: ${{ env.TARGET }}
-          file-type: ${{ env.FILE_TYPE }}
-          token: ${{ github.token }}
-
-      - name: Resolve release run
-        id: run
-        if: ${{ steps.winget.outputs.mode == 'create' }}
-        shell: pwsh
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ inputs.tag }}
-        run: |
-          $sha = gh api "repos/$env:GITHUB_REPOSITORY/commits/$env:TAG" --jq '.sha'
-          if (-not $sha) { throw "Tag $env:TAG does not resolve to a commit." }
-
-          $runs = @(gh api "repos/$env:GITHUB_REPOSITORY/actions/workflows/$env:RELEASE_WORKFLOW/runs?head_sha=$sha&per_page=20" --jq '.workflow_runs[].id')
-          if ($runs.Count -eq 0) { throw "No $env:RELEASE_WORKFLOW run found for $env:TAG ($sha)." }
-
-          $runId = $null
-          foreach ($candidate in $runs) {
-              $artifacts = @(gh api "repos/$env:GITHUB_REPOSITORY/actions/runs/$candidate/artifacts" --jq '.artifacts[] | select(.expired == false) | .name')
-              if ($artifacts -contains $env:MANIFEST_ARTIFACT) { $runId = $candidate; break }
-          }
-          if (-not $runId) {
-              throw "None of the $($runs.Count) $env:RELEASE_WORKFLOW run(s) for $env:TAG ($sha) has an unexpired '$env:MANIFEST_ARTIFACT' artifact. Artifacts expire after 90 days, and runs that failed before the archive step never produced one; re-run the release workflow for that tag."
-          }
-
-          Write-Host "Using $env:RELEASE_WORKFLOW run $runId for $env:TAG."
-          "id=$runId" >> $env:GITHUB_OUTPUT
-
-      - name: Download WinGet manifests
-        if: ${{ steps.winget.outputs.mode == 'create' }}
-        uses: actions/download-artifact@v8
-        with:
-          name: ${{ env.MANIFEST_ARTIFACT }}
-          run-id: ${{ steps.run.outputs.id }}
-          github-token: ${{ github.token }}
-          path: ${{ env.MANIFEST_PATH }}
-
-      - name: Verify WinGet manifest
-        if: ${{ steps.winget.outputs.mode == 'create' }}
-        uses: Der-Floh/Der-Floh/.github/actions/verify-manifest@v1
-        with:
-          manifest-path: ${{ env.MANIFEST_PATH }}
-          installer-url: ${{ steps.asset.outputs.url }}
-          installer-sha256: ${{ steps.asset.outputs.sha256 }}
-
-      - name: Create WinGet package
-        if: ${{ steps.winget.outputs.mode == 'create' }}
-        uses: Der-Floh/Der-Floh/.github/actions/winget-publish@v1
-        with:
-          manifest-path: ${{ env.MANIFEST_PATH }}
-          token: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
-
-      - name: Update WinGet package
-        if: ${{ steps.winget.outputs.mode == 'update' }}
-        uses: Der-Floh/Der-Floh/.github/actions/winget-update@v1
-        with:
-          package-id: ${{ env.WINGET_PACKAGE_ID }}
-          version: ${{ steps.version.outputs.value }}
-          installer-url: ${{ steps.asset.outputs.url }}
-          token: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
+    uses: Der-Floh/Der-Floh/.github/workflows/app-publish-winget.yml@v1
+    with:
+      tag: ${{ inputs.tag }}
+      winget-package-id: Der_Floh.CursorInstallerCreator
+    secrets:
+      WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
