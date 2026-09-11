@@ -13,134 +13,16 @@ permissions:
   id-token: write
   attestations: write
 
-env:
-  DOTNET_VERSION: "10.0.x"
-  PROJECT_PATH: Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj
-  PUBLISH_PROFILE: winx64
-  PUBLISH_PATH: Cursor_Installer_Creator.Desktop/bin/Publish
-  AIP_PATH: .github/CursorInstallerCreator.aip
-  ARTIFACTS_PATH: artifacts
-  MANIFEST_ARTIFACT: winget-manifests
-  WINGET_PACKAGE_ID: Der_Floh.CursorInstallerCreator
-  PACKAGE_NAME: CursorInstallerCreator
-  PRODUCT_NAME: Cursor Installer Creator
-  TARGET: win-x64
-  FILE_TYPE: msi
-
 jobs:
   publish:
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Resolve version
-        id: version
-        uses: Der-Floh/Der-Floh/.github/actions/resolve-version@v1
-        with:
-          tag: ${{ github.event.release.tag_name }}
-          allow-prerelease: "false"
-
-      - name: Setup .NET
-        uses: Der-Floh/Der-Floh/.github/actions/setup-dotnet@v1
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-
-      - name: Publish
-        run: >
-          dotnet publish ${{ env.PROJECT_PATH }}
-          -p:PublishProfile=${{ env.PUBLISH_PROFILE }}
-          -p:Version=${{ steps.version.outputs.value }}
-          -clp:ForceConsoleColor
-
-      - name: Create MSI
-        id: msi
-        uses: Der-Floh/Der-Floh/.github/actions/create-msi@v1
-        with:
-          aip-path: ${{ env.AIP_PATH }}
-          version: ${{ steps.version.outputs.value }}
-          output-dir: ${{ env.ARTIFACTS_PATH }}
-          advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
-
-      - name: Verify MSI
-        uses: Der-Floh/Der-Floh/.github/actions/verify-msi@v1
-        with:
-          installer-path: ${{ steps.msi.outputs.installer-path }}
-          product-name: ${{ env.PRODUCT_NAME }}
-          version: ${{ steps.version.outputs.value }}
-
-      - name: Create ZIP
-        uses: Der-Floh/Der-Floh/.github/actions/create-zip@v1
-        with:
-          name: ${{ env.PACKAGE_NAME }}
-          version: ${{ steps.version.outputs.value }}
-          target: ${{ env.TARGET }}
-          source-path: ${{ env.PUBLISH_PATH }}
-          output-dir: ${{ env.ARTIFACTS_PATH }}
-
-      - name: Upload to Release
-        uses: softprops/action-gh-release@v3
-        with:
-          fail_on_unmatched_files: true
-          files: |
-            ./${{ env.ARTIFACTS_PATH }}/*.zip
-            ./${{ env.ARTIFACTS_PATH }}/*.msi
-
-      - name: Attest build provenance
-        uses: actions/attest-build-provenance@v4
-        with:
-          subject-path: |
-            ./${{ env.ARTIFACTS_PATH }}/*.msi
-            ./${{ env.ARTIFACTS_PATH }}/*.zip
-
-      - name: Resolve release asset
-        id: asset
-        uses: Der-Floh/Der-Floh/.github/actions/resolve-release-asset@v1
-        with:
-          repository: ${{ github.repository }}
-          tag: ${{ github.event.release.tag_name }}
-          version: ${{ steps.version.outputs.value }}
-          target: ${{ env.TARGET }}
-          file-type: ${{ env.FILE_TYPE }}
-          token: ${{ github.token }}
-
-      - name: Verify WinGet manifest
-        uses: Der-Floh/Der-Floh/.github/actions/verify-manifest@v1
-        with:
-          manifest-path: ${{ steps.msi.outputs.manifest-dir }}
-          installer-url: ${{ steps.asset.outputs.url }}
-          installer-sha256: ${{ steps.asset.outputs.sha256 }}
-
-      - name: Archive WinGet manifests
-        uses: actions/upload-artifact@v7
-        with:
-          name: ${{ env.MANIFEST_ARTIFACT }}
-          path: ${{ steps.msi.outputs.manifest-dir }}
-          if-no-files-found: error
-          retention-days: 90
-
-      - name: Resolve WinGet submission mode
-        id: winget
-        if: ${{ !github.event.release.prerelease }}
-        uses: Der-Floh/Der-Floh/.github/actions/resolve-winget-mode@v1
-        with:
-          package-id: ${{ env.WINGET_PACKAGE_ID }}
-          version: ${{ steps.version.outputs.value }}
-          token: ${{ github.token }}
-
-      - name: Create WinGet package
-        if: ${{ steps.winget.outputs.mode == 'create' }}
-        uses: Der-Floh/Der-Floh/.github/actions/winget-publish@v1
-        with:
-          manifest-path: ${{ steps.msi.outputs.manifest-dir }}
-          token: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
-
-      - name: Update WinGet package
-        if: ${{ steps.winget.outputs.mode == 'update' }}
-        uses: Der-Floh/Der-Floh/.github/actions/winget-update@v1
-        with:
-          package-id: ${{ env.WINGET_PACKAGE_ID }}
-          version: ${{ steps.version.outputs.value }}
-          installer-url: ${{ steps.asset.outputs.url }}
-          token: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
+    uses: Der-Floh/Der-Floh/.github/workflows/app-publish.yml@v1
+    with:
+      project-path: Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj
+      publish-path: Cursor_Installer_Creator.Desktop/bin/Publish
+      aip-path: .github/CursorInstallerCreator.aip
+      product-name: Cursor Installer Creator
+      package-name: CursorInstallerCreator
+      winget-package-id: Der_Floh.CursorInstallerCreator
+    secrets:
+      ADVINST_LICENSE_KEY: ${{ secrets.ADVINST_LICENSE_KEY }}
+      WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
