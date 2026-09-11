@@ -17,55 +17,9 @@ concurrency:
 permissions:
   contents: write
 
-env:
-  PROJECT_PATH: Cursor_Installer_Creator.Browser/Cursor_Installer_Creator.Browser.csproj
-  OUTPUT_PATH: publish-output/wwwroot
-
 jobs:
   deploy-to-github-pages:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Resolve version
-        id: version
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
-          INPUT_VERSION: ${{ inputs.version }}
-        run: |
-          ref="${RELEASE_TAG:-$INPUT_VERSION}"
-          if [ -z "$ref" ]; then
-            ref="$(gh release view --json tagName -q .tagName)"
-          fi
-          value="${ref#v}"
-          if [[ ! "$value" =~ ^[0-9]+(\.[0-9]+){0,3}$ ]]; then
-            echo "::error::'$ref' is not a version."
-            exit 1
-          fi
-          echo "value=$value" >> "$GITHUB_OUTPUT"
-
-      - name: Setup .NET
-        uses: Der-Floh/Der-Floh/.github/actions/setup-dotnet@v1
-
-      - name: Install wasm-tools
-        run: dotnet workload install wasm-tools
-
-      - name: Publish .NET Project
-        run: dotnet publish "$PROJECT_PATH" -c Release --nologo -o ./publish-output -p:Version=${{ steps.version.outputs.value }} -clp:ForceConsoleColor
-
-      - name: Copy index.html to 404.html
-        run: cp "$OUTPUT_PATH/index.html" "$OUTPUT_PATH/404.html"
-
-      - name: Add .nojekyll file
-        run: touch "$OUTPUT_PATH/.nojekyll"
-
-      - name: Deploy to gh-pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages
-          folder: ${{ env.OUTPUT_PATH }}
-          single-commit: true
+    uses: Der-Floh/Der-Floh/.github/workflows/app-pages.yml@v1
+    with:
+      project-path: Cursor_Installer_Creator.Browser/Cursor_Installer_Creator.Browser.csproj
+      version: ${{ inputs.version }}
