@@ -34,20 +34,14 @@ jobs:
 
       - name: Resolve version
         id: version
-        shell: bash
-        env:
-          TAG: ${{ inputs.tag }}
-        run: |
-          value="${TAG#v}"
-          if [[ ! "$value" =~ ^[0-9]+(\.[0-9]+){0,3}$ ]]; then
-            echo "::error::'$TAG' is not a version tag."
-            exit 1
-          fi
-          echo "value=$value" >> "$GITHUB_OUTPUT"
+        uses: Der-Floh/Der-Floh/.github/actions/resolve-version@v1
+        with:
+          tag: ${{ inputs.tag }}
+          allow-prerelease: "false"
 
       - name: Resolve WinGet submission mode
         id: winget
-        uses: ./.github/actions/resolve-winget-mode
+        uses: Der-Floh/Der-Floh/.github/actions/resolve-winget-mode@v1
         with:
           package-id: ${{ env.WINGET_PACKAGE_ID }}
           version: ${{ steps.version.outputs.value }}
@@ -56,7 +50,7 @@ jobs:
       - name: Resolve release asset
         id: asset
         if: ${{ steps.winget.outputs.mode != 'skip' }}
-        uses: ./.github/actions/resolve-release-asset
+        uses: Der-Floh/Der-Floh/.github/actions/resolve-release-asset@v1
         with:
           repository: ${{ github.repository }}
           tag: ${{ inputs.tag }}
@@ -102,7 +96,7 @@ jobs:
 
       - name: Verify WinGet manifest
         if: ${{ steps.winget.outputs.mode == 'create' }}
-        uses: ./.github/actions/verify-manifest
+        uses: Der-Floh/Der-Floh/.github/actions/verify-manifest@v1
         with:
           manifest-path: ${{ env.MANIFEST_PATH }}
           installer-url: ${{ steps.asset.outputs.url }}
@@ -110,14 +104,14 @@ jobs:
 
       - name: Create WinGet package
         if: ${{ steps.winget.outputs.mode == 'create' }}
-        uses: ./.github/actions/winget-publish
+        uses: Der-Floh/Der-Floh/.github/actions/winget-publish@v1
         with:
           manifest-path: ${{ env.MANIFEST_PATH }}
           token: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
 
       - name: Update WinGet package
         if: ${{ steps.winget.outputs.mode == 'update' }}
-        uses: ./.github/actions/winget-update
+        uses: Der-Floh/Der-Floh/.github/actions/winget-update@v1
         with:
           package-id: ${{ env.WINGET_PACKAGE_ID }}
           version: ${{ steps.version.outputs.value }}
