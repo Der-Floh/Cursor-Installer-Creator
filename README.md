@@ -1,4 +1,8 @@
-# Cursor-Installer-Creator
+# ![Ico.Reader icon](https://raw.githubusercontent.com/Der-Floh/Cursor-Installer-Creator/main/Cursor_Installer_Creator/Assets/icon-x64.png) Cursor-Installer-Creator
+
+[![GitHub Release](https://img.shields.io/github/v/release/Der-Floh/Cursor-Installer-Creator)](https://github.com/Der-Floh/Cursor-Installer-Creator/releases/latest)
+[![GitHub Downloads](https://img.shields.io/github/downloads/Der-Floh/Cursor-Installer-Creator/total)](https://github.com/Der-Floh/Cursor-Installer-Creator/releases)
+[![CI](https://github.com/Der-Floh/Cursor-Installer-Creator/actions/workflows/ci.yml/badge.svg)](https://github.com/Der-Floh/Cursor-Installer-Creator/actions/workflows/ci.yml)
 
 Cursor Installer Creator builds distributable Windows cursor schemes from individual cursor files. Packaging one by hand means collecting the .cur and .ani files, mapping each one to the system role it should replace, and writing the .inf file that Windows uses to register the scheme — tedious work that is easy to get wrong. This application handles that assembly and produces a self-contained package that anyone can install with a right-click, or apply directly to the machine it is running on. It is intended for people who create or redistribute custom cursor sets.
 
