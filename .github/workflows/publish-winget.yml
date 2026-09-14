@@ -14,13 +14,13 @@ concurrency:
 
 permissions:
   contents: read
-  actions: read
 
 jobs:
   publish-winget:
     uses: Der-Floh/Der-Floh/.github/workflows/app-publish-winget.yml@v1
     with:
       tag: ${{ inputs.tag }}
-      winget-package-id: Der_Floh.CursorInstallerCreator
+      author: Der_Floh
+      package-name: CursorInstallerCreator
     secrets:
       WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}

@@ -23,3 +23,6 @@ jobs:
         ]
       publish-project: Cursor_Installer_Creator.Desktop/Cursor_Installer_Creator.Desktop.csproj
       publish-profile: winx64
+      author: Der_Floh
+      package-name: CursorInstallerCreator
+      splash-image: Cursor_Installer_Creator/Assets/icon-x256.png
