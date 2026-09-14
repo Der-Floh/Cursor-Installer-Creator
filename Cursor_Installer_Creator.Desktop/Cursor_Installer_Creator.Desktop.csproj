@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Velopack" />
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport">
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
