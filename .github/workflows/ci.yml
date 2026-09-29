@@ -29,16 +29,7 @@ jobs:
 
   automerge:
     needs: ci
-    if: github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]'
-    runs-on: ubuntu-latest
-
     permissions:
       contents: write
       pull-requests: write
-
-    steps:
-      - name: Merge Dependabot pull request
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-        run: gh pr merge --squash "$PR_URL"
+    uses: Der-Floh/Der-Floh/.github/workflows/dependabot-automerge.yml@v1
