@@ -220,7 +220,7 @@ public sealed class InfParserService : IInfParserService
                     {
                         inf.DriverVer = new Version(parts[1]);
                     }
-                    catch { /* malformed version string — leave null */ }
+                    catch { /* malformed version string - leave null */ }
                 }
             }
         }
@@ -651,7 +651,7 @@ public sealed class InfParserService : IInfParserService
             sb.AppendLine($"HKCU,\"Control Panel\\Cursors\",\"{regName}\",,\"{value}\"");
         }
 
-        // Scheme CSV entry — always 17 positional slots in canonical Windows order.
+        // Scheme CSV entry - always 17 positional slots in canonical Windows order.
         // Absent slots emit an empty string so that subsequent slots land in the correct position.
         var schemeValues = allAssignments.Select(a =>
         {

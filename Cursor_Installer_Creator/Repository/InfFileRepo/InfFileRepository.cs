@@ -233,7 +233,7 @@ public sealed class InfFileRepository : IInfFileRepository
         cleaned.Cursors.AddRange(candidates.Where(x => !IsDefaultCursor(x, defaultBytesById)));
 
         if (cleaned.Cursors.Count == 0)
-            throw new InvalidOperationException("Package contains no non-default cursors — customize at least one cursor before creating a package.");
+            throw new InvalidOperationException("Package contains no non-default cursors - customize at least one cursor before creating a package.");
 
         return cleaned;
     }
