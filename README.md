@@ -1,4 +1,4 @@
-# <img src="./Cursor_Installer_Creator/Assets/icon.svg" alt="" height="32"/> Cursor Installer Creator
+# <img src="./Cursor_Installer_Creator/Assets/icon.svg" alt="" height="48"/> Cursor Installer Creator
 
 [![GitHub Release](https://img.shields.io/github/v/release/Der-Floh/Cursor-Installer-Creator)](https://github.com/Der-Floh/Cursor-Installer-Creator/releases/latest)
 [![GitHub Downloads](https://img.shields.io/github/downloads/Der-Floh/Cursor-Installer-Creator/total)](https://github.com/Der-Floh/Cursor-Installer-Creator/releases)
