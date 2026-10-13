@@ -1,7 +1,8 @@
-# <img src="./Cursor_Installer_Creator/Assets/icon.svg" alt="" height="48"/> Cursor Installer Creator
+# <img src="https://raw.githubusercontent.com/Der-Floh/Cursor-Installer-Creator/main/Cursor_Installer_Creator/Assets/icon.svg" alt="" height="48"/> Cursor Installer Creator
 
-[![GitHub Release](https://img.shields.io/github/v/release/Der-Floh/Cursor-Installer-Creator)](https://github.com/Der-Floh/Cursor-Installer-Creator/releases/latest)
-[![GitHub Downloads](https://img.shields.io/github/downloads/Der-Floh/Cursor-Installer-Creator/total)](https://github.com/Der-Floh/Cursor-Installer-Creator/releases)
+[![Release](https://img.shields.io/github/v/release/Der-Floh/Cursor-Installer-Creator)](https://github.com/Der-Floh/Cursor-Installer-Creator/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/Der-Floh/Cursor-Installer-Creator/total)](https://github.com/Der-Floh/Cursor-Installer-Creator/releases)
+[![WinGet](https://img.shields.io/badge/WinGet-Available-0078D4?logo=windows)](https://winget.run/search?query=Cursor%20Installer%20Creator)
 [![CI](https://github.com/Der-Floh/Cursor-Installer-Creator/actions/workflows/ci.yml/badge.svg)](https://github.com/Der-Floh/Cursor-Installer-Creator/actions/workflows/ci.yml)
 
 Cursor Installer Creator builds distributable Windows cursor schemes from individual cursor files. Packaging one by hand means collecting the .cur and .ani files, mapping each one to the system role it should replace, and writing the .inf file that Windows uses to register the scheme. This is tedious work that is easy to get wrong. This application handles that assembly and produces a self-contained package that anyone can install with a right-click, or apply directly to the machine it is running on. It is intended for people who create or redistribute custom cursor sets.
@@ -13,7 +14,7 @@ Cursor Installer Creator builds distributable Windows cursor schemes from indivi
 
 ### [Download Latest Release](https://github.com/Der-Floh/Cursor-Installer-Creator/releases/latest)
 
-### [Use Web Version](https://der-floh.github.io/Cursor-Installer-Creator/)
+### [Use Web Version](https://der-floh.github.io/Cursor-Installer-Creator)
 
 ## Usage
 
@@ -49,15 +50,15 @@ Cursor Installer Creator does not collect, store, or transmit any personal data.
 
 - **Update check:** On Windows, the desktop app contacts the public GitHub Releases API (`https://api.github.com/repos/Der-Floh/Cursor-Installer-Creator/releases/latest`) once at startup to compare your installed version against the latest release. The request sends only a generic `User-Agent` header - no personal data, telemetry, or analytics.
 - **No accounts or tracking:** The app has no user accounts, ads, or third-party analytics.
-- **Opt out / offline use:** The app is fully functional offline. The update check is the only outbound request the app makes; you can prevent it by blocking network access to `api.github.com`. The [web version](https://der-floh.github.io/Cursor-Installer-Creator/) performs no update check.
+- **Opt out / offline use:** The app is fully functional offline. The update check is the only outbound request the app makes; you can prevent it by blocking network access to `api.github.com`. The [web version](https://der-floh.github.io/Cursor-Installer-Creator) performs no update check.
 
 ### If you found an error or want to submit an idea feel free to create an [Issue](https://github.com/Der-Floh/Cursor-Installer-Creator/issues/new) or view all [Issues](https://github.com/Der-Floh/Cursor-Installer-Creator/issues)
 
 ## 📜 License
 
-Licensed under the [MIT License](./LICENSE.txt).
+Licensed under the [MIT License](https://raw.githubusercontent.com/Cursor-Installer-Creator/main/Der-Floh/LICENSE.txt).
 
 <br>
 <br>
 
-[!["Buy me a coffee"](https://raw.githubusercontent.com/Der-Floh/Der-Floh/refs/heads/main/_meta/BuyMeACoffee/Buttons%20%26%20Icons/orange-button-x180.png)](https://www.buymeacoffee.com/der_floh)
+[!["Buy me a coffee"](https://raw.githubusercontent.com/Der-Floh/Der-Floh/main/_meta/BuyMeACoffee/Buttons%20%26%20Icons/orange-button-x180.png)](https://www.buymeacoffee.com/der_floh)
